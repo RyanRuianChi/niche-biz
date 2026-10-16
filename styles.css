@@ -379,6 +379,14 @@ img { display: block; max-width: 100%; }
 .quest--done .quest__stamp { animation: stamp .5s cubic-bezier(.3,1.6,.5,1) both; animation-delay: .4s; }
 @keyframes stamp { from { transform: rotate(12deg) scale(2.4); opacity: 0; } }
 
+/* Year tags */
+.yr {
+  display: inline-block; margin-bottom: 4px; padding: 1px 8px;
+  font: 13px/1.4 var(--display); letter-spacing: 1px; color: var(--ink); background: var(--yellow);
+  transform: skewX(var(--skew));
+}
+.confidant .yr { display: table; margin: 4px 0 0; font-size: 12px; }
+
 /* ---------- Origin (side quests) ---------- */
 .origins { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
 .origin {

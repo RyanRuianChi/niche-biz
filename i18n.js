@@ -53,6 +53,7 @@ window.SITE = {
 
 window.I18N = {
   en: {
+    "yr.now": "Present",
     "nav.vol": "Volunteering", "v.bag.t": "Event Staff", "v.bag.d": "Feb – May 2024",
     "v.yu.t": "Head of Marketing", "v.yu.d": "Feb – Apr 2024", "v.poly.t": "Lecturer",
     "v.poly.d": "Polygon Blockchain 101", "nav.ach": "Achievements", "nav.art": "Skill Scrolls",
@@ -99,6 +100,7 @@ window.I18N = {
   },
 
   "zh-Hant": {
+    "yr.now": "至今",
     "nav.vol": "義工經歷", "v.bag.t": "活動工作人員", "v.bag.d": "2024 年 2 月 – 5 月",
     "v.yu.t": "市場推廣主管", "v.yu.d": "2024 年 2 月 – 4 月", "v.poly.t": "講師",
     "v.poly.d": "Polygon Blockchain 101", "nav.ach": "成就", "nav.art": "技能卷軸",
@@ -145,6 +147,7 @@ window.I18N = {
   },
 
   ja: {
+    "yr.now": "現在",
     "nav.vol": "ボランティア", "v.bag.t": "イベントスタッフ", "v.bag.d": "2024年2月 – 5月",
     "v.yu.t": "マーケティング責任者", "v.yu.d": "2024年2月 – 4月", "v.poly.t": "講師",
     "v.poly.d": "Polygon Blockchain 101", "nav.ach": "実績", "nav.art": "スキルの書",
@@ -191,6 +194,7 @@ window.I18N = {
   },
 
   ko: {
+    "yr.now": "현재",
     "nav.vol": "봉사 활동", "v.bag.t": "이벤트 스태프", "v.bag.d": "2024년 2월 – 5월",
     "v.yu.t": "마케팅 총괄", "v.yu.d": "2024년 2월 – 4월", "v.poly.t": "강사",
     "v.poly.d": "Polygon Blockchain 101", "nav.ach": "업적", "nav.art": "스킬 스크롤",
