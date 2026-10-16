@@ -1,0 +1,26 @@
+{"balance":910,"frozen":0}
+bank-of-china exit=0
+{"task_id":"bf078ed9-2943-429e-8790-3fa02d081572","type":"image_to_model","status":"success","credits_consumed":30,"output_dir":"tools/tripo/logs/buildings/bank-of-china/tripo-out/hk-bank-of-china-bf078ed9","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/buildings/bank-of-china/tripo-out/hk-bank-of-china-bf078ed9/model.glb","preview":"tools/tripo/logs/buildings/bank-of-china/tripo-out/hk-bank-of-china-bf078ed9/preview.png"}
+
+-rw-r--r-- 1 runner runner 1437396 Oct 16 22:42 assets/models/hk/bank-of-china.glb
+central-pier exit=0
+{"task_id":"f8a4cd4f-8238-4cea-9689-fa0a950009dc","type":"image_to_model","status":"success","credits_consumed":30,"output_dir":"tools/tripo/logs/buildings/central-pier/tripo-out/hk-central-pier-f8a4cd4f","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/buildings/central-pier/tripo-out/hk-central-pier-f8a4cd4f/model.glb","preview":"tools/tripo/logs/buildings/central-pier/tripo-out/hk-central-pier-f8a4cd4f/preview.png"}
+
+-rw-r--r-- 1 runner runner 2991192 Oct 16 22:45 assets/models/hk/central-pier.glb
+court-of-final-appeal exit=0
+{"task_id":"c9030c30-052b-4f52-9c92-355c12ba1828","type":"image_to_model","status":"success","credits_consumed":30,"output_dir":"tools/tripo/logs/buildings/court-of-final-appeal/tripo-out/hk-court-of-final-appeal-c9030c30","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/buildings/court-of-final-appeal/tripo-out/hk-court-of-final-appeal-c9030c30/model.glb","preview":"tools/tripo/logs/buildings/court-of-final-appeal/tripo-out/hk-court-of-final-appeal-c9030c30/preview.png"}
+
+-rw-r--r-- 1 runner runner 3741640 Oct 16 22:47 assets/models/hk/court-of-final-appeal.glb
+hsbc exit=0
+{"task_id":"959f47e6-0186-4bf8-a6b1-270efddeedbf","type":"image_to_model","status":"success","credits_consumed":30,"output_dir":"tools/tripo/logs/buildings/hsbc/tripo-out/hk-hsbc-959f47e6","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/buildings/hsbc/tripo-out/hk-hsbc-959f47e6/model.glb","preview":"tools/tripo/logs/buildings/hsbc/tripo-out/hk-hsbc-959f47e6/preview.png"}
+
+-rw-r--r-- 1 runner runner 4710040 Oct 16 22:51 assets/models/hk/hsbc.glb
+ifc2 exit=0
+{"task_id":"0769ad0a-eed9-48af-81c2-58d3b15fcaa8","type":"image_to_model","status":"success","credits_consumed":30,"output_dir":"tools/tripo/logs/buildings/ifc2/tripo-out/hk-ifc2-0769ad0a","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/buildings/ifc2/tripo-out/hk-ifc2-0769ad0a/model.glb","preview":"tools/tripo/logs/buildings/ifc2/tripo-out/hk-ifc2-0769ad0a/preview.png"}
+
+-rw-r--r-- 1 runner runner 2521104 Oct 16 22:53 assets/models/hk/ifc2.glb
+jardine-house exit=0
+{"task_id":"73a51eb5-1a88-49a0-ad5c-53d41eb2576e","type":"image_to_model","status":"success","credits_consumed":30,"output_dir":"tools/tripo/logs/buildings/jardine-house/tripo-out/hk-jardine-house-73a51eb5","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/buildings/jardine-house/tripo-out/hk-jardine-house-73a51eb5/model.glb","preview":"tools/tripo/logs/buildings/jardine-house/tripo-out/hk-jardine-house-73a51eb5/preview.png"}
+
+-rw-r--r-- 1 runner runner 2823980 Oct 16 22:56 assets/models/hk/jardine-house.glb
+{"balance":730,"frozen":0}

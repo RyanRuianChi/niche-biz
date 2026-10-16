@@ -1,0 +1,21 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/hk/buildings/central-pier.jpg
+model: v3.1-20260211[2m — default high-fidelity → v3.1[22m
+steps:
+  1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
+[2m     model="v3.1-20260211" texture=true pbr=true[22m
+[1m──────────────────────────────────[22m
+model: v3.1-20260211 (default high-fidelity → v3.1)
+task created f8a4cd4f-8238-4cea-9689-fa0a950009dc (@hk-central-pier)
+image_to_model · queued
+image_to_model · running 7% · f8a4cd4f
+image_to_model · running 21% · f8a4cd4f
+image_to_model · running 34% · f8a4cd4f
+image_to_model · running 52% · f8a4cd4f
+image_to_model · running 80% · f8a4cd4f
+image_to_model · running 99% · f8a4cd4f
+image_to_model · running 99% · f8a4cd4f
+image_to_model · success 100% · f8a4cd4f
+[32m✓[39m image_to_model · f8a4cd4f-8238-4cea-9689-fa0a950009dc · 30 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/buildings/central-pier/tripo-out/hk-central-pier-f8a4cd4f

@@ -1,0 +1,20 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/hk/buildings/ifc2.jpg
+model: v3.1-20260211[2m — default high-fidelity → v3.1[22m
+steps:
+  1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
+[2m     model="v3.1-20260211" texture=true pbr=true[22m
+[1m──────────────────────────────────[22m
+model: v3.1-20260211 (default high-fidelity → v3.1)
+task created 0769ad0a-eed9-48af-81c2-58d3b15fcaa8 (@hk-ifc2)
+image_to_model · queued
+image_to_model · running 7% · 0769ad0a
+image_to_model · running 19% · 0769ad0a
+image_to_model · running 31% · 0769ad0a
+image_to_model · running 48% · 0769ad0a
+image_to_model · running 74% · 0769ad0a
+image_to_model · running 99% · 0769ad0a
+image_to_model · success 100% · 0769ad0a
+[32m✓[39m image_to_model · 0769ad0a-eed9-48af-81c2-58d3b15fcaa8 · 30 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/buildings/ifc2/tripo-out/hk-ifc2-0769ad0a
