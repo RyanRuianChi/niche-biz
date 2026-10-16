@@ -164,172 +164,196 @@ let font = null;
 const fontReady = new Promise((res) => new FontLoader().load("assets/vendor/addons/fonts/helvetiker_bold.typeface.json", (f) => { font = f; res(); }, undefined, () => res()));
 
 // ------------------------------------------------------------------ areas
+// Daytime anime look from the reference paintings in assets/ref/*. The walk line is z in [-1.8, 2.4];
+// UPenn and CUHK sit in front of stitched paintings; Central uses Tripo models of its six landmarks.
 const BOUNDS = { x: 19, zMin: -1.8, zMax: 2.4 };
-const AREAS = [];
+const texLoader = new THREE.TextureLoader();
+const gltfLoader = new GLTFLoader();
+gltfLoader.setMeshoptDecoder(MeshoptDecoder);
+
+const backdrop = (g, url, width, bottom = -1, z = -44) => {
+  const mat = noLine(new THREE.MeshBasicMaterial({ color: "#ffffff", fog: false }));
+  const mesh = add(g, new THREE.PlaneGeometry(width, 1), mat, 0, 0, z);
+  texLoader.load(url, (tex) => {
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = 4;
+    mat.map = tex; mat.needsUpdate = true;
+    const h = width * tex.image.height / tex.image.width;
+    mesh.scale.y = h; mesh.position.y = bottom + h / 2;
+  });
+  return mesh;
+};
+// place a Tripo landmark: scaled to height h, base at (x, z), turned by ry
+const landmark = (g, name, x, z, h, ry = 0, fallback) => {
+  const holder = new THREE.Group(); holder.position.set(x, 0, z); holder.rotation.y = ry; g.add(holder);
+  gltfLoader.load(`assets/models/hk/${name}.glb`, (gltf) => {
+    const m = gltf.scene;
+    const b = new THREE.Box3().setFromObject(m);
+    const s = h / (b.max.y - b.min.y);
+    m.scale.setScalar(s);
+    const c = b.getCenter(new THREE.Vector3());
+    m.position.set(-c.x * s, -b.min.y * s, -c.z * s);
+    m.traverse((o) => { if (o.isMesh) { o.castShadow = o.receiveShadow = true; [].concat(o.material).forEach((mt) => (mt.userData.outlineParameters = { thickness: 0.0012, color: [0.08, 0.1, 0.16] })); } });
+    holder.add(m);
+  }, undefined, () => fallback && fallback(holder));
+  return holder;
+};
+const glassTower = (g, x, z, w, h, d, tint = "#6f93c9") => {
+  const tex = windowsTex(Math.max(3, Math.round(w)), Math.max(4, Math.round(h / 1.4)), tint, "#cfe3ff", "#4d6c9c", 0.35, Math.round(x * 7 + z));
+  const side = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.25, metalness: 0.35 });
+  const top = toon("#8aa2c8");
+  const m = box(g, w, h, d, [side, side, top, top, side, side], x, 0, z);
+  m.castShadow = true;
+  return m;
+};
+const lampDay = (p, x, z, globe = false) => {
+  const m = toon("#1d2028");
+  cyl(p, 0.06, 3.4, m, x, 0, z, 10);
+  cyl(p, 0.12, 0.3, m, x, 0, z, 10);
+  if (globe) ball(p, 0.2, noLine(glow("#fdf6e3")), x, 3.55, z);
+  else { box(p, 0.3, 0.42, 0.3, toon("#1d2028"), x, 3.35, z); box(p, 0.22, 0.3, 0.22, noLine(glow("#fff1c8")), x, 3.4, z); }
+};
+const bench = (p, x, z, ry = 0) => {
+  const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = ry; p.add(g);
+  const wood = toon("#6b4128"), iron = toon("#1d2028");
+  box(g, 1.6, 0.08, 0.45, wood, 0, 0.45, 0); box(g, 1.6, 0.4, 0.06, wood, 0, 0.55, -0.22);
+  for (const sx of [-0.7, 0.7]) box(g, 0.06, 0.45, 0.45, iron, sx, 0, 0);
+};
+const shade = (g, x, z, r) => {   // soft dappled tree shadow on the ground (the references are full of these)
+  const c = document.createElement("canvas"); c.width = c.height = 128;
+  const ctx = c.getContext("2d"); const gr = ctx.createRadialGradient(64, 64, 10, 64, 64, 64);
+  gr.addColorStop(0, "rgba(20,30,60,.35)"); gr.addColorStop(1, "rgba(20,30,60,0)"); ctx.fillStyle = gr; ctx.fillRect(0, 0, 128, 128);
+  const m = noLine(new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false }));
+  const p = add(g, new THREE.PlaneGeometry(r * 2, r * 2), m, x, 0.02, z); p.rotation.x = -Math.PI / 2;
+};
+const leafy = (g, x, z, h, crown, color = "#4f9a3f", seed = 1) => { tree(g, x, z, h, crown, color, "#5a3b22", seed); shade(g, x, z + 0.5, crown * 1.4); };
+const tiles = (a, b, size = 64, repeat = [20, 6]) => {
+  const c = document.createElement("canvas"); c.width = c.height = size;
+  const g = c.getContext("2d"); g.fillStyle = b; g.fillRect(0, 0, size, size); g.fillStyle = a; g.fillRect(1, 1, size - 2, size - 2);
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(...repeat); t.colorSpace = THREE.SRGBColorSpace;
+  return new THREE.MeshStandardMaterial({ map: t, roughness: 0.9 });
+};
+const ground = (g, mat, w, d, x, z) => { const m = box(g, w, 0.1, d, mat, x, -0.1, z); m.receiveShadow = true; return m; };
+const DAY = { sky: [[0, "#2f6fd6"], [0.55, "#6fa9ec"], [1, "#d9ecff"]], hemi: ["#cfe6ff", "#6f7d55", 1.5], sun: ["#fff0d8", 2.8, [-14, 22, 14]] };
 
 function areaCentral() {
   const g = new THREE.Group();
   const spots = [];
-  // street
-  box(g, 120, 0.1, 60, toon("#2b2830"), 0, -0.1, -20);
-  box(g, 60, 0.12, 7, toon("#4a4550"), 0, -0.1, 1.2);                // pavement
-  box(g, 60, 0.12, 0.25, toon("#d8d4cc"), 0, -0.08, -2.3);             // kerb
-  for (const z of [-5.5, -6.9, -9.2, -10.6]) box(g, 120, 0.02, 0.08, noLine(toon("#9a96a3")), 0, 0, z);
-  // Ding Ding double-decker tram (moves along the tracks)
+  // Victoria Peak hills behind the skyline
+  [[-80, 60, 34], [-25, 46, 46], [25, 60, 40], [85, 55, 30]].forEach(([x, s, h]) => ball(g, 1, toon("#3f7a45"), x, -6, -150, [s, h, 20]));
+  // landmarks (Tripo models from the reference sheet), arranged like the waterfront panorama
+  landmark(g, "bank-of-china", -16, -70, 92, 0.25, (h) => glassTower(h, 0, 0, 10, 92, 10, "#4d7cc4"));
+  landmark(g, "hsbc", 2, -46, 42, 0, (h) => glassTower(h, 0, 0, 16, 42, 12, "#9fb0c4"));
+  landmark(g, "jardine-house", 22, -60, 52, -0.2, (h) => glassTower(h, 0, 0, 10, 52, 10, "#d8dbe0"));
+  landmark(g, "ifc2", 40, -90, 120, 0, (h) => glassTower(h, 0, 0, 12, 120, 12, "#5f86c4"));
+  landmark(g, "court-of-final-appeal", -15, -22, 11, 0.15, (h) => box(h, 14, 9, 8, toon("#e8dcc4"), 0, 0, 0));
+  landmark(g, "central-pier", 18, -24, 9, -0.1, (h) => box(h, 14, 6, 6, toon("#4f8f6c"), 0, 0, 0));
+  // filler towers between landmarks
+  [[-38, -80, 8, 55], [-30, -100, 9, 70], [-6, -95, 8, 60], [12, -100, 9, 75], [30, -110, 8, 65], [55, -95, 9, 58], [-50, -70, 8, 40], [62, -75, 8, 48]]
+    .forEach(([x, z, w, h], i) => glassTower(g, x, z, w, h, w, i % 2 ? "#7d9bcc" : "#a7b4c6"));
+  // street: pavement (walk line), kerb, road with tram tracks, far pavement
+  ground(g, tiles("#c9c6c0", "#a9a6a0", 64, [40, 4]), 80, 7, 0, 0.6);
+  box(g, 80, 0.14, 0.3, toon("#dedad2"), 0, -0.1, -2.8);
+  ground(g, toon("#55565c"), 80, 12, 0, -9);
+  for (const z of [-6.2, -7.6, -10.4, -11.8]) box(g, 80, 0.02, 0.08, noLine(toon("#b8b8c0")), 0, 0, z);
+  for (let x = -38; x < 40; x += 2.4) box(g, 1.2, 0.02, 0.5, noLine(toon("#f2c94c")), x, 0, -3.6);   // yellow crossing
+  ground(g, tiles("#bdbab4", "#a3a09a", 64, [40, 8]), 80, 16, 0, -23);
+  // green Ding Ding tram running along the tracks
   const tram = new THREE.Group();
-  const green = toon("#0f8f4b");
-  box(tram, 9.6, 3.6, 2.4, green, 0, 0.35, 0);
-  box(tram, 9.4, 0.24, 2.3, toon("#ece7da"), 0, 3.95, 0);
-  const winM = noLine(new THREE.MeshBasicMaterial({ map: windowsTex(12, 2, "#0f8f4b", "#ffe9b0", "#ffe9b0", 1, 4) }));
-  add(tram, new THREE.PlaneGeometry(8.8, 2.4), winM, 0, 2.3, 1.22);
-  sign(tram, "DING DING · HONG KONG TRAMWAYS", 0, 1.05, 1.225, 8.4, 0.45, { vertical: false, w: 1024, h: 56, bg: "#e60012", fg: "#ffffff", font: "900 34px Inter, Arial, sans-serif" });
-  for (const x of [-3.4, 3.4]) { const w = cyl(tram, 0.36, 0.2, toon("#111"), x, 0, 1.2, 12); w.rotation.x = Math.PI / 2; w.position.y = 0.36; }
-  const pole = cyl(tram, 0.03, 1.8, toon("#222"), 0, 4.1, 0, 6); pole.rotation.z = 0.6;
-  tram.position.set(-30, 0, -6.2);
-  g.add(tram);
+  const green = toon("#1f6b45");
+  box(tram, 9.4, 3.7, 2.4, green, 0, 0.35, 0);
+  box(tram, 9.2, 0.25, 2.3, toon("#e9e4d6"), 0, 4.05, 0);
+  const winM = noLine(new THREE.MeshBasicMaterial({ map: windowsTex(10, 2, "#1f6b45", "#fff2c4", "#fff2c4", 1, 4) }));
+  add(tram, new THREE.PlaneGeometry(8.6, 2.5), winM, 0, 2.35, 1.22);
+  for (const x of [-3.3, 3.3]) { const w = cyl(tram, 0.36, 0.2, toon("#111"), x, 0, 1.2, 12); w.rotation.x = Math.PI / 2; w.position.y = 0.36; }
+  const pole = cyl(tram, 0.03, 1.9, toon("#222"), 0, 4.2, 0, 6); pole.rotation.z = 0.55;
+  tram.position.set(-30, 0, -7); g.add(tram);
   // red taxi
   const taxi = new THREE.Group();
-  box(taxi, 4.2, 0.9, 1.8, toon("#d81b1b"), 0, 0.32, 0);
-  box(taxi, 2.4, 0.7, 1.7, toon("#e8e3d6"), 0.2, 1.2, 0);
-  box(taxi, 0.6, 0.2, 0.3, noLine(glow("#fff4b0")), 0.2, 1.9, 0);
+  box(taxi, 4.2, 0.9, 1.8, toon("#cf2a2a"), 0, 0.32, 0); box(taxi, 2.4, 0.7, 1.7, toon("#e8e3d6"), 0.2, 1.2, 0);
   for (const x of [-1.4, 1.4]) for (const z of [-0.9, 0.9]) { const w = cyl(taxi, 0.34, 0.24, toon("#0e0e0e"), x, 0, z, 12); w.rotation.x = Math.PI / 2; w.position.y = 0.34; }
-  taxi.position.set(9, 0, -3.4);
-  g.add(taxi);
-  // street blocks with neon signs (close row)
-  const words = ["中環", "茶餐廳", "找換", "大押", "酒吧", "金行", "地產", "涼茶"];
-  const neon = ["#ff2a6d", "#05d9e8", "#ffe14d", "#ff6b35", "#7a5cff", "#3ee07a"];
-  for (let i = 0; i < 12; i++) {
-    const x = -27 + i * 4.9, h = 8 + ((i * 37) % 9), d = 5;
-    box(g, 4.6, h, d, facade(4.6, h, d, ["#3a2a3f", "#2d2a44", "#40302a", "#2a3a3f"][i % 4], "#ffcf7a", "#241a2c", 0.45, i + 3), x, 0, -17);
-    if (i % 2 === 0) {
-      const col = neon[i % neon.length];
-      const s = sign(g, words[i % words.length], x + 1.6, 4.5 + (i % 3), -14.4, 1.1, 3.2, { fg: col, border: col }, 0);
-      s.rotation.y = Math.PI / 2 - 0.3;
-    }
-  }
-  sign(g, "中環\nCENTRAL", 1, 6.5, -14.45, 4, 2.6, { vertical: false, w: 512, h: 340, bg: "#120610", fg: "#ffe14d", border: "#ff2a6d", font: "900 110px 'Noto Sans TC', 'PingFang TC', sans-serif" });
-  // far skyline: IFC 2, Bank of China, HSBC, The Center
-  const ifcM = facade(8, 150, 8, "#7b8cab", "#cfe6ff", "#5b6c8f", 0.6, 9);
-  [[0, 70, 9], [70, 40, 8], [110, 28, 7], [138, 14, 6]].forEach(([y, h, w]) => box(g, w, h, w, ifcM, -24, y, -95));
-  for (const sx of [-1, 1]) box(g, 1.2, 18, 1.2, toon("#a9b8d6"), -24 + sx * 2.6, 152, -95);
-  const bocM = toon("#5d7aa8");
-  [[0, 120], [1, 100], [2, 80]].forEach(([k, h]) => { const c = add(g, new THREE.CylinderGeometry(k === 2 ? 0.2 : 5, 6.5, h, 4), bocM, 26 + k * 2, h / 2, -110 + k * 2); c.rotation.y = Math.PI / 4; });
-  for (let y = 8; y < 100; y += 16) { const x1 = add(g, new THREE.BoxGeometry(0.4, 22, 0.3), noLine(glow("#e8f0ff")), 26, y + 8, -103.8); x1.rotation.z = 0.7; const x2 = x1.clone(); x2.rotation.z = -0.7; g.add(x2); }
-  box(g, 0.3, 30, 0.3, toon("#dfe7f5"), 30, 120, -106);
-  box(g, 14, 70, 9, facade(14, 70, 9, "#9aa4ad", "#fff1c9", "#6c757d", 0.5, 12), 4, 0, -80);
-  const ctr = box(g, 10, 110, 10, facade(10, 110, 10, "#2a1a3a", "#ffd27a", "#2c2048", 0.4, 15), 48, 0, -120);
-  ["#ff3b6b", "#ff9f1c", "#ffe14d", "#3ee07a", "#3bc8ff", "#7a5cff"].forEach((c, i) => box(g, 10.2, 1.2, 10.2, noLine(glow(c)), 48, 30 + i * 12, -120));
-  for (let i = 0; i < 26; i++) {
-    const h = 30 + ((i * 53) % 60), x = -80 + i * 7;
-    box(g, 6, h, 6, facade(6, h, 6, "#24163a", "#ffd27a", "#2c2048", 0.35, 20 + i), x, 0, -140 - (i % 3) * 12);
-  }
-  // near props
-  for (const x of [-12, 0, 12]) lamp(g, x, -2.6);
-  for (let x = -20; x <= 20; x += 2) box(g, 0.06, 1.0, 0.06, toon("#c9ccd2"), x, 0, -2.8);
-  box(g, 40, 0.06, 0.06, toon("#c9ccd2"), 0, 0.95, -2.8);
-  spots.push({ x: 6, z: -1, r: 3.2, key: "tram" }, { x: -12, z: -1, r: 3, key: "ifc" }, { x: 1, z: -1.2, r: 2.6, key: "neon" });
+  taxi.position.set(10, 0, -11); g.add(taxi);
+  // railings, street lamps, planters with trees (tram streetscape reference)
+  for (let x = -20; x <= 20; x += 1.6) cyl(g, 0.05, 1.0, toon("#1d2028"), x, 0, -2.6, 8);
+  box(g, 40, 0.06, 0.06, toon("#1d2028"), 0, 0.92, -2.6);
+  for (const x of [-15, -3, 9, 21]) lampDay(g, x, -2.4);
+  for (const x of [-26, -12, 4, 20]) { box(g, 2.2, 0.6, 1.4, toon("#b5b2ac"), x, 0, -17); leafy(g, x, -17, 3.4, 1.8, "#3f8a3a", 30 + x); }
+  // Statue Square cenotaph-like monument and bronze lions in front of HSBC
+  box(g, 1.4, 4.5, 1.4, toon("#d9d4c8"), -4, 0, -19);
+  for (const x of [-1.2, 5.2]) { box(g, 1.2, 0.8, 1.6, toon("#8f8a80"), x, 0, -16); ball(g, 0.5, toon("#5b4a35"), x, 1.2, -16, [0.9, 1, 1.3]); }
+  spots.push({ x: 6, z: -1, r: 3.2, key: "tram" }, { x: 14, z: -1, r: 3, key: "ifc" }, { x: -6, z: -1.2, r: 3, key: "neon" });
   return {
-    group: g, spots, sky: [[0, "#0b0518"], [0.5, "#3b0b4a"], [0.8, "#c2185b"], [1, "#ff5a3c"]],
-    fog: ["#3a1240", 40, 260], hemi: ["#7a5cff", "#2a1020", 1.1], sun: ["#ffb38a", 1.6, [-6, 10, 8]],
-    tick(dt, time) { tram.position.x = ((time * 3.2) % 90) - 45; },
+    group: g, spots, ...DAY, fog: ["#cfe4fb", 70, 260],
+    tick(dt, time) { tram.position.x = ((time * 3.2) % 90) - 45; taxi.position.x = 30 - ((time * 6) % 70); },
   };
 }
 
 function areaUPenn() {
   const g = new THREE.Group();
   const spots = [];
-  box(g, 140, 0.1, 80, toon("#6f9a3c"), 0, -0.1, -25);
-  // Locust Walk brick path with a herringbone-ish texture
+  backdrop(g, "assets/world/bg-upenn.jpg", 124, -1.5, -40);
+  ground(g, toon("#6aa84f"), 140, 40, 0, -20);
+  // Locust Walk red brick
   const bc = document.createElement("canvas"); bc.width = 64; bc.height = 32;
-  const bg = bc.getContext("2d"); bg.fillStyle = "#7a2f20"; bg.fillRect(0, 0, 64, 32);
-  bg.fillStyle = "#a8432e"; for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) bg.fillRect(x * 16 + (y % 2) * 8 + 1, y * 8 + 1, 14, 6);
-  const btex = new THREE.CanvasTexture(bc); btex.wrapS = btex.wrapT = THREE.RepeatWrapping; btex.repeat.set(30, 3); btex.colorSpace = THREE.SRGBColorSpace; btex.magFilter = THREE.NearestFilter;
-  box(g, 80, 0.12, 7, new THREE.MeshStandardMaterial({ map: btex, roughness: 0.9 }), 0, -0.1, 0.4);
-  // College Hall: green serpentine stone, gothic towers
-  const stone = facade(30, 16, 8, "#6f8a6a", "#f3e3b5", "#2e3b2d", 0.25, 31, false);
-  box(g, 30, 16, 8, stone, -6, 0, -26);
-  const roof = add(g, new THREE.CylinderGeometry(0.2, 18, 7, 4), toon("#3a3f4a"), -6, 19.5, -26, Math.PI / 4); roof.scale.z = 0.35;
-  for (const sx of [-1, 1]) {
-    box(g, 5, 24, 5, stone, -6 + sx * 10, 0, -21);
-    add(g, new THREE.ConeGeometry(3.4, 9, 8), toon("#3a3f4a"), -6 + sx * 10, 28.5, -21);
-  }
-  box(g, 3, 4.5, 0.3, toon("#2a1a12"), -6, 0, -21.9);
-  // Fisher Fine Arts Library (terracotta)
-  const terra = facade(16, 14, 9, "#b5523b", "#ffe2a8", "#4a1f16", 0.3, 33, false);
-  box(g, 16, 14, 9, terra, 20, 0, -24);
-  box(g, 4.5, 22, 4.5, terra, 13, 0, -19);
-  add(g, new THREE.CylinderGeometry(0.1, 3.4, 6, 4), toon("#5a2a1e"), 13, 25, -19, Math.PI / 4);
-  // flags
-  [[-14, "#011f5b"], [-10, "#990000"], [8, "#011f5b"], [12, "#990000"]].forEach(([x, c]) => {
-    cyl(g, 0.05, 7, toon("#d9d9d9"), x, 0, -6, 8);
-    sign(g, "PENN", x + 0.75, 6.1, -6, 1.4, 0.9, { vertical: false, w: 256, h: 160, bg: c, fg: "#ffffff", font: "900 72px Inter, Arial, sans-serif" });
-  });
-  // LOVE sculpture (Robert Indiana), the Split Button, Ben Franklin bench
-  const red = toon("#d0102b");
-  box(g, 2.6, 0.8, 1.6, toon("#9a9a9a"), -12, 0, -4.5);
+  const bg = bc.getContext("2d"); bg.fillStyle = "#7c3a2a"; bg.fillRect(0, 0, 64, 32);
+  bg.fillStyle = "#b25a43"; for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) bg.fillRect(x * 16 + (y % 2) * 8 + 1, y * 8 + 1, 14, 6);
+  const btex = new THREE.CanvasTexture(bc); btex.wrapS = btex.wrapT = THREE.RepeatWrapping; btex.repeat.set(40, 3); btex.colorSpace = THREE.SRGBColorSpace;
+  ground(g, new THREE.MeshStandardMaterial({ map: btex, roughness: 0.9 }), 80, 5.6, 0, 0.3);
+  box(g, 80, 0.12, 0.25, toon("#cfc6b6"), 0, -0.1, -2.6); box(g, 80, 0.12, 0.25, toon("#cfc6b6"), 0, -0.1, 3.2);
+  // LOVE (Robert Indiana) on a black plinth under a pink cherry tree
+  box(g, 3, 0.7, 1.8, toon("#2a2a2e"), -11, 0, -6);
+  const red = toon("#d4202c"), blue = toon("#2d4fa3"), grn = toon("#1f6a3a");
   fontReady.then(() => {
     if (!font) return;
-    const mk = (s, x, y, rz = 0) => { const geo = new TextGeometry(s, { font, size: 0.95, depth: 0.35, curveSegments: 4 }); const m = add(g, geo, red, x, y, -4.6); m.rotation.z = rz; return m; };
-    mk("L", -13.2, 1.95); mk("O", -12.25, 2.15, 0.35); mk("V", -13.2, 0.85); mk("E", -12.2, 0.85);
+    const mk = (s, x, y, rz, m) => { const geo = new TextGeometry(s, { font, size: 1.0, depth: 0.4, curveSegments: 4 }); const o = add(g, geo, [red, m], x, y, -6.2); o.rotation.z = rz; o.castShadow = true; return o; };
+    mk("L", -12.3, 1.95, 0, blue); mk("O", -11.35, 2.15, 0.38, grn); mk("V", -12.3, 0.75, 0, grn); mk("E", -11.3, 0.75, 0, blue);
   });
-  const btn = add(g, new THREE.CylinderGeometry(2.2, 2.2, 0.55, 40), toon("#f4f1e8"), 5, 1.2, -8);
-  btn.rotation.set(Math.PI / 2 - 0.35, 0, 0.25);
-  [[-0.6, -0.55], [0.6, -0.55], [-0.6, 0.55], [0.6, 0.55]].forEach(([a, b]) => { const h = add(btn, new THREE.CylinderGeometry(0.24, 0.24, 0.6, 16), toon("#6f9a3c"), a, 0, b); });
-  const bronze = toon("#7a5a32");
-  box(g, 2.4, 0.12, 0.7, bronze, 15, 0.45, -4); box(g, 2.4, 0.7, 0.1, bronze, 15, 0.5, -4.35);
-  for (const [x, y, z] of [[15.4, 0.9, -4]]) { ball(g, 0.34, bronze, x, y, z, [1, 1.3, 1]); ball(g, 0.2, bronze, x, y + 0.6, z); }
-  // autumn trees
-  const leaves = ["#d9822b", "#c4442a", "#e8b13a", "#b8541f"];
-  for (let i = 0; i < 18; i++) tree(g, -40 + i * 4.8, -12 - (i % 3) * 3, 4 + (i % 3), 2.2, leaves[i % 4], "#4a3020", 50 + i);
-  for (const x of [-16, 2, 18]) tree(g, x, -4.5, 4.2, 1.8, leaves[(x + 20) % 4], "#4a3020", 90 + x);
-  for (const x of [-8, 8]) lamp(g, x, -3, "#fff1b8", "#1b1b1b");
-  spots.push({ x: -12, z: -3, r: 3, key: "love" }, { x: 5, z: -5.5, r: 3.4, key: "button" }, { x: -6, z: -3.2, r: 2.6, key: "hall" });
-  return {
-    group: g, spots, sky: [[0, "#6e5aa8"], [0.45, "#f2826b"], [0.75, "#ffb36b"], [1, "#ffd08a"]],
-    fog: ["#f2b08a", 50, 220], hemi: ["#ffe0b0", "#5a7a3a", 1.4], sun: ["#ffd9a8", 2.2, [-10, 12, 6]],
-  };
+  leafy(g, -14, -8, 3.6, 2.4, "#f2a7c3", 7); leafy(g, -9, -9.5, 3.4, 2.2, "#f4b6cd", 8);
+  // Ben Franklin seated on a stone plinth
+  const bronze = toon("#4c4a44");
+  box(g, 2.4, 1.0, 2.0, toon("#b9b6ae"), 9, 0, -7);
+  box(g, 1.2, 1.0, 1.0, bronze, 9, 1.0, -7.1); ball(g, 0.42, bronze, 9, 2.4, -7, [1, 1.25, 0.9]); ball(g, 0.24, bronze, 9, 3.2, -6.95);
+  // black Victorian lamps, benches, green trees (summer, like the references)
+  for (const x of [-17, -6, 5, 16]) lampDay(g, x, -3.1);
+  bench(g, -2, -3.6); bench(g, 12, -3.6);
+  for (const [x, z] of [[-20, -7], [-4, -10], [2, -8], [15, -9], [20, -6]]) leafy(g, x, z, 4 + (x % 3), 2.4, "#4f9a3f", 50 + x);
+  spots.push({ x: -11, z: -2, r: 3.2, key: "love" }, { x: 9, z: -2.4, r: 3, key: "hall" }, { x: 0, z: -1.5, r: 2.4, key: "button" });
+  return { group: g, spots, ...DAY, fog: ["#dbeafc", 60, 220] };
 }
 
 function areaCUHK() {
   const g = new THREE.Group();
   const spots = [];
-  box(g, 160, 0.1, 90, toon("#79b85a"), 0, -0.1, -30);
-  box(g, 80, 0.12, 7, toon("#cfc4ae"), 0, -0.1, 0.4);
-  // Ma On Shan ridge + Tolo Harbour
-  box(g, 400, 0.2, 80, toon("#3da6d9"), 0, -0.4, -120);
-  [[-90, 60, 44], [-30, 50, 60], [10, 34, 78], [60, 60, 52], [120, 70, 40]].forEach(([x, s, h]) => ball(g, 1, toon("#5e8f5a"), x, -4, -190, [s, h, 18]));
-  [[-40, 30], [0, 34], [45, 28]].forEach(([x, s]) => ball(g, 1, toon("#6fb24f"), x, -6, -60, [s, 16, 14]));
-  // University Library (modernist concrete, fins)
-  const conc = facade(18, 12, 10, "#d8d2c4", "#bfe3ff", "#6b7f8c", 0.25, 41, false);
-  box(g, 18, 12, 10, conc, -14, 0, -30);
-  for (let y = 2; y < 12; y += 2.4) box(g, 18.6, 0.35, 0.6, toon("#efe9db"), -14, y, -24.8);
-  box(g, 12, 18, 10, facade(12, 18, 10, "#e3ddd0", "#bfe3ff", "#6b7f8c", 0.25, 44, false), 18, 0, -34);
-  // Gate of Wisdom (Ju Ming)
-  const rust = toon("#8b5e3c");
-  const l = box(g, 1.2, 5.2, 1.8, rust, -4, 0, -9); l.rotation.z = 0.12;
-  const r = box(g, 1.2, 5.2, 1.8, rust, -0.6, 0, -9); r.rotation.z = -0.12;
-  box(g, 4.8, 1.1, 1.9, rust, -2.3, 5.0, -9);
-  // Chinese pavilion
-  for (const dx of [-1.6, 1.6]) for (const dz of [-1.2, 1.2]) cyl(g, 0.15, 3, toon("#c0392b"), 12 + dx, 0, -10 + dz, 10);
-  add(g, new THREE.CylinderGeometry(0.2, 3.4, 1.8, 4), toon("#2f6d4a"), 12, 3.9, -10, Math.PI / 4);
-  box(g, 4.8, 0.25, 4, toon("#cfc6b4"), 12, 0, -10);
-  // University MTR station sign
-  sign(g, "大學\nUniversity", -14, 2.6, -5, 4.6, 1.5, { vertical: false, w: 640, h: 210, bg: "#1f8a4c", fg: "#ffffff", font: "800 74px 'Noto Sans TC', 'PingFang TC', Inter, sans-serif" });
-  for (const dx of [-2, 2]) cyl(g, 0.06, 1.9, toon("#3a3a3a"), -14 + dx, 0, -5.05, 8);
-  // CUHK purple & gold banners
-  for (const x of [-20, -8, 4, 16]) {
-    cyl(g, 0.05, 5.2, toon("#cfcfcf"), x, 0, -5.5, 8);
-    sign(g, "CUHK", x + 0.45, 4.0, -5.5, 0.8, 2, { vertical: false, w: 128, h: 320, bg: "#5b2c83", fg: "#d4a514", font: "900 48px Inter, Arial, sans-serif" });
-  }
-  // bauhinia (pink) + green trees
-  for (let i = 0; i < 16; i++) tree(g, -36 + i * 5, -16 - (i % 2) * 4, 4 + (i % 3), 2, i % 3 === 0 ? "#e85d9c" : "#3f8f3a", "#4a3020", 70 + i);
-  for (const x of [-18, 6]) tree(g, x, -4.2, 3.8, 1.6, "#e85d9c", "#4a3020", 99 + x);
-  for (const x of [-8, 14]) lamp(g, x, -3, "#ffffff", "#3b3b44");
-  spots.push({ x: -2.3, z: -6.5, r: 3, key: "gate" }, { x: -14, z: -3, r: 3, key: "station" }, { x: 12, z: -7.5, r: 3, key: "lib" });
-  return {
-    group: g, spots, sky: [[0, "#3a8fd1"], [0.6, "#9fdcf5"], [1, "#e6f7ff"]],
-    fog: ["#cfeefa", 60, 300], hemi: ["#ffffff", "#5a8a3a", 1.5], sun: ["#fff4dc", 2.4, [-8, 14, 10]],
-  };
+  backdrop(g, "assets/world/bg-cuhk.jpg", 150, -2, -42);
+  // plaza paving with the meander border from the University Mall
+  ground(g, tiles("#cfcac2", "#b3aea6", 64, [60, 20]), 160, 50, 0, -18);
+  const kc = document.createElement("canvas"); kc.width = 64; kc.height = 16; const kg = kc.getContext("2d");
+  kg.fillStyle = "#8f8a82"; kg.fillRect(0, 0, 64, 16); kg.strokeStyle = "#ece8e0"; kg.lineWidth = 3;
+  kg.beginPath(); kg.moveTo(0, 13); kg.lineTo(8, 13); kg.lineTo(8, 3); kg.lineTo(24, 3); kg.lineTo(24, 10); kg.lineTo(16, 10); kg.lineTo(16, 7); kg.moveTo(32, 13); kg.lineTo(40, 13); kg.lineTo(40, 3); kg.lineTo(56, 3); kg.lineTo(56, 10); kg.lineTo(48, 10); kg.lineTo(48, 7); kg.stroke();
+  const kt = new THREE.CanvasTexture(kc); kt.wrapS = THREE.RepeatWrapping; kt.repeat.set(40, 1); kt.colorSpace = THREE.SRGBColorSpace;
+  for (const z of [-2.8, 3.4]) { const s = box(g, 80, 0.02, 0.6, noLine(new THREE.MeshBasicMaterial({ map: kt })), 0, 0, z); s.receiveShadow = true; }
+  // Gate of Wisdom (Ju Ming) on a stepped stone platform
+  for (let i = 0; i < 3; i++) box(g, 7 - i * 1.4, 0.25, 5 - i * 1.0, toon("#d7c9ae"), -6, i * 0.25, -9);
+  const dark = toon("#2d2a2a");
+  const l = box(g, 1.3, 4.6, 1.8, dark, -7.6, 0.75, -9); l.rotation.z = 0.1; l.castShadow = true;
+  const r = box(g, 1.3, 4.6, 1.8, dark, -4.4, 0.75, -9); r.rotation.z = -0.1; r.castShadow = true;
+  box(g, 5.0, 1.3, 2.0, dark, -6, 5.0, -9).castShadow = true;
+  // reflecting pools with the pergola (University Mall)
+  const water = new THREE.MeshStandardMaterial({ color: "#3a9fb5", roughness: 0.1, metalness: 0.2 });
+  box(g, 7, 0.12, 3, water, 10, 0, -9); box(g, 7, 0.3, 0.3, toon("#c9c4bb"), 10, 0, -10.6); box(g, 7, 0.3, 0.3, toon("#c9c4bb"), 10, 0, -7.4);
+  for (let x = 7; x <= 13; x += 1.5) { box(g, 0.35, 3, 0.35, toon("#d9d5ce"), x, 0, -12); box(g, 0.35, 3, 0.35, toon("#d9d5ce"), x, 0, -14); }
+  for (let x = 7; x <= 13; x += 0.75) box(g, 0.2, 0.3, 2.4, toon("#d9d5ce"), x, 3, -13);
+  box(g, 6.6, 0.3, 0.3, toon("#d9d5ce"), 10, 3.2, -12); box(g, 6.6, 0.3, 0.3, toon("#d9d5ce"), 10, 3.2, -14);
+  // Pavilion of Harmony (red pillars, green tiled roof)
+  for (const dx of [-1.4, 1.4]) for (const dz of [-1.2, 1.2]) cyl(g, 0.14, 2.8, toon("#b8352a"), 20 + dx, 0, -10 + dz, 10);
+  add(g, new THREE.CylinderGeometry(0.15, 3.0, 1.5, 6), toon("#2f7a55"), 20, 3.5, -10);
+  box(g, 4.2, 0.3, 3.4, toon("#cfc6b4"), 20, 0, -10);
+  // globe lamps, planters, trees
+  for (const x of [-16, -4, 8, 18]) lampDay(g, x, -3.2, true);
+  for (const x of [-20, -12, 0, 14]) { box(g, 2.4, 0.5, 1.2, toon("#b9b4ab"), x, 0, -5.2); box(g, 2.2, 0.35, 1.0, toon("#4f8f3f"), x, 0.5, -5.2); }
+  for (const [x, z] of [[-24, -10], [-18, -14], [2, -15], [26, -12]]) leafy(g, x, z, 4.2, 2.2, "#3f8a3a", 80 + x);
+  spots.push({ x: -6, z: -2, r: 3.2, key: "gate" }, { x: 10, z: -2, r: 3, key: "station" }, { x: 20, z: -2, r: 3, key: "lib" });
+  return { group: g, spots, ...DAY, sky: [[0, "#2a6fd4"], [0.6, "#7fb4ee"], [1, "#e3f1ff"]], fog: ["#dcecfb", 60, 240] };
 }
 
 // ------------------------------------------------------------------ character
@@ -454,9 +478,14 @@ const pose = (phase, amount, time) => {
 
 // ------------------------------------------------------------------ area switching
 let area = null, areaIndex = 0;
+const sunOffset = new THREE.Vector3(-14, 22, 14);
 const sun = new THREE.DirectionalLight("#ffffff", 2);
 const hemi = new THREE.HemisphereLight("#ffffff", "#444444", 1);
-scene.add(sun, hemi);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -16, right: 16, top: 16, bottom: -16, near: 1, far: 80 });
+sun.shadow.bias = -0.0005;
+scene.add(sun, hemi, sun.target);
 const builders = [areaCentral, areaUPenn, areaCUHK];
 const built = [];
 const titleCard = root.querySelector(".world__card");
@@ -470,7 +499,8 @@ function setArea(i, fromEdge = 0) {
   scene.background = skyTex(area.sky);
   scene.fog = new THREE.Fog(...area.fog);
   hemi.color.set(area.hemi[0]); hemi.groundColor.set(area.hemi[1]); hemi.intensity = area.hemi[2];
-  sun.color.set(area.sun[0]); sun.intensity = area.sun[1]; sun.position.set(...area.sun[2]);
+  sun.color.set(area.sun[0]); sun.intensity = area.sun[1];
+  sunOffset.set(...area.sun[2]);
   hero.position.set(fromEdge ? -fromEdge * (BOUNDS.x - 1) : 0, 0, 0.6);
   target = null;
   tabs.forEach((b, k) => b.setAttribute("aria-pressed", String(k === areaIndex)));
@@ -568,6 +598,7 @@ function frame() {
   pose(phase, walkAmt, time);
   if (vrm) vrm.update(dt);
   area.tick?.(dt, time);
+  sun.position.copy(hero.position).add(sunOffset); sun.target.position.copy(hero.position);
   // hotspots
   showSpot(area.spots.find((s) => Math.hypot(hero.position.x - s.x, hero.position.z - s.z) < s.r) || null);
   // Persona-style follow camera (3/4, slightly above)
