@@ -1,0 +1,76 @@
+{"balance":730,"frozen":0}
+balance=730
+make exit=0
+{"task_id":"9efc33d0-dbde-482b-8416-e717e253a347","type":"multiview_to_model","status":"success","credits_consumed":60,"output_dir":"tools/tripo/logs/avatar2/model/tripo-out/rc-v2-9efc33d0","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/avatar2/model/tripo-out/rc-v2-9efc33d0/model.glb","preview":"tools/tripo/logs/avatar2/model/tripo-out/rc-v2-9efc33d0/preview.png"}
+  · geometry detailed (Ultra): extra HD credit
+[1m──────────────────────────────────[22m
+model: v3.1-20260211 (explicit --model)
+task created 9efc33d0-dbde-482b-8416-e717e253a347 (@rc-v2)
+multiview_to_model · queued
+multiview_to_model · running 5% · 9efc33d0
+multiview_to_model · running 13% · 9efc33d0
+multiview_to_model · running 21% · 9efc33d0
+multiview_to_model · running 31% · 9efc33d0
+multiview_to_model · running 47% · 9efc33d0
+multiview_to_model · running 68% · 9efc33d0
+multiview_to_model · success 100% · 9efc33d0
+[32m✓[39m multiview_to_model · 9efc33d0-dbde-482b-8416-e717e253a347 · 60 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/avatar2/model/tripo-out/rc-v2-9efc33d0
+rig exit=0
+{"task_id":"2ddcc235-7a33-471a-8261-96bb8218c6ba","type":"animate_rig","status":"success","credits_consumed":25,"output_dir":"tools/tripo/logs/avatar2/rig/tripo-out/rc-v2-rig-2ddcc235","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/avatar2/rig/tripo-out/rc-v2-rig-2ddcc235/model.glb","preview":"tools/tripo/logs/avatar2/rig/tripo-out/rc-v2-rig-2ddcc235/preview.png"}
+task created 2ddcc235-7a33-471a-8261-96bb8218c6ba (@rc-v2-rig)
+animate_rig · queued
+animate_rig · running 99% · 2ddcc235
+animate_rig · running 99% · 2ddcc235
+animate_rig · running 99% · 2ddcc235
+animate_rig · running 99% · 2ddcc235
+animate_rig · running 99% · 2ddcc235
+animate_rig · success 100% · 2ddcc235
+[32m✓[39m animate_rig · 2ddcc235-7a33-471a-8261-96bb8218c6ba · 25 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/avatar2/rig/tripo-out/rc-v2-rig-2ddcc235
+{"balance":645,"frozen":0}
+tools/tripo/logs/avatar2/make.json 410
+tools/tripo/logs/avatar2/rig/tripo-out/rc-v2-rig-2ddcc235/preview.png 109359
+tools/tripo/logs/avatar2/rig/tripo-out/rc-v2-rig-2ddcc235/task.json 528
+tools/tripo/logs/avatar2/rig/tripo-out/rc-v2-rig-2ddcc235/model.glb 82624136
+tools/tripo/logs/avatar2/rig/tripo-out/rc-v2-rig-2ddcc235/rendered_image.webp 109359
+tools/tripo/logs/avatar2/rig.json 409
+tools/tripo/logs/avatar2/balance-after.json 27
+tools/tripo/logs/avatar2/model/tripo-out/rc-v2-9efc33d0/preview.png 109375
+tools/tripo/logs/avatar2/model/tripo-out/rc-v2-9efc33d0/task.json 1180
+tools/tripo/logs/avatar2/model/tripo-out/rc-v2-9efc33d0/model.glb 62841868
+tools/tripo/logs/avatar2/model/tripo-out/rc-v2-9efc33d0/rendered_image.webp 109375
+tools/tripo/logs/avatar2/balance-before.json 27
+tools/tripo/logs/avatar2/make.err 1326
+tools/tripo/logs/avatar2/rig.err 516
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+[33m❯[39m dedup
+[32m✔[39m dedup               [2m 3ms[0m
+[33m❯[39m instance
+[32m✔[39m instance            [2m 1ms[0m
+[33m❯[39m palette
+[32m✔[39m palette             [2m 1ms[0m
+[33m❯[39m flatten
+[32m✔[39m flatten             [2m 2ms[0m
+[33m❯[39m join
+[32m✔[39m join                [2m 1ms[0m
+[33m❯[39m weld
+[32m✔[39m weld                [2m 1,254ms[0m
+[33m❯[39m simplify
+[32m✔[39m simplify            [2m 1,920ms[0m
+[33m❯[39m resample
+[32m✔[39m resample            [2m 0ms[0m
+[33m❯[39m prune
+[32m✔[39m prune               [2m 239ms[0m
+[33m❯[39m sparse
+[32m✔[39m sparse              [2m 128ms[0m
+[33m❯[39m textureCompress
+[32m✔[39m textureCompress     [2m 729ms[0m
+[33m❯[39m meshopt
+[32m✔[39m meshopt             [2m 1,856ms[0m
+
+info: model.glb (82.62 MB) → avatar-v2.glb (4.76 MB)
+-rw-r--r-- 1 runner runner 4764184 Oct 16 23:32 assets/models/avatar-v2.glb
