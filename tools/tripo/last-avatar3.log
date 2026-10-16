@@ -1,0 +1,20 @@
+{"balance":645,"frozen":0}
+prep 1 exit=2
+{"error":"One or more parameters are invalid (check the docs) (invalid model for image-to-image: gemini-3-pro; allowed: banana, banana2, banana_pro, chat_image_1, chat_image_1.5, chat_image_2, chat_image_2.5_flare, chat_image_2.5_sunburst, seedream_v5)","exit_code":2,"api_code":1004,"request_id":"59d18f55-897c-4e19-8f19-31cadbfdfafc","http_status":400,"suggestion":"Refer to the API documentation for parameter requirements"}
+[31m✗ One or more parameters are invalid (check the docs) (invalid model for image-to-image: gemini-3-pro; allowed: banana, banana2, banana_pro, chat_image_1, chat_image_1.5, chat_image_2, chat_image_2.5_flare, chat_image_2.5_sunburst, seedream_v5)[39m
+[2m  → Refer to the API documentation for parameter requirements
+[22m[2m  request_id: 59d18f55-897c-4e19-8f19-31cadbfdfafc
+[22mfind: ‘tools/tripo/logs/avatar3/prep-1’: No such file or directory
+prep 2 exit=2
+{"error":"One or more parameters are invalid (check the docs) (invalid model for image-to-image: gemini-3-pro; allowed: banana, banana2, banana_pro, chat_image_1, chat_image_1.5, chat_image_2, chat_image_2.5_flare, chat_image_2.5_sunburst, seedream_v5)","exit_code":2,"api_code":1004,"request_id":"2ce7cc02-3f01-4804-a434-57a9b85f5d9f","http_status":400,"suggestion":"Refer to the API documentation for parameter requirements"}
+[31m✗ One or more parameters are invalid (check the docs) (invalid model for image-to-image: gemini-3-pro; allowed: banana, banana2, banana_pro, chat_image_1, chat_image_1.5, chat_image_2, chat_image_2.5_flare, chat_image_2.5_sunburst, seedream_v5)[39m
+[2m  → Refer to the API documentation for parameter requirements
+[22m[2m  request_id: 2ce7cc02-3f01-4804-a434-57a9b85f5d9f
+[22mfind: ‘tools/tripo/logs/avatar3/prep-2’: No such file or directory
+{"balance":645,"frozen":0}
+tools/tripo/logs/avatar3/balance-prep-before.json 27
+tools/tripo/logs/avatar3/prep-2.err 390
+tools/tripo/logs/avatar3/prep-2.json 428
+tools/tripo/logs/avatar3/prep-1.json 428
+tools/tripo/logs/avatar3/prep-1.err 390
+tools/tripo/logs/avatar3/balance-prep-after.json 27
