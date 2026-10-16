@@ -1,5 +1,6 @@
 // Mr.RC walk-around: a Persona-style cel-shaded 3D diorama (three.js).
-// Walk through Hong Kong Central, UPenn and CUHK. Character = assets/me.vrm (VRoid export).
+// Walk through Hong Kong Central, UPenn and CUHK. Character = assets/models/avatar.json (rigged GLB
+// generated with Tripo from the character sheets), falling back to assets/me.vrm (VRoid).
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OutlineEffect } from "three/addons/effects/OutlineEffect.js";
@@ -10,10 +11,13 @@ import { VRMLoaderPlugin, VRMUtils } from "@pixiv/three-vrm";
 const root = document.getElementById("world");
 const params = new URLSearchParams(location.search);
 const VRM_URL = params.get("vrm") || "assets/me.vrm";
+const AVATAR_URL = params.get("avatar") || "assets/models/avatar.json";
 
 // Only show once the real avatar exists (or when previewing with ?scene=preview).
-const hasVRM = await fetch(VRM_URL, { method: "HEAD" }).then((r) => r.ok).catch(() => false);
-if (!hasVRM && params.get("scene") !== "preview") await new Promise(() => {});   // stay hidden until the avatar exists
+const exists = (u) => fetch(u, { method: "HEAD" }).then((r) => r.ok).catch(() => false);
+const avatarManifest = await fetch(AVATAR_URL).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+const hasVRM = !avatarManifest && (await exists(VRM_URL));
+if (!avatarManifest && !hasVRM && params.get("scene") !== "preview") await new Promise(() => {});   // stay hidden until the avatar exists
 root.hidden = false;
 
 // ------------------------------------------------------------------ text (5 languages)
@@ -48,7 +52,11 @@ const stage = root.querySelector(".world__stage");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
-const effect = new OutlineEffect(renderer, { defaultThickness: 0.0035, defaultColor: [0.04, 0.02, 0.05] });
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const effect = new OutlineEffect(renderer, { defaultThickness: 0.0022, defaultColor: [0.04, 0.02, 0.05] });
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(32, 16 / 9, 0.1, 600);
 const clock = new THREE.Clock();
@@ -64,7 +72,7 @@ const ramp = (() => {
 const matCache = new Map();
 const toon = (color, opts = {}) => {
   const key = color + JSON.stringify(opts);
-  if (!matCache.has(key)) matCache.set(key, new THREE.MeshToonMaterial({ color, gradientMap: ramp, ...opts }));
+  if (!matCache.has(key)) matCache.set(key, new THREE.MeshStandardMaterial({ color, roughness: 0.78, metalness: 0.02, ...opts }));
   return matCache.get(key);
 };
 const glow = (color) => new THREE.MeshBasicMaterial({ color });
@@ -100,7 +108,7 @@ const windowsTex = (cols, rows, wall, lit, dark, ratio = 0.5, seed = 1) => {
 };
 const facade = (w, h, d, wall, lit, dark, ratio, seed, night = true) => {
   const tex = windowsTex(Math.max(2, Math.round(w * 1.2)), Math.max(2, Math.round(h / 1.6)), wall, lit, dark, ratio, seed);
-  const side = night ? new THREE.MeshBasicMaterial({ map: tex }) : new THREE.MeshToonMaterial({ map: tex, gradientMap: ramp });
+  const side = night ? new THREE.MeshBasicMaterial({ map: tex }) : new THREE.MeshStandardMaterial({ map: tex, roughness: 0.8 });
   const top = toon(wall);
   return [side, side, top, top, side, side];
 };
@@ -234,7 +242,7 @@ function areaUPenn() {
   const bg = bc.getContext("2d"); bg.fillStyle = "#7a2f20"; bg.fillRect(0, 0, 64, 32);
   bg.fillStyle = "#a8432e"; for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) bg.fillRect(x * 16 + (y % 2) * 8 + 1, y * 8 + 1, 14, 6);
   const btex = new THREE.CanvasTexture(bc); btex.wrapS = btex.wrapT = THREE.RepeatWrapping; btex.repeat.set(30, 3); btex.colorSpace = THREE.SRGBColorSpace; btex.magFilter = THREE.NearestFilter;
-  box(g, 80, 0.12, 7, new THREE.MeshToonMaterial({ map: btex, gradientMap: ramp }), 0, -0.1, 0.4);
+  box(g, 80, 0.12, 7, new THREE.MeshStandardMaterial({ map: btex, roughness: 0.9 }), 0, -0.1, 0.4);
   // College Hall: green serpentine stone, gothic towers
   const stone = facade(30, 16, 8, "#6f8a6a", "#f3e3b5", "#2e3b2d", 0.25, 31, false);
   box(g, 30, 16, 8, stone, -6, 0, -26);
