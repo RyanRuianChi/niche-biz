@@ -1,7 +1,7 @@
 name: tripo-avatar
 on:
   push:
-    paths: [".github/workflows/tripo.yml", "tools/tripo/generate.sh", "tools/tripo/RUN"]
+    paths: ["tools/tripo/RUN_ANIM"]
 permissions:
   contents: write
 jobs:
@@ -13,10 +13,10 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: npm install -g tripo-cli@0.7.0
-      - name: Generate avatar
+      - name: Animate avatar
         env:
           TRIPO_API_KEY: ${{ secrets.TRIPO_API_KEY }}
-        run: bash tools/tripo/generate.sh "$(cat tools/tripo/RUN)" 2>&1 | tee tools/tripo/last-run.log
+        run: bash tools/tripo/anim.sh "$(cat tools/tripo/RUN_ANIM)" 2>&1 | tee tools/tripo/last-anim.log
       - name: Commit results
         if: always()
         run: |
