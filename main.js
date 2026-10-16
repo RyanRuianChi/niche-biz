@@ -47,28 +47,39 @@
     b.setAttribute("aria-hidden", "true");
     img.replaceWith(b);
   };
+  // Each logo tries, in order: the site's own apple-touch-icon (official, high-res),
+  // the org's X avatar (data-x), then Google's favicon service. Google answers
+  // unknown sites with a 16px globe, so tiny results count as a miss.
   const loadLogos = (root) => {
-    root.querySelectorAll("img.logo:not([src])").forEach((img) => {
+    root.querySelectorAll("img.logo:not([data-loading])").forEach((img) => {
       const domain = img.dataset.domain;
       const label = img.dataset.mono || (domain || "?").slice(0, 2).toUpperCase();
-      if (!domain) return mono(img, label);
+      const srcs = [];
+      if (domain) srcs.push(`https://${domain}/apple-touch-icon.png`);
+      if (img.dataset.x) srcs.push(`https://unavatar.io/x/${img.dataset.x}?fallback=false`);
+      if (domain) srcs.push(`https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(domain)}`);
+      if (!srcs.length) return mono(img, label);
+      img.dataset.loading = "1";
       img.decoding = "async";
       img.referrerPolicy = "no-referrer";
-      img.addEventListener("error", () => mono(img, label), { once: true });
-      img.src = "https://www.google.com/s2/favicons?sz=128&domain=" + encodeURIComponent(domain);
+      let i = 0;
+      const next = () => (i < srcs.length ? (img.src = srcs[i++]) : mono(img, label));
+      img.addEventListener("error", next);
+      img.addEventListener("load", () => { if (img.naturalWidth < 32) next(); });
+      next();
     });
   };
 
   // ---------- Bio chips (interpolated into translated bio) ----------
   const chips = {
-    insiders: ["https://insiders.bot", "insiders.bot", "insiders.bot"],
+    insiders: ["https://insiders.bot", "www.insiders.bot", "insiders.bot"],
     city: ["https://cityprotocol.co", "cityprotocol.co", "City Protocol"],
-    cuhk: ["https://www.cuhk.edu.hk", "cuhk.edu.hk", "CUHK"],
-    wharton: ["https://www.wharton.upenn.edu", "upenn.edu", "Wharton"],
+    cuhk: ["https://www.cuhk.edu.hk", "www.cuhk.edu.hk", "CUHK"],
+    wharton: ["https://www.wharton.upenn.edu", "wharton.upenn.edu", "Wharton"],
     edhec: ["https://www.edhec.edu", "edhec.edu", "EDHEC"],
     polymarket: ["https://polymarket.com", "polymarket.com", "Polymarket"],
-    evg: ["", "", "EVG Ventures", "EVG"],
-    pennbc: ["", "upenn.edu", "Penn Blockchain"],
+    evg: ["https://evg.co", "evg.co", "EVG Ventures"],
+    pennbc: ["https://pennblockchain.com", "pennblockchain.com", "Penn Blockchain"],
   };
   // Inside an existing link (e.g. confidant cards) chips render as spans.
   const chipHTML = (k, inLink) => {
