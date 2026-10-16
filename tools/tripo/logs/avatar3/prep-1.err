@@ -1,4 +1,10 @@
-[31m✗ One or more parameters are invalid (check the docs) (invalid model for image-to-image: gemini-3-pro; allowed: banana, banana2, banana_pro, chat_image_1, chat_image_1.5, chat_image_2, chat_image_2.5_flare, chat_image_2.5_sunburst, seedream_v5)[39m
-[2m  → Refer to the API documentation for parameter requirements
-[22m[2m  request_id: 59d18f55-897c-4e19-8f19-31cadbfdfafc
-[22m
+task created 0ea1e76c-7c05-40e8-9b96-09a8e2b01230 (@assets-ref-white-hq-front-face-r)
+generate_image · queued
+generate_image · running · 0ea1e76c
+generate_image · running · 0ea1e76c
+generate_image · running · 0ea1e76c
+generate_image · running · 0ea1e76c
+generate_image · success 100% · 0ea1e76c
+[32m✓[39m generate_image · 0ea1e76c-7c05-40e8-9b96-09a8e2b01230 · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c

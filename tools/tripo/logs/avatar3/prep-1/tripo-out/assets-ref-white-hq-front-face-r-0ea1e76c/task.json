@@ -1,0 +1,19 @@
+{
+  "task_id": "0ea1e76c-7c05-40e8-9b96-09a8e2b01230",
+  "type": "image_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "The image shows a full-body character turnaround view (left) and a close-up portrait of the same young man (right). Output ONLY the full-body character from the left: identical A-pose facing the camera, identical outfit (white leather biker jacket, white ribbed turtleneck, pleated charcoal trousers, grey and white sneakers, silver watch), identical colours, proportions and framing, plain light grey background. Redraw his face and hair in sharp high detail so they match the close-up portrait exactly: same eyes, eyebrows, nose, lips, jaw line and wavy dark brown hair with a centre part. Clean semi-realistic game-art style, even studio lighting, no text, square image.",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-16T23:52:05.243746Z",
+  "completed_at": "2026-10-16T23:52:49.312452Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}
