@@ -35,8 +35,10 @@ window.SITE = {
     mit:        { name: "MIT",             href: "https://www.mit.edu",            x: "MIT",            domain: "www.mit.edu",           mono: "MIT" },
     malvern:    { name: "Malvern College Hong Kong", href: "https://malverncollege.org.hk", domain: "malverncollege.org.hk", mono: "MC" },
     artstation: { name: "ArtStation",      href: "https://www.artstation.com",                                                          mono: "AS" },
-    polygon:    { name: "Polygon",         href: "https://polygon.technology",                                                          mono: "PG" },
     bag:        { name: "Blockchain Academy Group", href: "",                                                                       mono: "BA" },
+    aiesec:     { name: "AIESEC Hong Kong", href: "https://aiesec.org.hk",       x: "AIESEC",         domain: "aiesec.org",            mono: "AI" },
+    hutech:     { name: "HUTECH University", href: "https://www.hutech.edu.vn",                       domain: "www.hutech.edu.vn",     mono: "HU" },
+    tec:        { name: "TEC FTU",          href: "",                                                                                   mono: "TEC" },
     yu:         { name: "YU CHALLENGE",    href: "",                                                                                    mono: "YU" },
     bilibili:   { name: "Bilibili",        href: "https://www.bilibili.com",       domain: "www.bilibili.com",                          mono: "B" },
   },
@@ -53,10 +55,11 @@ window.SITE = {
 
 window.I18N = {
   en: {
+    "v.hutech.t": "Speaker", "v.hutech.d": "Lecturer at Polygon Blockchain 101", "v.aiesec.t": "Speaker", "v.tec.t": "Professional Speaker", "v.cuhk.t": "Guest Lecturer",
     "yr.now": "Present",
-    "nav.vol": "Volunteering", "v.bag.t": "Event Staff", "v.bag.d": "Feb – May 2024",
-    "v.yu.t": "Head of Marketing", "v.yu.d": "Feb – Apr 2024", "v.poly.t": "Lecturer",
-    "v.poly.d": "Polygon Blockchain 101", "nav.ach": "Achievements", "nav.art": "Skill Scrolls",
+    "nav.vol": "Volunteering", "v.bag.t": "Event Staff", 
+    "v.yu.t": "Head of Marketing", 
+    "nav.ach": "Achievements", "nav.art": "Skill Scrolls",
     "art.sub": "Articles on prediction markets, quant trading and Web3 strategy.", "a.inet": "Young Leadership Award", "a.caseit": "2nd Place",
     "a.ow": "Case Competition Finalist", "a.cbs": "Top 2.2%", "a.bbg": "Top 2.9%",
     "a.hsbc": "Semi-Finalist (2023 & 2024)", "a.hkstp": "Semi-Finalist", "a.cuhk": "Full Scholarship · Honors Entry",
@@ -100,10 +103,11 @@ window.I18N = {
   },
 
   "zh-Hant": {
+    "v.hutech.t": "講者", "v.hutech.d": "Polygon Blockchain 101 講師", "v.aiesec.t": "講者", "v.tec.t": "專業講者", "v.cuhk.t": "客席講師",
     "yr.now": "至今",
-    "nav.vol": "義工經歷", "v.bag.t": "活動工作人員", "v.bag.d": "2024 年 2 月 – 5 月",
-    "v.yu.t": "市場推廣主管", "v.yu.d": "2024 年 2 月 – 4 月", "v.poly.t": "講師",
-    "v.poly.d": "Polygon Blockchain 101", "nav.ach": "成就", "nav.art": "技能卷軸",
+    "nav.vol": "義工經歷", "v.bag.t": "活動工作人員", 
+    "v.yu.t": "市場推廣主管", 
+    "nav.ach": "成就", "nav.art": "技能卷軸",
     "art.sub": "關於預測市場、量化交易與 Web3 策略的文章。", "a.inet": "青年領袖獎", "a.caseit": "亞軍",
     "a.ow": "案例比賽決賽入圍", "a.cbs": "前 2.2%", "a.bbg": "前 2.9%",
     "a.hsbc": "準決賽（2023 及 2024）", "a.hkstp": "準決賽", "a.cuhk": "全額獎學金 · 榮譽入學",
@@ -147,10 +151,11 @@ window.I18N = {
   },
 
   ja: {
+    "v.hutech.t": "スピーカー", "v.hutech.d": "Polygon Blockchain 101 講師", "v.aiesec.t": "スピーカー", "v.tec.t": "プロフェッショナル・スピーカー", "v.cuhk.t": "ゲスト講師",
     "yr.now": "現在",
-    "nav.vol": "ボランティア", "v.bag.t": "イベントスタッフ", "v.bag.d": "2024年2月 – 5月",
-    "v.yu.t": "マーケティング責任者", "v.yu.d": "2024年2月 – 4月", "v.poly.t": "講師",
-    "v.poly.d": "Polygon Blockchain 101", "nav.ach": "実績", "nav.art": "スキルの書",
+    "nav.vol": "ボランティア", "v.bag.t": "イベントスタッフ", 
+    "v.yu.t": "マーケティング責任者", 
+    "nav.ach": "実績", "nav.art": "スキルの書",
     "art.sub": "予測市場、クオンツ取引、Web3戦略についての記事。", "a.inet": "ヤングリーダーシップ賞", "a.caseit": "準優勝",
     "a.ow": "ケースコンペ ファイナリスト", "a.cbs": "上位 2.2%", "a.bbg": "上位 2.9%",
     "a.hsbc": "準決勝進出（2023・2024）", "a.hkstp": "準決勝進出", "a.cuhk": "全額奨学金 · 優等入学",
@@ -194,10 +199,11 @@ window.I18N = {
   },
 
   ko: {
+    "v.hutech.t": "연사", "v.hutech.d": "Polygon Blockchain 101 강사", "v.aiesec.t": "연사", "v.tec.t": "전문 연사", "v.cuhk.t": "객원 강사",
     "yr.now": "현재",
-    "nav.vol": "봉사 활동", "v.bag.t": "이벤트 스태프", "v.bag.d": "2024년 2월 – 5월",
-    "v.yu.t": "마케팅 총괄", "v.yu.d": "2024년 2월 – 4월", "v.poly.t": "강사",
-    "v.poly.d": "Polygon Blockchain 101", "nav.ach": "업적", "nav.art": "스킬 스크롤",
+    "nav.vol": "봉사 활동", "v.bag.t": "이벤트 스태프", 
+    "v.yu.t": "마케팅 총괄", 
+    "nav.ach": "업적", "nav.art": "스킬 스크롤",
     "art.sub": "예측 시장, 퀀트 트레이딩, Web3 전략에 관한 글.", "a.inet": "청년 리더십상", "a.caseit": "준우승",
     "a.ow": "케이스 대회 결선 진출", "a.cbs": "상위 2.2%", "a.bbg": "상위 2.9%",
     "a.hsbc": "준결승 진출 (2023·2024)", "a.hkstp": "준결승 진출", "a.cuhk": "전액 장학금 · 우등 입학",
