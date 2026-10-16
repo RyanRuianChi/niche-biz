@@ -1,0 +1,35 @@
+[1m── Plan ──────────────────────────[22m
+input: front.png right.png back.png
+scenario: anim (Character animation)
+model: v3.1-20260211[2m — explicit --model[22m
+steps:
+  1. multiview-to-model  [2mPOST /v3/generation/multiview-to-model[22m — generate a 3D model from multiple views
+[2m     model="v3.1-20260211" texture=true pbr=true texture_quality="detailed"[22m
+  2. rig  [2mPOST /v3/animations/rig[22m — auto-rig a skeleton
+deliverables: GLB, FBX
+cost impact:
+  · texture_quality detailed: higher price tier
+[1m──────────────────────────────────[22m
+[33m! --then overrides the default anim processing chain[39m
+model: v3.1-20260211 (explicit --model)
+task created bf2dccea-eccd-4191-968c-a99ef1bd8e96 (@rc-white)
+multiview_to_model · queued
+multiview_to_model · running 3% · bf2dccea
+multiview_to_model · running 8% · bf2dccea
+multiview_to_model · running 13% · bf2dccea
+multiview_to_model · running 20% · bf2dccea
+multiview_to_model · running 30% · bf2dccea
+multiview_to_model · running 44% · bf2dccea
+multiview_to_model · running 57% · bf2dccea
+multiview_to_model · success 100% · bf2dccea
+[32m✓[39m multiview_to_model · bf2dccea-eccd-4191-968c-a99ef1bd8e96 · 40 credits
+task created e853dc9e-5508-4574-89d5-4a7e6f535a4d (@rc-white-rig)
+animate_rig · queued
+animate_rig · running 22% · e853dc9e
+animate_rig · running 69% · e853dc9e
+animate_rig · running 99% · e853dc9e
+animate_rig · running 99% · e853dc9e
+animate_rig · success 100% · e853dc9e
+[32m✓[39m animate_rig · e853dc9e-5508-4574-89d5-4a7e6f535a4d · 25 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to ../../../tools/tripo/logs/white/model/tripo-out/rc-white-rig-e853dc9e
