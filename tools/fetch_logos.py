@@ -1,16 +1,13 @@
 """One-off: download logo candidates into logo-candidates/ (run on CI)."""
 import os, re, urllib.request, urllib.parse
 ORGS = {
-  "inet2":     ("Internet2Conf",   "internet2conf.com"),
-  "caseit":    ("CaseITcomp",      "caseit.org"),
-  "oliverwyman": ("OliverWyman",   "www.oliverwyman.com"),
-  "cbscase":   ("CBSCaseComp",     "casecompetition.com"),
-  "bloomberg": ("Bloomberg",       "www.bloomberg.com"),
-  "hsbc":      ("HSBC",            "www.hsbc.com"),
-  "hkstp":     ("HKSTP",           "www.hkstp.org"),
-  "businessweek": ("BW",           "www.bloomberg.com/businessweek"),
-  "solana":    ("solana",          "solana.com"),
-  "superteam": ("SuperteamDAO",    "superteam.fun"),
+  "htx":       ("HTX_Ventures",    "www.htx.com"),
+  "dwf":       ("DWFLabs",         "www.dwf-labs.com"),
+  "uob":       ("UOBgroup",        "www.uobvm.com.sg"),
+  "uob2":      (None,              "www.uobgroup.com"),
+  "signum":    ("SignumCapital",   "signum.capital"),
+  "bitget":    ("bitgetglobal",    "www.bitget.com"),
+  "okx":       ("okx",             "www.okx.com"),
 }
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"}
 OUT = "logo-candidates"; os.makedirs(OUT, exist_ok=True)
