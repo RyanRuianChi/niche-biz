@@ -1,0 +1,26 @@
+name: tripo-buildings
+on:
+  push:
+    paths: ["tools/tripo/RUN_BUILDINGS"]
+permissions:
+  contents: write
+jobs:
+  avatar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install -g tripo-cli@0.7.0
+      - name: Build HK landmarks
+        env:
+          TRIPO_API_KEY: ${{ secrets.TRIPO_API_KEY }}
+        run: bash tools/tripo/buildings.sh 2>&1 | tee tools/tripo/last-buildings.log
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "tripo-bot"; git config user.email "tripo-bot@users.noreply.github.com"
+          git add tools/tripo assets/models || true
+          git commit -m "Tripo avatar output (CI)" || echo "nothing to commit"
+          git pull --rebase origin "${GITHUB_REF_NAME}" && git push
