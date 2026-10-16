@@ -18,11 +18,11 @@ prep)
     tripo generate image-to-image "$H/front-face-ref.png" --model "$M" --prompt "$P" -o "$LOG/prep-$i" --yes --json > "$LOG/prep-$i.json" 2> "$LOG/prep-$i.err"
     echo "prep $i exit=$?"; cat "$LOG/prep-$i.json"; tail -5 "$LOG/prep-$i.err"
     f=$(find "$LOG/prep-$i" -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.webp" \) | head -1)
-    [ -n "$f" ] && python3 -c "from PIL import Image; Image.open('$f').convert('RGB').save('$H/front-ai-$i.png')" && ls -la "$H/front-ai-$i.png"
+    [ -n "$f" ] && cp "$f" "$H/front-ai-$i.png"
   done ;;
 build)
   FRONT="${ARG:-$H/front.png}"
-  for s in 11 22 33; do
+  for s in 11 22; do
     tripo make "$FRONT" "$H/right.png" "$H/back.png" --model tripo-v3.1 --seed $s \
       -p texture_quality=extreme -p geometry_quality=detailed -p texture_alignment=original_image \
       --name "rc-v3-$s" -o "$LOG/cand-$s" --yes --json > "$LOG/cand-$s.json" 2> "$LOG/cand-$s.err"
