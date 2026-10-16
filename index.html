@@ -44,6 +44,7 @@
   <nav class="nav__menu" aria-label="Sections">
     <a href="#status" data-i18n="nav.status">Status</a>
     <a href="#quests" data-i18n="nav.quests">Quests</a>
+    <a href="#origin" data-i18n="nav.origin">Origin</a>
     <a href="#confidants" data-i18n="nav.confidants">Confidants</a>
     <a href="#contact" data-i18n="nav.card">Calling Card</a>
   </nav>
@@ -129,80 +130,154 @@
   <h2 class="title reveal"><span data-i18n="nav.quests">Quests</span></h2>
 
   <div class="quests">
-    <article class="quest quest--done reveal">
-      <div class="quest__stamp" data-i18n="q.exited">Exited</div>
-      <header class="quest__head">
-        <div class="quest__logo"><img class="logo" data-domain="www.insiders.bot" alt="insiders.bot logo"></div>
-        <div>
-          <p class="quest__meta" data-i18n="q.ins.role">Cofounder &amp; Co-CEO · Exited Oct 2026</p>
-          <h3><a href="https://insiders.bot" target="_blank" rel="noopener">insiders.bot</a></h3>
-        </div>
-      </header>
-      <p data-i18n="q.ins.desc">Prediction-markets aggregator for trading and copy-trading, built on data from 1.6M Polymarket traders. Cofounded with Daksh Joshi.</p>
-      <div class="quest__loot">
-        <div class="loot--big"><b>$360K</b><span data-i18n="q.ins.arr">Peak ARR</span></div>
-        <div><b>$1.3M</b><span data-i18n="q.ins.vol">Volume in 1 month of public beta</span></div>
-        <div><b>$0</b><span data-i18n="q.ins.mkt">Marketing spend</span></div>
-      </div>
-    </article>
-
-    <article class="quest quest--active reveal">
-      <div class="quest__stamp quest__stamp--live" data-i18n="q.active">Active</div>
-      <header class="quest__head">
-        <div class="quest__logo"><img class="logo" data-domain="cityprotocol.co" alt="City Protocol logo"></div>
-        <div>
-          <p class="quest__meta" data-i18n="q.city.role">Founding Member</p>
-          <h3><a href="https://cityprotocol.co" target="_blank" rel="noopener">City Protocol</a></h3>
-        </div>
-      </header>
-      <p data-i18n="q.city.desc">An IP capital market for on-chain cultural assets. Joined alongside Jerome Wong (ex-EVG Ventures).</p>
-      <div class="quest__loot">
-        <div class="loot--big"><b>$80M</b><span data-i18n="q.city.tvl">In TVL</span></div>
-        <div class="loot--big"><b>$11M</b><span data-i18n="q.city.raised">Raised</span></div>
-      </div>
-    </article>
-
     <article class="quest quest--wide quest--creator reveal">
-      <div class="quest__stamp quest__stamp--live" data-i18n="q.active">Active</div>
+      <div class="quest__stamp quest__stamp--live" data-i18n="q.active"></div>
       <header class="quest__head">
-        <div class="quest__logo quest__logo--x"><svg><use href="#i-x"/></svg></div>
+        <div class="quest__logo"><img class="logo" data-logo="xcreator" alt="@MrRyanChi logo"></div>
         <div>
-          <p class="quest__meta" data-i18n="q.cc.role">Content Creator · X / Twitter</p>
+          <p class="quest__meta" data-i18n="q.cc.role"></p>
           <h3><a href="https://x.com/MrRyanChi" target="_blank" rel="noopener">@MrRyanChi</a></h3>
         </div>
       </header>
-      <p data-i18n="q.cc.desc">Writing about crypto, AI and building in public.</p>
+      <p data-i18n="q.cc.desc"></p>
       <div class="quest__loot">
-        <div class="loot--big"><b>10M</b><span data-i18n="q.cc.exp">Exposure in 2026</span></div>
-        <div class="loot--big"><b>16.8K</b><span data-i18n="q.cc.fol">Followers</span></div>
+        <div class="loot--big"><b>10M</b><span data-i18n="q.cc.exp"></span></div>
+        <div class="loot--big"><b>16.8K</b><span data-i18n="q.cc.fol"></span></div>
       </div>
     </article>
-
-    <article class="quest reveal">
+    <article class="quest quest--done reveal">
+      <div class="quest__stamp" data-i18n="q.exited"></div>
       <header class="quest__head">
-        <div class="quest__logo"><img class="logo" data-domain="sigmaboy.ai" alt="Sigmaboy.ai logo"></div>
+        <div class="quest__logo"><img class="logo" data-logo="insiders" alt="insiders.bot logo"></div>
         <div>
-          <p class="quest__meta" data-i18n="q.sig.role">Cofounder</p>
+          <p class="quest__meta" data-i18n="q.ins.role"></p>
+          <h3><a href="https://insiders.bot" target="_blank" rel="noopener">insiders.bot</a></h3>
+        </div>
+      </header>
+      <p data-i18n="q.ins.desc"></p>
+      <div class="quest__loot">
+        <div class="loot--big"><b>$360K</b><span data-i18n="q.ins.arr"></span></div>
+        <div><b>$1.3M</b><span data-i18n="q.ins.vol"></span></div>
+        <div><b>$0</b><span data-i18n="q.ins.mkt"></span></div>
+      </div>
+    </article>
+    <article class="quest quest--active reveal">
+      <div class="quest__stamp quest__stamp--live" data-i18n="q.active"></div>
+      <header class="quest__head">
+        <div class="quest__logo"><img class="logo" data-logo="city" alt="City Protocol logo"></div>
+        <div>
+          <p class="quest__meta" data-i18n="q.city.role"></p>
+          <h3><a href="https://cityprotocol.co" target="_blank" rel="noopener">City Protocol</a></h3>
+        </div>
+      </header>
+      <p data-i18n="q.city.desc"></p>
+      <div class="quest__loot">
+        <div class="loot--big"><b>$80M</b><span data-i18n="q.city.tvl"></span></div>
+        <div class="loot--big"><b>$11M</b><span data-i18n="q.city.raised"></span></div>
+      </div>
+    </article>
+    <article class="quest quest--done reveal">
+      <div class="quest__stamp" data-i18n="q.left"></div>
+      <header class="quest__head">
+        <div class="quest__logo"><img class="logo" data-logo="academic" alt="Academic Labs logo"></div>
+        <div>
+          <p class="quest__meta" data-i18n="q.acad.role"></p>
+          <h3><a href="https://acad.live" target="_blank" rel="noopener">Academic Labs</a></h3>
+        </div>
+      </header>
+      <p data-i18n="q.acad.desc"></p>
+      <div class="quest__loot">
+        <div class="loot--big"><b>$3.2M</b><span data-i18n="q.acad.raised"></span></div>
+        <div class="loot--big"><b>$350M</b><span data-i18n="q.acad.fdv"></span></div>
+        <div><b>7x</b><span data-i18n="q.acad.x"></span></div>
+      </div>
+    </article>
+    <article class="quest quest--done reveal">
+      <div class="quest__stamp" data-i18n="q.ended"></div>
+      <header class="quest__head">
+        <div class="quest__logo"><img class="logo" data-logo="showtime" alt="Showtime Watch logo"></div>
+        <div>
+          <p class="quest__meta" data-i18n="q.show.role"></p>
+          <h3><a href="https://x.com/SHOWTIME_WATCH" target="_blank" rel="noopener">Showtime Watch</a></h3>
+        </div>
+      </header>
+      <p data-i18n="q.show.desc"></p>
+      <div class="quest__loot">
+        <div class="loot--big"><b>$400K</b><span data-i18n="q.show.sales"></span></div>
+      </div>
+    </article>
+    <article class="quest  reveal">
+      <header class="quest__head">
+        <div class="quest__logo"><img class="logo" data-logo="sigmaboy" alt="Sigmaboy.ai logo"></div>
+        <div>
+          <p class="quest__meta" data-i18n="q.sig.role"></p>
           <h3><a href="https://sigmaboy.ai" target="_blank" rel="noopener">Sigmaboy.ai</a></h3>
         </div>
       </header>
-      <p data-i18n="q.sig.desc">Early AI product, shipped to a closed beta.</p>
+      <p data-i18n="q.sig.desc"></p>
       <div class="quest__loot">
-        <div><b>100</b><span data-i18n="q.sig.users">Beta users</span></div>
+        <div><b>100</b><span data-i18n="q.sig.users"></span></div>
       </div>
     </article>
-
-    <article class="quest reveal">
+    <article class="quest  reveal">
       <header class="quest__head">
-        <div class="quest__logo"><img class="logo" data-domain="0xu.club" data-x="0xUClub" data-mono="0xU" alt="0xU Club logo"></div>
+        <div class="quest__logo"><img class="logo" data-logo="oxu" alt="0xU Club logo"></div>
         <div>
-          <p class="quest__meta" data-i18n="q.oxu.role">Former President</p>
+          <p class="quest__meta" data-i18n="q.oxu.role"></p>
           <h3><a href="https://x.com/0xUClub" target="_blank" rel="noopener">0xU Club</a></h3>
         </div>
       </header>
-      <p data-i18n="q.oxu.desc">Hong Kong university blockchain club.</p>
+      <p data-i18n="q.oxu.desc"></p>
       <div class="quest__loot">
-        <div><b>6,000+</b><span data-i18n="q.oxu.f">Followers grown</span></div>
+        <div><b>6,000+</b><span data-i18n="q.oxu.f"></span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ ORIGIN (side quests) ============ -->
+<section id="origin" class="section">
+  <h2 class="title reveal"><span data-i18n="nav.origin">Origin</span></h2>
+
+  <div class="origins">
+    <article class="origin reveal">
+      <img class="logo" data-logo="cityu" alt="">
+      <div>
+        <h3 data-i18n="o.cityu.t"></h3>
+        <p data-i18n="o.cityu.d"></p>
+        
+      </div>
+    </article>
+    <article class="origin reveal">
+      <img class="logo" data-logo="mit" alt="">
+      <div>
+        <h3 data-i18n="o.mit.t"></h3>
+        <p data-i18n="o.mit.d"></p>
+        <p class="origin__stat"><b>14</b><span data-i18n="o.mit.s"></span></p>
+      </div>
+    </article>
+    <article class="origin reveal">
+      <img class="logo" data-logo="ycis" alt="">
+      <div>
+        <h3 data-i18n="o.art.t"></h3>
+        <p data-i18n="o.art.d"></p>
+        <p class="origin__stat"><b>HK$600K</b><span data-i18n="o.art.s"></span></p>
+      </div>
+    </article>
+    <article class="origin reveal">
+      <img class="logo" data-logo="ycis" alt="">
+      <div>
+        <h3 data-i18n="o.head.t"></h3>
+        <p data-i18n="o.head.d"></p>
+        
+      </div>
+    </article>
+    <article class="origin reveal">
+      <img class="logo" data-logo="bilibili" alt="">
+      <div>
+        <h3 data-i18n="o.bili.t"></h3>
+        <p data-i18n="o.bili.d"></p>
+        <p class="origin__stat"><b>1M+</b><span data-i18n="o.bili.s"></span></p>
       </div>
     </article>
   </div>
@@ -214,24 +289,34 @@
 
   <div class="confidants">
     <a class="confidant reveal" href="https://www.cuhk.edu.hk" target="_blank" rel="noopener">
-      <img class="logo" data-domain="www.cuhk.edu.hk" alt="CUHK logo">
-      <div><b data-i18n="c.cuhk">CUHK</b><span data-i18n="c.cuhk.d">Global Business &amp; Computer Science</span></div>
-      <em class="confidant__rank"><span data-i18n="c.rank">Rank</span> 8</em>
+      <img class="logo" data-logo="cuhk" alt="">
+      <div><b data-i18n="c.cuhk"></b><span data-i18n="c.cuhk.d"></span></div>
+      <em class="confidant__rank"><span data-i18n="c.rank"></span> 9</em>
     </a>
     <a class="confidant reveal" href="https://www.wharton.upenn.edu" target="_blank" rel="noopener">
-      <img class="logo" data-domain="wharton.upenn.edu" alt="Wharton logo">
-      <div><b data-i18n="c.penn">UPenn · Wharton</b><span data-i18n="c.penn.d">Exchange Term</span></div>
-      <em class="confidant__rank"><span data-i18n="c.rank">Rank</span> 7</em>
+      <img class="logo" data-logo="upenn" alt="">
+      <div><b data-i18n="c.penn"></b><span data-i18n="c.penn.d"></span></div>
+      <em class="confidant__rank"><span data-i18n="c.rank"></span> 8</em>
     </a>
     <a class="confidant reveal" href="https://www.edhec.edu" target="_blank" rel="noopener">
-      <img class="logo" data-domain="edhec.edu" alt="EDHEC logo">
-      <div><b data-i18n="c.edhec">EDHEC Business School</b><span data-i18n="c.edhec.d">Exchange Term</span></div>
-      <em class="confidant__rank"><span data-i18n="c.rank">Rank</span> 6</em>
+      <img class="logo" data-logo="edhec" alt="">
+      <div><b data-i18n="c.edhec"></b><span data-i18n="c.edhec.d"></span></div>
+      <em class="confidant__rank"><span data-i18n="c.rank"></span> 7</em>
     </a>
-    <a class="confidant reveal" href="https://pennblockchain.com" target="_blank" rel="noopener">
-      <img class="logo" data-domain="pennblockchain.com" alt="FranklinDAO logo">
-      <div><b>FranklinDAO</b><span data-i18n="c.fdao.d">Member · Penn Blockchain</span></div>
-      <em class="confidant__rank"><span data-i18n="c.rank">Rank</span> 5</em>
+    <a class="confidant reveal" href="https://x.com/PennBlockchain" target="_blank" rel="noopener">
+      <img class="logo" data-logo="pennbc" alt="">
+      <div><b>FranklinDAO / Penn Blockchain</b><span data-i18n="c.fdao.d"></span></div>
+      <em class="confidant__rank"><span data-i18n="c.rank"></span> 6</em>
+    </a>
+    <a class="confidant reveal" href="https://www.cityu.edu.hk" target="_blank" rel="noopener">
+      <img class="logo" data-logo="cityu" alt="">
+      <div><b data-i18n="c.cityu"></b><span data-i18n="c.cityu.d"></span></div>
+      <em class="confidant__rank"><span data-i18n="c.rank"></span> 5</em>
+    </a>
+    <a class="confidant reveal" href="https://www.ycis-hk.com" target="_blank" rel="noopener">
+      <img class="logo" data-logo="ycis" alt="">
+      <div><b data-i18n="c.ycis"></b><span data-i18n="c.ycis.d"></span></div>
+      <em class="confidant__rank"><span data-i18n="c.rank"></span> 4</em>
     </a>
   </div>
 </section>

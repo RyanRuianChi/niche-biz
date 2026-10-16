@@ -47,17 +47,25 @@
     b.setAttribute("aria-hidden", "true");
     img.replaceWith(b);
   };
-  // Each logo tries, in order: the site's own apple-touch-icon (official, high-res),
-  // the org's X avatar (data-x), then Google's favicon service. Google answers
-  // unknown sites with a 16px globe, so tiny results count as a miss.
+  // Logos come from SITE.logos (i18n.js). Each one tries, in order: an explicit
+  // image URL, the org's X avatar, the site's apple-touch-icon, unavatar's
+  // lookup of the domain, then Google's favicon service. Google answers unknown
+  // sites with a 16px globe, so a tiny Google result counts as a miss.
+  const logoSources = (key) => {
+    const L = SITE.logos[key] || {};
+    const srcs = [];
+    if (L.src) srcs.push(L.src);
+    if (L.x) srcs.push(`https://unavatar.io/x/${L.x}?fallback=false`);
+    if (L.domain) {
+      srcs.push(`https://${L.domain}/apple-touch-icon.png`);
+      srcs.push(`https://unavatar.io/${L.domain.replace(/^www\./, "")}?fallback=false`);
+      srcs.push(`https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(L.domain)}`);
+    }
+    return { srcs, label: L.mono || key.slice(0, 2).toUpperCase() };
+  };
   const loadLogos = (root) => {
-    root.querySelectorAll("img.logo:not([data-loading])").forEach((img) => {
-      const domain = img.dataset.domain;
-      const label = img.dataset.mono || (domain || "?").slice(0, 2).toUpperCase();
-      const srcs = [];
-      if (domain) srcs.push(`https://${domain}/apple-touch-icon.png`);
-      if (img.dataset.x) srcs.push(`https://unavatar.io/x/${img.dataset.x}?fallback=false`);
-      if (domain) srcs.push(`https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(domain)}`);
+    root.querySelectorAll("img.logo[data-logo]:not([data-loading])").forEach((img) => {
+      const { srcs, label } = logoSources(img.dataset.logo);
       if (!srcs.length) return mono(img, label);
       img.dataset.loading = "1";
       img.decoding = "async";
@@ -65,35 +73,24 @@
       let i = 0;
       const next = () => (i < srcs.length ? (img.src = srcs[i++]) : mono(img, label));
       img.addEventListener("error", next);
-      img.addEventListener("load", () => { if (img.naturalWidth < 32) next(); });
+      img.addEventListener("load", () => {
+        if (img.naturalWidth <= 16 && img.src.includes("google.com/s2")) next();
+      });
       next();
     });
   };
 
-  // ---------- Bio chips (interpolated into translated bio) ----------
-  const chips = {
-    insiders: ["https://insiders.bot", "www.insiders.bot", "insiders.bot"],
-    city: ["https://cityprotocol.co", "cityprotocol.co", "City Protocol"],
-    cuhk: ["https://www.cuhk.edu.hk", "www.cuhk.edu.hk", "CUHK"],
-    wharton: ["https://www.wharton.upenn.edu", "wharton.upenn.edu", "Wharton"],
-    edhec: ["https://www.edhec.edu", "edhec.edu", "EDHEC"],
-    polymarket: ["https://polymarket.com", "polymarket.com", "Polymarket"],
-    evg: ["https://evg.co", "evg.co", "EVG Ventures"],
-    pennbc: ["https://pennblockchain.com", "pennblockchain.com", "Penn Blockchain"],
-  };
-  // Inside an existing link (e.g. confidant cards) chips render as spans.
+  // ---------- Inline org chips, used as {key} inside translated strings ----------
   const chipHTML = (k, inLink) => {
-    const [href, domain, label, monoLabel] = chips[k];
-    const img = domain
-      ? `<img class="logo" data-domain="${domain}" alt="">`
-      : `<img class="logo" data-mono="${monoLabel || label.slice(0, 2)}" alt="">`;
-    if (!href || inLink) return `<span class="chip">${img}${label}</span>`;
-    return `<a class="chip" href="${href}" target="_blank" rel="noopener">${img}${label}</a>`;
+    const L = SITE.logos[k];
+    const img = `<img class="logo" data-logo="${k}" alt="">`;
+    if (!L.href || inLink) return `<span class="chip">${img}${L.name}</span>`;
+    return `<a class="chip" href="${L.href}" target="_blank" rel="noopener">${img}${L.name}</a>`;
   };
   const fill = (n, str) => {
     if (typeof str === "string" && str.includes("{")) {
       const inLink = !!n.closest("a");
-      n.innerHTML = str.replace(/\{(\w+)\}/g, (_, k) => (chips[k] ? chipHTML(k, inLink) : _));
+      n.innerHTML = str.replace(/\{(\w+)\}/g, (_, k) => (SITE.logos[k] ? chipHTML(k, inLink) : _));
       loadLogos(n);
     } else {
       n.textContent = str;
