@@ -42,9 +42,24 @@ Branch: `claude/pensive-bardeen-h0se4f` (auto-deploys to https://niche-biz.verce
   is built from the notes above; compare against the video and tune colours/density.
 - Debug: `?scene=preview&debug` exposes `window.__world` (`step`, `render()` -> dataURL) for headless snapshots.
 
+## Five areas + inspectable landmarks (done)
+- `world.js`: Central, UPenn, CUHK, Singapore (Marina Bay), New York, each a 120 m walk (`L = 60`) with zones.
+  Landmarks get a spot (`spot(A, key, x, z, r, look)`): floating "!" marker, E/tap -> camera frames `look`,
+  dialog shows `TXT[lang].s[key] = [name, line]` (5 languages). Singapore/NY landmarks are procedural
+  (the user's SG/NY reference images were only pasted in chat, not saved to the repo).
+- Ground: one Reflector per area painted along its full length (`wetGround` + `painter`), water via `water()`
+  with `cuts` discarding ground over it.
+- Crypto Quest game cancelled by the user; its i18n strings were removed.
+
+## Avatar
+- v2 (`assets/models/avatar-v2.glb`): Tripo v3.1 detailed multiview + rig (85 credits), simplified locally to 80k tris.
+- v3 in progress (`tools/tripo/avatar3.sh`, workflow `tripo-avatar3`, stage set by `tools/tripo/RUN_AVATAR3`):
+  `prep` -> AI-refined front view with the face from `assets/ref/white-sheet-detail.webp`;
+  `build <front.png>` -> 3 candidates (extreme texture, detailed geometry); `rig <task_id>` -> `avatar-v3.glb`.
+  world.js loads avatar-v3 > v2 > v1 automatically; `rigLayout()` handles both Tripo bone layouts.
+
 ## User feedback still open
-- Avatar quality: user unhappy; ask which part (face / proportions / motion / style); option to
-  regenerate in a more anime style via Tripo (~65 credits).
+- Avatar: user wants it as close to the design sheets as possible and approved spending more credits.
 - Flip `LIVE = true` only after the user approves the 3D section.
 
 Commit attribution lines used so far:
