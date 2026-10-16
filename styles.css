@@ -577,6 +577,17 @@ img { display: block; max-width: 100%; }
 .world__dialog b { display: inline-block; margin-bottom: 4px; font: 14px var(--display); letter-spacing: 1px; background: var(--red); padding: 0 8px; transform: skewX(var(--skew)); }
 .world__dialog p { margin: 0; font-size: 15px; }
 .world__dialog.is-on { opacity: 1; transform: translateX(-50%) scale(1); }
+.world__dialog small { display: inline-block; margin-left: 10px; font: 11px var(--heavy); letter-spacing: 2px; text-transform: uppercase; color: var(--yellow); }
+.world__prompt {
+  position: absolute; left: 50%; bottom: 58px; transform: translateX(-50%) skewX(var(--skew)); display: flex; align-items: center; gap: 8px;
+  padding: 6px 16px 7px; background: var(--white); color: var(--ink); border: 0; box-shadow: 5px 5px 0 var(--red); cursor: pointer;
+  font: 13px var(--heavy); text-transform: uppercase; letter-spacing: 1px; animation: world-prompt .9s ease-in-out infinite alternate;
+}
+.world__prompt[hidden] { display: none; }
+.world__prompt kbd { font: 12px var(--heavy); background: var(--ink); color: var(--white); padding: 1px 7px; }
+.world__prompt b { color: var(--red); }
+@keyframes world-prompt { to { transform: translateX(-50%) skewX(var(--skew)) translateY(-3px); } }
+.world__tabs { flex-wrap: wrap; }
 .world__wipe { position: absolute; inset: -10%; background: var(--red); transform: translateX(-130%) skewX(-18deg); pointer-events: none; }
 .world.is-wipe .world__wipe { animation: world-wipe .7s cubic-bezier(.7,0,.3,1); }
 @keyframes world-wipe { 0% { transform: translateX(-130%) skewX(-18deg); } 45%, 55% { transform: translateX(0) skewX(-18deg); } 100% { transform: translateX(130%) skewX(-18deg); } }
