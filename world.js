@@ -413,45 +413,88 @@ const loadAvatar = () => new Promise((res) => {
     const holder = new THREE.Group();
     model.scale.setScalar(s);
     model.position.y = -box.min.y * s;
+    const baseY = model.position.y;
     model.rotation.y = -Math.PI / 2;           // model +X (its forward) -> group +Z
     holder.add(model);
     holder.updateMatrixWorld(true);
-    // collect bones with their rest pose and model-space position
-    const inv = new THREE.Matrix4().copy(model.matrixWorld).invert();
-    const bones = [];
-    model.traverse((o) => { if (o.isBone) bones.push({ o, rest: o.quaternion.clone(), p: new THREE.Vector3().setFromMatrixPosition(o.matrixWorld).applyMatrix4(inv) }); });
-    const byName = (n) => bones.find((b) => b.o.name.replace(/[^A-Za-z0-9_]/g, "").endsWith(n.replace(/[^A-Za-z0-9_]/g, "")));
-    // lateral (left-right) axis in model space is Z; express it in each bone's parent space at rest
-    const lateral = new THREE.Vector3(0, 0, 1);
-    const prep = (b) => {
-      if (!b) return null;
-      const pq = new THREE.Quaternion();
-      b.o.parent.getWorldQuaternion(pq);
-      const mq = new THREE.Quaternion(); model.getWorldQuaternion(mq);
-      b.axis = lateral.clone().applyQuaternion(mq).applyQuaternion(pq.invert()).normalize();
-      return b;
-    };
-    const hips = ["bone_14", "1_Left_Limb_2"].map(byName).filter(Boolean);
-    const knees = ["bone_15", "1_Left_Limb_3"].map(byName).filter(Boolean);
-    const arms = ["0_Right_Limb_0", "0_Left_Limb_0"].map(byName).filter(Boolean);
-    const elbows = ["0_Right_Limb_1", "0_Left_Limb_1"].map(byName).filter(Boolean);
-    [...hips, ...knees, ...arms, ...elbows].forEach(prep);
-    const side = (b) => Math.sign(b.p.z) || 1;
-    rig = { holder, hips, knees, arms, elbows, side, spine: byName("Spine_1"), head: byName("Head_0") };
+    const bones = {};
+    model.traverse((o) => { if (o.isBone) bones[o.name.replace(/^tripo:*/, "")] = o; });
+    rig = { holder, model, baseY, bones, rest: new Map(Object.values(bones).map((o) => [o, o.quaternion.clone()])) };
     res(holder);
   }, undefined, (e) => { console.warn("avatar load failed", e); res(null); });
 });
-const swing = (b, a) => { if (b) b.o.quaternion.copy(new THREE.Quaternion().setFromAxisAngle(b.axis, a)).multiply(b.rest); };
+// ---- motion capture: Mixamo walk / idle / run clips (three.js Xbot) copied onto the Tripo rig by
+// matching each limb's direction every frame, so it works whatever the bones' local axes are.
+let motion = null;
+const loadMotion = () => new Promise((res) => {
+  gltfLoader.load("assets/models/motion.glb", (gltf) => {
+    const src = gltf.scene;
+    const mixer = new THREE.AnimationMixer(src);
+    const clip = (n) => mixer.clipAction(THREE.AnimationClip.findByName(gltf.animations, n));
+    const acts = { idle: clip("idle"), walk: clip("walk"), run: clip("run") };
+    Object.values(acts).forEach((a) => { a.play(); a.setEffectiveWeight(0); });
+    acts.idle.setEffectiveWeight(1);
+    const S = {};
+    src.traverse((o) => { if (o.isBone) S[o.name.replace(/^mixamorig:?/, "")] = o; });
+    res({ src, mixer, acts, S });
+  }, undefined, () => res(null));
+});
+function buildMap() {
+  const B = rig.bones, S = motion.S;
+  const wp = (o) => o.getWorldPosition(new THREE.Vector3());
+  rig.holder.updateMatrixWorld(true);
+  const inv = new THREE.Matrix4().copy(rig.holder.matrixWorld).invert();
+  const sideOf = (o) => Math.sign(wp(o).applyMatrix4(inv).x);   // +X = character's left (faces +Z)
+  const legs = [["bone_14", "bone_15", "bone_16", "bone_17"], ["1_Left_Limb_2", "1_Left_Limb_3", "1_Left_Limb_4", "1_Left_Limb_5"]];
+  const arms = [["0_Right_Limb_0", "0_Right_Limb_1", "0_Right_Limb_2"], ["0_Left_Limb_0", "0_Left_Limb_1", "0_Left_Limb_2"]];
+  const map = [
+    [B.Spine_0, B.Spine_1, S.Spine, S.Spine2],
+    [B.Spine_1, B.Head_0, S.Spine2, S.Neck],
+  ];
+  for (const a of arms) {
+    const [c, u, f] = a.map((n) => B[n]); if (!c || !u || !f) continue;
+    const P = sideOf(u) > 0 ? "Left" : "Right";
+    map.push([c, u, S[P + "Arm"], S[P + "ForeArm"]], [u, f, S[P + "ForeArm"], S[P + "Hand"]]);
+  }
+  for (const l of legs) {
+    const [h, k, a, t] = l.map((n) => B[n]); if (!h || !k || !a) continue;
+    const P = sideOf(k) > 0 ? "Left" : "Right";
+    map.push([h, k, S[P + "UpLeg"], S[P + "Leg"]], [k, a, S[P + "Leg"], S[P + "Foot"]]);
+    if (t) map.push([a, t, S[P + "Foot"], S[P + "ToeBase"]]);
+  }
+  rig.map = map.filter((m) => m.length === 4 && m.every(Boolean));
+  rig.hipsRestY = S.Hips.getWorldPosition(new THREE.Vector3()).y;
+}
+const _a = new THREE.Vector3(), _b = new THREE.Vector3(), _q = new THREE.Quaternion(), _p = new THREE.Quaternion(), _w = new THREE.Quaternion(), _h = new THREE.Quaternion();
+function retarget() {
+  motion.src.updateMatrixWorld(true);
+  rig.rest.forEach((q, o) => o.quaternion.copy(q));
+  rig.holder.updateMatrixWorld(true);
+  hero.getWorldQuaternion(_h);
+  for (const [bone, child, sb, sc] of rig.map) {
+    const want = sc.getWorldPosition(_a).sub(sb.getWorldPosition(_b)).normalize().applyQuaternion(_h);
+    const have = child.getWorldPosition(_b).sub(bone.getWorldPosition(new THREE.Vector3())).normalize();
+    _q.setFromUnitVectors(have, want);
+    bone.getWorldQuaternion(_w).premultiply(_q);
+    bone.parent.getWorldQuaternion(_p).invert();
+    bone.quaternion.copy(_p.multiply(_w));
+    bone.updateMatrixWorld(true);
+  }
+  const bob = motion.S.Hips.getWorldPosition(_a).y - rig.hipsRestY;
+  rig.model.position.y = rig.baseY + bob * 0.9;
+}
 
 // procedural walk / idle on VRM normalized bones
 const pose = (phase, amount, time) => {
-  if (rig) {
-    const s = Math.sin(phase);
-    rig.hips.forEach((b) => swing(b, rig.side(b) * s * 0.5 * amount));
-    rig.knees.forEach((b) => swing(b, -Math.max(0, -rig.side(b) * Math.sin(phase + 0.6)) * 0.85 * amount));
-    rig.arms.forEach((b) => swing(b, -rig.side(b) * s * 0.4 * amount));
-    rig.elbows.forEach((b) => swing(b, (0.15 + 0.2 * amount) ));
-    rig.holder.position.y = Math.abs(Math.cos(phase)) * 0.025 * amount + Math.sin(time * 1.8) * 0.004 * (1 - amount);
+  if (rig && motion && rig.map) {
+    const { acts } = motion;
+    const run = keys.run ? 1 : 0;
+    runAmt += (run - runAmt) * 0.1;
+    acts.idle.setEffectiveWeight(1 - amount);
+    acts.walk.setEffectiveWeight(amount * (1 - runAmt));
+    acts.run.setEffectiveWeight(amount * runAmt);
+    motion.mixer.update(clockDt);
+    retarget();
   } else if (vrm) {
     const b = (n) => vrm.humanoid.getNormalizedBoneNode(n);
     const s = Math.sin(phase);
@@ -552,7 +595,7 @@ const showSpot = (s) => {
 };
 
 // ------------------------------------------------------------------ loop
-let phase = 0, walkAmt = 0, visible = true, autoT = 0;
+let phase = 0, walkAmt = 0, visible = true, autoT = 0, runAmt = 0, clockDt = 0;
 const look = new THREE.Vector3(0, 2.1, -6);
 const camPos = new THREE.Vector3(0, 2.9, 8.2);
 const resize = () => {
@@ -568,6 +611,7 @@ new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(stage);
 function frame() {
   requestAnimationFrame(frame);
   const dt = Math.min(clock.getDelta(), 0.05), time = clock.elapsedTime;
+  clockDt = dt;
   if (!visible) return;
   // input direction
   const dir = new THREE.Vector3((keys.r ? 1 : 0) - (keys.l ? 1 : 0), 0, (keys.dn ? 1 : 0) - (keys.u ? 1 : 0));
@@ -581,7 +625,7 @@ function frame() {
     dir.set(Math.cos(autoT * 0.25), 0, Math.sin(autoT * 0.4) * 0.35);
   }
   const moving = dir.lengthSq() > 0.0001;
-  const speed = keys.run ? 5.2 : 2.6;
+  const speed = keys.run ? 4.2 : 1.55;
   if (moving) {
     dir.normalize();
     hero.position.addScaledVector(dir, speed * dt);
@@ -612,8 +656,8 @@ function frame() {
 setArea(0);
 resize();
 frame();
-const avatar = await loadAvatar();
-if (avatar) { hero.remove(placeholder); hero.add(avatar); }
+const [avatar, mo] = await Promise.all([loadAvatar(), loadMotion()]);
+if (avatar) { hero.remove(placeholder); hero.add(avatar); motion = mo; if (motion) buildMap(); }
 else {
   vrm = await loadVRM();
   if (vrm) { hero.remove(placeholder); hero.add(vrm.scene); }
