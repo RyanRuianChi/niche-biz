@@ -12,8 +12,10 @@ tripo balance --json | tee "$LOG/balance-$MODE-before.json"
 case "$MODE" in
 prep)
   P="The image shows a full-body character turnaround view (left) and a close-up portrait of the same young man (right). Output ONLY the full-body character from the left: identical A-pose facing the camera, identical outfit (white leather biker jacket, white ribbed turtleneck, pleated charcoal trousers, grey and white sneakers, silver watch), identical colours, proportions and framing, plain light grey background. Redraw his face and hair in sharp high detail so they match the close-up portrait exactly: same eyes, eyebrows, nose, lips, jaw line and wavy dark brown hair with a centre part. Clean semi-realistic game-art style, even studio lighting, no text, square image."
-  for i in 1 2; do
-    tripo generate image-to-image "$H/front-face-ref.png" --model gemini-3-pro --prompt "$P" -p aspect_ratio=1:1 -o "$LOG/prep-$i" --yes --json > "$LOG/prep-$i.json" 2> "$LOG/prep-$i.err"
+  i=0
+  for M in banana_pro chat_image_2; do
+    i=$((i+1))
+    tripo generate image-to-image "$H/front-face-ref.png" --model "$M" --prompt "$P" -o "$LOG/prep-$i" --yes --json > "$LOG/prep-$i.json" 2> "$LOG/prep-$i.err"
     echo "prep $i exit=$?"; cat "$LOG/prep-$i.json"; tail -5 "$LOG/prep-$i.err"
     f=$(find "$LOG/prep-$i" -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.webp" \) | head -1)
     [ -n "$f" ] && python3 -c "from PIL import Image; Image.open('$f').convert('RGB').save('$H/front-ai-$i.png')" && ls -la "$H/front-ai-$i.png"

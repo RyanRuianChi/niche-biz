@@ -16,7 +16,7 @@ jobs:
       - name: Avatar v3 stage
         env:
           TRIPO_API_KEY: ${{ secrets.TRIPO_API_KEY }}
-        run: bash tools/tripo/avatar3.sh $(cat tools/tripo/RUN_AVATAR3) 2>&1 | tee tools/tripo/last-avatar3.log
+        run: bash tools/tripo/avatar3.sh $(head -1 tools/tripo/RUN_AVATAR3 | cut -d" " -f1-2) 2>&1 | tee tools/tripo/last-avatar3.log
       - name: Commit results
         if: always()
         run: |
