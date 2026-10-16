@@ -415,7 +415,7 @@ img { display: block; max-width: 100%; }
 }
 .trophy:nth-child(3n+1) { background: var(--red); color: var(--white); }
 .trophy:hover { transform: translateY(-4px) rotate(-1deg); background: var(--yellow); color: var(--ink); }
-.trophy__icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 30px; }
+.trophy__logo { position: absolute; left: 12px; top: 50%; width: 38px; height: 38px; transform: translateY(-50%) rotate(-4deg); box-shadow: 3px 3px 0 var(--ink); }
 .trophy b { font: 17px/1.15 var(--display); letter-spacing: .5px; text-transform: uppercase; }
 .trophy span:not(.trophy__icon) { font: 12px var(--heavy); letter-spacing: .5px; }
 .trophy i { position: absolute; right: 12px; top: 8px; font-style: normal; font-weight: 800; }
@@ -603,3 +603,4 @@ body.is-loading { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .loader__star, .loader__burst, .loader__title .l { animation: none !important; }
 }
+

@@ -183,6 +183,7 @@
     if (nav.startsWith("zh")) return "zh-Hant";
     if (nav.startsWith("ja")) return "ja";
     if (nav.startsWith("ko")) return "ko";
+    if (nav.startsWith("fr")) return "fr";
     return "en";
   };
 
