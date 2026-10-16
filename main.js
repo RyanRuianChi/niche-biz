@@ -47,36 +47,15 @@
     b.setAttribute("aria-hidden", "true");
     img.replaceWith(b);
   };
-  // Logos come from SITE.logos (i18n.js). Each one tries, in order: an explicit
-  // image URL, the org's X avatar, the site's apple-touch-icon, unavatar's
-  // lookup of the domain, then Google's favicon service. Google answers unknown
-  // sites with a 16px globe, so a tiny Google result counts as a miss.
-  const logoSources = (key) => {
-    const L = SITE.logos[key] || {};
-    const srcs = [];
-    if (L.src) srcs.push(L.src);
-    if (L.x) srcs.push(`https://unavatar.io/x/${L.x}?fallback=false`);
-    if (L.domain) {
-      srcs.push(`https://${L.domain}/apple-touch-icon.png`);
-      srcs.push(`https://unavatar.io/${L.domain.replace(/^www\./, "")}?fallback=false`);
-      srcs.push(`https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(L.domain)}`);
-    }
-    return { srcs, label: L.mono || key.slice(0, 2).toUpperCase() };
-  };
+  // Logos are local files: assets/logos/<key>.png (keys from SITE.logos in i18n.js).
+  // If a file is missing, a red initials badge is shown instead.
   const loadLogos = (root) => {
-    root.querySelectorAll("img.logo[data-logo]:not([data-loading])").forEach((img) => {
-      const { srcs, label } = logoSources(img.dataset.logo);
-      if (!srcs.length) return mono(img, label);
-      img.dataset.loading = "1";
+    root.querySelectorAll("img.logo[data-logo]:not([src])").forEach((img) => {
+      const key = img.dataset.logo;
+      const L = SITE.logos[key] || {};
       img.decoding = "async";
-      img.referrerPolicy = "no-referrer";
-      let i = 0;
-      const next = () => (i < srcs.length ? (img.src = srcs[i++]) : mono(img, label));
-      img.addEventListener("error", next);
-      img.addEventListener("load", () => {
-        if (img.naturalWidth <= 16 && img.src.includes("google.com/s2")) next();
-      });
-      next();
+      img.addEventListener("error", () => mono(img, L.mono || key.slice(0, 2).toUpperCase()), { once: true });
+      img.src = `assets/logos/${key}.png`;
     });
   };
 

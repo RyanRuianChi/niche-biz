@@ -200,6 +200,7 @@ img { display: block; max-width: 100%; }
 .confidant .chip .logo { width: 16px; height: 16px; padding: 0; transform: none; }
 
 .logo { object-fit: contain; background: var(--white); border-radius: 3px; }
+.quest__logo .logo, .confidant > .logo, .origin > .logo { padding: 0; object-fit: cover; }
 .logo--mono {
   display: grid; place-items: center; background: var(--red); color: var(--white);
   font: 13px var(--display); letter-spacing: .5px;

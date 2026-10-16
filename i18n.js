@@ -10,8 +10,8 @@ window.SITE = {
     github: "https://github.com/RyanRuianChi",
   },
 
-  // Organisation logos and links. `x` = X/Twitter handle (avatar used as logo),
-  // `domain` = website to pull an icon from, `mono` = initials if nothing loads.
+  // Organisations: name, link, and initials shown if assets/logos/<key>.png is missing.
+  // `x` / `domain` record where each logo file came from.
   logos: {
     insiders:   { name: "insiders.bot",    href: "https://insiders.bot",           x: "insidersdotbot", domain: "insiders.bot",          mono: "IN" },
     city:       { name: "City Protocol",   href: "https://cityprotocol.co",        domain: "cityprotocol.co",                           mono: "CP" },
