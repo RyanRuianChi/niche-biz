@@ -15,6 +15,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Permanent+Marker&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script type="importmap">
+{ "imports": {
+  "three": "./assets/vendor/three.module.min.js",
+  "three/addons/": "./assets/vendor/addons/",
+  "@pixiv/three-vrm": "./assets/vendor/three-vrm.module.min.js"
+} }
+</script>
 </head>
 <body class="is-loading">
 
@@ -138,6 +145,26 @@
     </div>
   </div>
 
+
+  <div class="world reveal" id="world" hidden>
+    <div class="world__head">
+      <div class="world__tabs" role="group" aria-label="Location">
+        <button type="button" data-area="0">Central</button>
+        <button type="button" data-area="1">UPenn</button>
+        <button type="button" data-area="2">CUHK</button>
+      </div>
+      <p class="world__hint"></p>
+    </div>
+    <div class="world__stage">
+      <canvas aria-label="Ryan walking around Central, UPenn and CUHK"></canvas>
+      <div class="world__loc"><small>LOCATION</small><span class="world__card"></span></div>
+      <div class="world__time"></div>
+      <div class="world__edge world__edge--l"></div>
+      <div class="world__edge world__edge--r"></div>
+      <div class="world__dialog"><b>Mr.RC</b><p></p></div>
+      <div class="world__wipe" aria-hidden="true"></div>
+    </div>
+  </div>
 </section>
 
 <!-- ============ QUESTS ============ -->
@@ -466,5 +493,6 @@
 
 <script src="i18n.js"></script>
 <script src="main.js"></script>
+<script type="module" src="world.js"></script>
 </body>
 </html>
