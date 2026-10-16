@@ -7,17 +7,19 @@ import { OutlineEffect } from "three/addons/effects/OutlineEffect.js";
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 import { VRMLoaderPlugin, VRMUtils } from "@pixiv/three-vrm";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 
 const root = document.getElementById("world");
 const params = new URLSearchParams(location.search);
 const VRM_URL = params.get("vrm") || "assets/me.vrm";
-const AVATAR_URL = params.get("avatar") || "assets/models/avatar.json";
+const AVATAR_URL = params.get("avatar") || "assets/models/avatar.glb";
 
 // Only show once the real avatar exists (or when previewing with ?scene=preview).
 const exists = (u) => fetch(u, { method: "HEAD" }).then((r) => r.ok).catch(() => false);
-const avatarManifest = await fetch(AVATAR_URL).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-const hasVRM = !avatarManifest && (await exists(VRM_URL));
-if (!avatarManifest && !hasVRM && params.get("scene") !== "preview") await new Promise(() => {});   // stay hidden until the avatar exists
+const hasAvatar = await exists(AVATAR_URL);
+const hasVRM = !hasAvatar && (await exists(VRM_URL));
+const LIVE = false;   // flip once the reference-based scenes are in
+if ((!LIVE || (!hasAvatar && !hasVRM)) && params.get("scene") !== "preview") await new Promise(() => {});   // stay hidden until the avatar exists
 root.hidden = false;
 
 // ------------------------------------------------------------------ text (5 languages)
@@ -371,9 +373,62 @@ const loadVRM = () => new Promise((res) => {
   }, undefined, () => res(null));
 });
 
+// ---- Tripo avatar (rigged GLB, faces +X in model space). Animated procedurally: Tripo's
+// retarget endpoint rejected this rig, so hips / knees / shoulders are found by position
+// and swung about the body's lateral axis.
+let rig = null;
+const loadAvatar = () => new Promise((res) => {
+  if (!hasAvatar) return res(null);
+  const loader = new GLTFLoader();
+  loader.setMeshoptDecoder(MeshoptDecoder);
+  loader.load(AVATAR_URL, (gltf) => {
+    const model = gltf.scene;
+    model.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; [].concat(o.material).forEach((m) => (m.userData.outlineParameters = { thickness: 0.0018, color: [0.05, 0.03, 0.04] })); } });
+    const box = new THREE.Box3().setFromObject(model);
+    const s = 1.78 / (box.max.y - box.min.y);
+    const holder = new THREE.Group();
+    model.scale.setScalar(s);
+    model.position.y = -box.min.y * s;
+    model.rotation.y = -Math.PI / 2;           // model +X (its forward) -> group +Z
+    holder.add(model);
+    holder.updateMatrixWorld(true);
+    // collect bones with their rest pose and model-space position
+    const inv = new THREE.Matrix4().copy(model.matrixWorld).invert();
+    const bones = [];
+    model.traverse((o) => { if (o.isBone) bones.push({ o, rest: o.quaternion.clone(), p: new THREE.Vector3().setFromMatrixPosition(o.matrixWorld).applyMatrix4(inv) }); });
+    const byName = (n) => bones.find((b) => b.o.name.replace(/[^A-Za-z0-9_]/g, "").endsWith(n.replace(/[^A-Za-z0-9_]/g, "")));
+    // lateral (left-right) axis in model space is Z; express it in each bone's parent space at rest
+    const lateral = new THREE.Vector3(0, 0, 1);
+    const prep = (b) => {
+      if (!b) return null;
+      const pq = new THREE.Quaternion();
+      b.o.parent.getWorldQuaternion(pq);
+      const mq = new THREE.Quaternion(); model.getWorldQuaternion(mq);
+      b.axis = lateral.clone().applyQuaternion(mq).applyQuaternion(pq.invert()).normalize();
+      return b;
+    };
+    const hips = ["bone_14", "1_Left_Limb_2"].map(byName).filter(Boolean);
+    const knees = ["bone_15", "1_Left_Limb_3"].map(byName).filter(Boolean);
+    const arms = ["0_Right_Limb_0", "0_Left_Limb_0"].map(byName).filter(Boolean);
+    const elbows = ["0_Right_Limb_1", "0_Left_Limb_1"].map(byName).filter(Boolean);
+    [...hips, ...knees, ...arms, ...elbows].forEach(prep);
+    const side = (b) => Math.sign(b.p.z) || 1;
+    rig = { holder, hips, knees, arms, elbows, side, spine: byName("Spine_1"), head: byName("Head_0") };
+    res(holder);
+  }, undefined, (e) => { console.warn("avatar load failed", e); res(null); });
+});
+const swing = (b, a) => { if (b) b.o.quaternion.copy(new THREE.Quaternion().setFromAxisAngle(b.axis, a)).multiply(b.rest); };
+
 // procedural walk / idle on VRM normalized bones
 const pose = (phase, amount, time) => {
-  if (vrm) {
+  if (rig) {
+    const s = Math.sin(phase);
+    rig.hips.forEach((b) => swing(b, rig.side(b) * s * 0.5 * amount));
+    rig.knees.forEach((b) => swing(b, -Math.max(0, -rig.side(b) * Math.sin(phase + 0.6)) * 0.85 * amount));
+    rig.arms.forEach((b) => swing(b, -rig.side(b) * s * 0.4 * amount));
+    rig.elbows.forEach((b) => swing(b, (0.15 + 0.2 * amount) ));
+    rig.holder.position.y = Math.abs(Math.cos(phase)) * 0.025 * amount + Math.sin(time * 1.8) * 0.004 * (1 - amount);
+  } else if (vrm) {
     const b = (n) => vrm.humanoid.getNormalizedBoneNode(n);
     const s = Math.sin(phase);
     const swing = 0.55 * amount;
@@ -526,6 +581,10 @@ function frame() {
 setArea(0);
 resize();
 frame();
-vrm = await loadVRM();
-if (vrm) { hero.remove(placeholder); hero.add(vrm.scene); }
+const avatar = await loadAvatar();
+if (avatar) { hero.remove(placeholder); hero.add(avatar); }
+else {
+  vrm = await loadVRM();
+  if (vrm) { hero.remove(placeholder); hero.add(vrm.scene); }
+}
 root.classList.add("is-ready");
