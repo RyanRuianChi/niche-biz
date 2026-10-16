@@ -1,6 +1,6 @@
 # Handoff — ryanchi.com revamp
 
-Branch: `claude/pensive-bardeen-h0se4f` (auto-deploys to https://niche-biz.vercel.app/).
+Branch: `claude/pensive-bardeen-h0se4f` (auto-deploys to https://niche-biz.vercel.app/). Rain rebuild is on `claude/trusting-thompson-j4eqmw`.
 
 ## Done
 - Persona 5–style personal site (`index.html`, `styles.css`, `main.js`), 5 languages in `i18n.js`
@@ -27,12 +27,22 @@ Branch: `claude/pensive-bardeen-h0se4f` (auto-deploys to https://niche-biz.verce
   low close follow camera, dense street-level props (signs, awnings, vending machines, wires),
   character rim lighting.
 
+## Rainy-evening rebuild (done, awaiting user review)
+- `world.js` now renders all three areas as P5R-style rainy evening streets: EffectComposer
+  (outlined cel pass -> UnrealBloom -> ACES -> cool grade + vignette + grain), wet ground via
+  `Reflector` with a custom smeared/rippled shader (`GroundShader`, albedo + wetness canvases per area),
+  GPU rain streaks + splash rings, silhouette crowds (`NPC`), procedural shop-house rows with neon
+  (`shopRow`), vending machines, poles + wires, guardrails, bikes, etc. Low over-the-shoulder chase
+  camera; WASD is camera-relative. Hero picks up the colour of nearby lights (4 roaming point lights)
+  plus a rim-light shader patch (`rimify`). Extra vendored addons: postprocessing/, shaders/, objects/Reflector.
+- Walk fix: the Tripo legs are hip -> knee -> ankle with two sibling foot bones (toe + heel). One leg was
+  mapped through the heel bone (foot turned backwards); now `LEGS` maps ankle->toe and the heel bone
+  follows the ankle, and the Mixamo hips rotation drives the rig root. Checked from the side in headless renders.
+- The style video was NOT available in the cloud session (it lives on the user's machine), so the look
+  is built from the notes above; compare against the video and tune colours/density.
+- Debug: `?scene=preview&debug` exposes `window.__world` (`step`, `render()` -> dataURL) for headless snapshots.
+
 ## User feedback still open
-- "Too rough" — the scenes and model are far from the P5R look; rebuild Central (and the others)
-  to match the video's style: rain, wet ground reflections, NPC silhouettes, dense street props,
-  colour grading / bloom / vignette, low camera.
-- Walking posture was bad; the mocap retarget (`retarget()` in `world.js`) was just added and
-  needs visual checking and tuning (bone pairs, foot roll, arm swing).
 - Avatar quality: user unhappy; ask which part (face / proportions / motion / style); option to
   regenerate in a more anime style via Tripo (~65 credits).
 - Flip `LIVE = true` only after the user approves the 3D section.

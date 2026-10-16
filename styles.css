@@ -555,6 +555,15 @@ img { display: block; max-width: 100%; }
 }
 .world__loc small { display: block; font: 10px var(--heavy); letter-spacing: 3px; color: var(--red); }
 .world__loc span { font: clamp(18px, 2.4vw, 28px)/1 var(--display); letter-spacing: 1px; text-transform: uppercase; }
+.world__time {
+  position: absolute; top: 14px; right: 14px; display: flex; align-items: baseline; gap: 6px; padding: 2px 14px 4px;
+  background: var(--ink); color: var(--white); border: 2px solid var(--white); transform: rotate(2deg) skewX(var(--skew)); pointer-events: none;
+}
+.world__time b { font: clamp(20px, 2.6vw, 30px)/1 var(--display); letter-spacing: 1px; }
+.world__time span { font: 12px var(--heavy); text-transform: uppercase; color: var(--yellow); }
+.world__time i { font-style: normal; font-size: 16px; color: #8fc4ff; }
+.world__time small { font: 10px var(--heavy); letter-spacing: 2px; text-transform: uppercase; opacity: .8; }
+.world__time:empty { display: none; }
 .world__edge {
   position: absolute; bottom: 14px; font: 13px var(--heavy); text-transform: uppercase; letter-spacing: 1px;
   background: var(--ink); color: var(--yellow); padding: 3px 10px; transform: skewX(var(--skew)); pointer-events: none; opacity: .85;
