@@ -5,6 +5,7 @@
   --paper: #f5f2ea;
   --white: #ffffff;
   --gray: #8a8a8a;
+  --yellow: #ffe100;
   --skew: -8deg;
   --cjk: "Noto Sans TC", "Noto Sans JP", "Noto Sans KR", "PingFang TC", "Hiragino Sans", "Apple SD Gothic Neo", "Microsoft JhengHei", sans-serif;
   --display: "Anton", "Impact", "Arial Narrow Bold", var(--cjk);
@@ -119,7 +120,7 @@ img { display: block; max-width: 100%; }
 }
 .soc:nth-child(even) { transform: translateY(6px) rotate(4deg); background: var(--white); color: var(--ink); border-color: var(--ink); }
 .soc svg { width: 24px; height: 24px; fill: currentColor; }
-.soc--mal svg { width: 32px; height: 32px; }
+.soc--mal svg, .soc--xhs svg { width: 32px; height: 32px; }
 .soc:hover, .soc:focus-visible { background: var(--red); color: var(--white); transform: translateY(-4px) rotate(-6deg) scale(1.08); }
 .hero__frame {
   position: relative; transform: rotate(-4deg);
@@ -192,6 +193,11 @@ img { display: block; max-width: 100%; }
 }
 .chip:hover { background: var(--red); color: var(--white); }
 .chip .logo { width: 18px; height: 18px; }
+.chip .logo--mono { display: inline-grid; font-size: 8px; }
+.quest p .chip, .confidant .chip { background: var(--ink); color: var(--white); vertical-align: -4px; }
+.quest--active p .chip { background: var(--white); color: var(--ink); }
+.confidant:hover .chip { background: var(--white); color: var(--ink); }
+.confidant .chip .logo { width: 16px; height: 16px; padding: 0; transform: none; }
 
 .logo { object-fit: contain; background: var(--white); border-radius: 3px; }
 .logo--mono {
@@ -266,43 +272,46 @@ img { display: block; max-width: 100%; }
 
 
 /* Social-stats pentagon */
-.radar { position: relative; }
+.radar { position: relative; isolation: isolate; }
 .radar__head {
-  position: absolute; z-index: 2; top: -6px; left: 0; margin: 0;
+  position: relative; z-index: 2; display: table; margin: 0 0 6px;
   font: 20px var(--display); letter-spacing: 2px; text-transform: uppercase;
   background: var(--white); color: var(--ink); padding: 2px 14px; transform: rotate(-5deg) skewX(var(--skew));
 }
-.radar__stage { position: relative; width: min(100%, 520px); aspect-ratio: 1; margin: 0 auto; }
-.radar__svg { width: 100%; height: 100%; overflow: visible; }
-.radar__burst { fill: var(--red); stroke: var(--ink); stroke-width: 3; }
-.radar__rim { fill: var(--white); }
-.radar__ring--odd { fill: #111; stroke: #3a3a3a; stroke-width: 1; }
-.radar__ring--even { fill: #1d1d1d; stroke: #3a3a3a; stroke-width: 1; }
-.radar__spoke { stroke: #555; stroke-width: 1.5; stroke-dasharray: 3 4; }
-.radar__shadow { fill: var(--ink); opacity: .7; }
-.radar__value {
-  fill: url(#rg); stroke: var(--white); stroke-width: 3; stroke-linejoin: round;
-  transform-origin: 0 0; animation: grow 1s cubic-bezier(.3,1.5,.5,1) both .2s;
+.radar__stage { position: relative; width: min(100%, 540px); aspect-ratio: 1; margin: 0 auto; }
+.radar__stage::before {
+  content: ""; position: absolute; inset: 14% 4% 18% 8%; z-index: -1;
+  background: var(--red); transform: rotate(-8deg) skewX(-12deg);
+  clip-path: polygon(0 10%, 100% 0, 94% 100%, 6% 88%);
 }
-.radar__dot { fill: var(--white); stroke: var(--ink); stroke-width: 2; }
-@keyframes grow { from { transform: scale(0) rotate(-40deg); } }
+.radar__stage::after {
+  content: ""; position: absolute; inset: 14% 4% 18% 8%; z-index: -1; transform: rotate(-8deg) skewX(-12deg);
+  background-image: radial-gradient(rgba(0,0,0,.35) 1.4px, transparent 1.8px); background-size: 9px 9px;
+  clip-path: polygon(0 10%, 100% 0, 94% 100%, 6% 88%);
+}
+.radar__svg { width: 100%; height: 100%; overflow: visible; }
+.radar__ghost { fill: none; stroke: #3b3b3b; stroke-width: 3; }
+.radar__base { fill: #000; stroke: #5a5a5a; stroke-width: 5; stroke-linejoin: miter; }
+.radar__guide { fill: none; stroke: #333; stroke-width: 1.5; }
+.radar__shadow { fill: var(--red); }
+.radar__value {
+  fill: var(--yellow); stroke: var(--ink); stroke-width: 3; stroke-linejoin: miter;
+  transform-origin: 0 0; animation: grow .9s cubic-bezier(.3,1.6,.5,1) both .2s;
+}
+@keyframes grow { from { transform: scale(0) rotate(-72deg); } }
 .radar__labels { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; pointer-events: none; }
 .radar__label {
-  position: absolute; transform: translate(-50%, -50%) rotate(var(--tilt));
+  position: absolute; transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: center; line-height: 1.05; white-space: nowrap;
 }
 .radar__name {
-  font: 17px var(--heavy); text-transform: uppercase; letter-spacing: 1px;
-  background: var(--ink); color: var(--white); padding: 3px 10px; border: 2px solid var(--white);
+  display: inline-flex; align-items: flex-end; gap: 3px; transform: rotate(var(--tilt));
+  font: 22px var(--hand); color: var(--ink); background: var(--yellow);
+  padding: 2px 8px 0; box-shadow: 3px 3px 0 var(--ink);
+  clip-path: polygon(0 8%, 100% 0, 97% 100%, 3% 92%);
 }
-.radar__rank {
-  font: 17px var(--hand); background: var(--white); color: var(--red); padding: 1px 8px; margin-top: -2px;
-  transform: rotate(-3deg);
-}
-.radar__label em {
-  font: 14px var(--display); font-style: normal; letter-spacing: 1px; color: var(--ink);
-  background: #ffe14d; padding: 0 6px; margin-top: 2px; transform: skewX(var(--skew));
-}
+.radar__name em { font: 14px var(--display); font-style: normal; padding-bottom: 2px; }
+.radar__rank { margin-top: 4px; font: 16px var(--heavy); color: var(--white); text-shadow: 2px 2px 0 var(--ink); }
 
 .ticker {
   margin: 60px calc(-1 * clamp(16px, 5vw, 64px)) 0; overflow: hidden;
@@ -425,12 +434,12 @@ img { display: block; max-width: 100%; }
   .nav { flex-wrap: wrap; row-gap: 8px; }
   .nav__menu { order: 3; width: 100%; justify-content: space-between; margin: 0; }
   .lang button { font-size: 11px; padding: 3px 7px; }
+  .nav__menu a { white-space: nowrap; font-size: 10px; padding: 4px 5px; }
   .hero { padding-top: 120px; }
   .soc { width: 46px; height: 46px; }
-  .radar__name { font-size: 12px; padding: 2px 6px; }
-  .radar__rank { font-size: 12px; }
-  .radar__label em { font-size: 11px; }
-  .radar__stage { width: 86%; }
+  .radar__name { font-size: 15px; padding: 1px 6px 0; }
+  .radar__name em { font-size: 11px; }
+  .radar__rank { font-size: 11px; }
   .quest__loot .loot--big b { font-size: 40px; }
   .card__links .social { min-width: 0; width: 100%; }
   .nav__logo { font-size: 22px; }

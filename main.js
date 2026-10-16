@@ -65,20 +65,49 @@
     city: ["https://cityprotocol.co", "cityprotocol.co", "City Protocol"],
     cuhk: ["https://www.cuhk.edu.hk", "cuhk.edu.hk", "CUHK"],
     wharton: ["https://www.wharton.upenn.edu", "upenn.edu", "Wharton"],
+    edhec: ["https://www.edhec.edu", "edhec.edu", "EDHEC"],
+    polymarket: ["https://polymarket.com", "polymarket.com", "Polymarket"],
+    evg: ["", "", "EVG Ventures", "EVG"],
+    pennbc: ["", "upenn.edu", "Penn Blockchain"],
   };
-  const chipHTML = (k) => {
-    const [href, domain, label] = chips[k];
-    return `<a class="chip" href="${href}" target="_blank" rel="noopener"><img class="logo" data-domain="${domain}" alt="">${label}</a>`;
+  // Inside an existing link (e.g. confidant cards) chips render as spans.
+  const chipHTML = (k, inLink) => {
+    const [href, domain, label, monoLabel] = chips[k];
+    const img = domain
+      ? `<img class="logo" data-domain="${domain}" alt="">`
+      : `<img class="logo" data-mono="${monoLabel || label.slice(0, 2)}" alt="">`;
+    if (!href || inLink) return `<span class="chip">${img}${label}</span>`;
+    return `<a class="chip" href="${href}" target="_blank" rel="noopener">${img}${label}</a>`;
+  };
+  const fill = (n, str) => {
+    if (typeof str === "string" && str.includes("{")) {
+      const inLink = !!n.closest("a");
+      n.innerHTML = str.replace(/\{(\w+)\}/g, (_, k) => (chips[k] ? chipHTML(k, inLink) : _));
+      loadLogos(n);
+    } else {
+      n.textContent = str;
+    }
   };
 
-  // ---------- Social-stats pentagon ----------
-  const R = 112;
+  // ---------- Social-stats star (Persona 5 "social stats" screen) ----------
   const N = SITE.stats.length;
-  const pt = (i, r) => {
-    const a = (-90 + (360 / N) * i) * Math.PI / 180;
+  const R = 150;          // outer tip radius of the big black star
+  const RIN = R * 0.42;   // inner (valley) radius of the big star
+  const pt = (deg, r) => {
+    const a = (deg * Math.PI) / 180;
     return [Math.cos(a) * r, Math.sin(a) * r];
   };
-  const poly = (r) => SITE.stats.map((_, i) => pt(i, r).map((v) => v.toFixed(1)).join(",")).join(" ");
+  const fmt = (p) => p.map((v) => v.toFixed(1)).join(",");
+  // star polygon: tip i at -90 + 72i, valley between tips
+  const star = (tipR, valleyR) => {
+    const pts = [];
+    for (let i = 0; i < N; i++) {
+      const tip = -90 + (360 / N) * i;
+      pts.push(fmt(pt(tip, typeof tipR === "function" ? tipR(i) : tipR)));
+      pts.push(fmt(pt(tip + 180 / N, valleyR)));
+    }
+    return pts.join(" ");
+  };
   const el = (tag, attrs) => {
     const n = document.createElementNS(svgNS, tag);
     for (const k in attrs) n.setAttribute(k, attrs[k]);
@@ -88,44 +117,26 @@
   const svg = document.querySelector(".radar__svg");
   const labels = document.querySelector(".radar__labels");
   if (svg) {
-    const defs = el("defs", {});
-    const grad = el("linearGradient", { id: "rg", x1: "0", y1: "0", x2: "1", y2: "1" });
-    grad.append(el("stop", { offset: "0", "stop-color": "#ffe14d" }), el("stop", { offset: "1", "stop-color": "#ff2a2a" }));
-    defs.append(grad);
-    svg.append(defs);
-
-    // spiky star burst behind the chart, like the in-game screen
-    const spikes = [];
-    for (let i = 0; i < 20; i++) {
-      const a = (i * 18 - 90) * Math.PI / 180;
-      const r = i % 2 ? 128 : 154;
-      spikes.push((Math.cos(a) * r).toFixed(1) + "," + (Math.sin(a) * r).toFixed(1));
+    // ghost outline star, offset like the in-game layered shapes
+    svg.append(el("polygon", { points: star(R + 14, RIN + 6), class: "radar__ghost", transform: "rotate(-6)" }));
+    svg.append(el("polygon", { points: star(R, RIN), class: "radar__base" }));
+    // level guides along each arm
+    for (let l = 1; l < 5; l++) {
+      svg.append(el("polygon", { points: star(RIN * 0.55 + (R * 0.8 - RIN * 0.55) * (l / 5), RIN * 0.55), class: "radar__guide" }));
     }
-    svg.append(el("polygon", { points: spikes.join(" "), class: "radar__burst" }));
-    svg.append(el("polygon", { points: poly(R + 8), class: "radar__rim" }));
-    for (let l = 5; l >= 1; l--) {
-      svg.append(el("polygon", { points: poly((R * l) / 5), class: "radar__ring radar__ring--" + (l % 2 ? "odd" : "even") }));
-    }
-    SITE.stats.forEach((_, i) => {
-      const [x, y] = pt(i, R);
-      svg.append(el("line", { x1: 0, y1: 0, x2: x.toFixed(1), y2: y.toFixed(1), class: "radar__spoke" }));
-    });
-    const val = SITE.stats.map((s, i) => pt(i, (R * s.level) / 5).map((v) => v.toFixed(1)).join(",")).join(" ");
-    svg.append(el("polygon", { points: val, class: "radar__shadow", transform: "translate(7 7)" }));
+    const valueTip = (i) => RIN * 0.55 + (R * 0.8 - RIN * 0.55) * (SITE.stats[i].level / 5);
+    const val = star(valueTip, RIN * 0.55);
+    svg.append(el("polygon", { points: val, class: "radar__shadow", transform: "translate(6 6)" }));
     svg.append(el("polygon", { points: val, class: "radar__value" }));
-    SITE.stats.forEach((s, i) => {
-      const [x, y] = pt(i, (R * s.level) / 5);
-      svg.append(el("circle", { cx: x.toFixed(1), cy: y.toFixed(1), r: 5, class: "radar__dot" }));
-    });
 
     SITE.stats.forEach((s, i) => {
-      const [x, y] = pt(i, R + 34);
+      const [x, y] = pt(-90 + (360 / N) * i, R + 30);
       const li = document.createElement("li");
       li.className = "radar__label";
-      li.style.left = ((x + 160) / 320) * 100 + "%";
-      li.style.top = ((y + 160) / 320) * 100 + "%";
-      li.style.setProperty("--tilt", ((i % 2 ? 1 : -1) * (3 + i)) + "deg");
-      li.innerHTML = `<span class="radar__name" data-stat="${s.key}"></span><span class="radar__rank" data-rank="${s.key}" data-level="${s.level}"></span><em>Lv${s.level}</em>`;
+      li.style.left = ((x + 215) / 430) * 100 + "%";
+      li.style.top = ((y + 215) / 430) * 100 + "%";
+      li.style.setProperty("--tilt", ((i % 2 ? 1 : -1) * (4 + i)) + "deg");
+      li.innerHTML = `<span class="radar__name"><span data-stat="${s.key}"></span><em>${s.level}</em></span><span class="radar__rank" data-rank="${s.key}" data-level="${s.level}"></span>`;
       labels.append(li);
     });
   }
@@ -153,11 +164,8 @@
     document.documentElement.lang = lang;
     document.documentElement.dataset.lang = lang;
 
-    document.querySelectorAll("[data-i18n]").forEach((n) => { n.textContent = t(n.dataset.i18n); });
-    document.querySelectorAll("[data-i18n-html]").forEach((n) => {
-      n.innerHTML = t(n.dataset.i18nHtml).replace(/\{(\w+)\}/g, (_, k) => chipHTML(k));
-      loadLogos(n);
-    });
+    document.querySelectorAll("[data-i18n]").forEach((n) => fill(n, t(n.dataset.i18n)));
+    document.querySelectorAll("[data-i18n-html]").forEach((n) => fill(n, t(n.dataset.i18nHtml)));
     document.querySelectorAll("[data-stat]").forEach((n) => { n.textContent = t("stat." + n.dataset.stat); });
     document.querySelectorAll("[data-rank]").forEach((n) => { n.textContent = t("rank." + n.dataset.rank)[n.dataset.level - 1]; });
 
