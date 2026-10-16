@@ -70,7 +70,6 @@ window.SITE = {
 
 window.I18N = {
   en: {
-    "game.title": "Crypto Quest", "game.hint": "← → move · ↑ / Space jump · J / X dagger · Esc pause", "game.start": "Click or press Enter to play",
     "v.hutech.t": "Speaker", "v.hutech.d": "Lecturer at Polygon Blockchain 101", "v.aiesec.t": "Speaker", "v.tec.t": "Professional Speaker", "v.cuhk.t": "Guest Lecturer",
     "yr.now": "Present",
     "nav.vol": "Volunteering", "v.bag.t": "Event Staff", 
@@ -119,7 +118,6 @@ window.I18N = {
   },
 
   "zh-Hant": {
-    "game.title": "加密冒險", "game.hint": "← → 移動 · ↑ / 空白鍵 跳躍 · J / X 匕首 · Esc 暫停", "game.start": "點擊或按 Enter 開始",
     "v.hutech.t": "講者", "v.hutech.d": "Polygon Blockchain 101 講師", "v.aiesec.t": "講者", "v.tec.t": "專業講者", "v.cuhk.t": "客席講師",
     "yr.now": "至今",
     "nav.vol": "義工經歷", "v.bag.t": "活動工作人員", 
@@ -168,7 +166,6 @@ window.I18N = {
   },
 
   ja: {
-    "game.title": "クリプト・クエスト", "game.hint": "← → 移動 · ↑ / Space ジャンプ · J / X ナイフ · Esc ポーズ", "game.start": "クリックまたは Enter でプレイ",
     "v.hutech.t": "スピーカー", "v.hutech.d": "Polygon Blockchain 101 講師", "v.aiesec.t": "スピーカー", "v.tec.t": "プロフェッショナル・スピーカー", "v.cuhk.t": "ゲスト講師",
     "yr.now": "現在",
     "nav.vol": "ボランティア", "v.bag.t": "イベントスタッフ", 
@@ -217,7 +214,6 @@ window.I18N = {
   },
 
   ko: {
-    "game.title": "크립토 퀘스트", "game.hint": "← → 이동 · ↑ / Space 점프 · J / X 단검 · Esc 일시정지", "game.start": "클릭하거나 Enter를 눌러 시작",
     "v.hutech.t": "연사", "v.hutech.d": "Polygon Blockchain 101 강사", "v.aiesec.t": "연사", "v.tec.t": "전문 연사", "v.cuhk.t": "객원 강사",
     "yr.now": "현재",
     "nav.vol": "봉사 활동", "v.bag.t": "이벤트 스태프", 
@@ -377,8 +373,5 @@ window.I18N = {
     "c.rank": "Rang",
     "card.line": "quelque chose qui volera la vedette.",
     "foot": "Prends ton temps.",
-    "game.title": "Crypto Quest",
-    "game.hint": "← → bouger · ↑ / Espace sauter · J / X dague · Échap pause",
-    "game.start": "Clique ou appuie sur Entrée pour jouer",
   },
 };
