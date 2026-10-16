@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Permanent+Marker&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="is-loading">
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -30,6 +30,23 @@
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M2 10h14l-5-6h5l7 8-7 8h-5l5-6H2z"/></symbol>
   </defs>
 </svg>
+
+<!-- ============ LOADING SCREEN ============ -->
+<div class="loader" id="loader" role="status" aria-label="Loading">
+  <div class="loader__burst" aria-hidden="true"></div>
+  <div class="loader__slash loader__slash--a" aria-hidden="true"></div>
+  <div class="loader__slash loader__slash--b" aria-hidden="true"></div>
+  <svg class="loader__star" viewBox="-50 -50 100 100" aria-hidden="true">
+    <polygon class="loader__star-ghost" points="0,-48 11,-15 46,-15 18,6 28,40 0,19 -28,40 -18,6 -46,-15 -11,-15"/>
+    <polygon class="loader__star-main" points="0,-42 10,-13 40,-13 16,5 25,35 0,17 -25,35 -16,5 -40,-13 -10,-13"/>
+  </svg>
+  <div class="loader__card" aria-hidden="true"><span>Mr.</span>RC</div>
+  <p class="loader__title ransom" data-ransom="NOW LOADING" aria-hidden="true">NOW LOADING</p>
+  <div class="loader__bar" aria-hidden="true"><i></i></div>
+  <p class="loader__hint"><span data-i18n="foot">Take your time.</span></p>
+  <div class="loader__wipe loader__wipe--1" aria-hidden="true"></div>
+  <div class="loader__wipe loader__wipe--2" aria-hidden="true"></div>
+</div>
 
 <div class="bg" aria-hidden="true">
   <div class="bg__burst"></div>

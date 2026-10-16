@@ -211,5 +211,31 @@
     items.forEach((n) => n.classList.add("is-in"));
   }
 
+  // ---------- Loading screen ----------
+  // Shows "NOW LOADING" until the page (fonts, logos) has loaded, for at least 1.5s
+  // on the first visit of a session and 0.6s after that. Click / key press skips it.
+  const loader = document.getElementById("loader");
+  if (loader) {
+    loader.querySelectorAll(".l").forEach((l, i) => l.style.setProperty("--i", i));
+    let seen = false;
+    try { seen = sessionStorage.getItem("seenLoader") === "1"; sessionStorage.setItem("seenLoader", "1"); } catch (e) {}
+    const minMs = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : seen ? 600 : 1500;
+    const t0 = performance.now();
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      loader.classList.add("is-out");
+      document.body.classList.remove("is-loading");
+      setTimeout(() => loader.classList.add("is-gone"), 1000);
+    };
+    const whenLoaded = () => setTimeout(finish, Math.max(0, minMs - (performance.now() - t0)));
+    if (document.readyState === "complete") whenLoaded();
+    else window.addEventListener("load", whenLoaded, { once: true });
+    setTimeout(finish, 6000); // never block the page on a slow asset
+    loader.addEventListener("click", finish);
+    window.addEventListener("keydown", finish, { once: true });
+  }
+
   document.getElementById("yr").textContent = new Date().getFullYear();
 })();
