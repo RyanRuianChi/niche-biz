@@ -8,7 +8,13 @@ tripo balance --json | tee "$LOG/balance-before.json"
 while IFS='|' read -r n ref what; do
   [ -z "$n" ] && continue
   P="Isolate $what from this painting as a single clean 3D-asset concept: the whole structure fully visible, three-quarter front view, centred, plain white background, no people, no trees in front, no ground clutter, same colours, materials and architectural details, clean semi-realistic game-art style."
-  tripo generate image-to-image "$ref" --model banana_pro --prompt "$P" -o "$LOG/$n-img" --yes --json > "$LOG/$n-img.json" 2> "$LOG/$n-img.err"
+  if [ "$ref" = "-" ]; then   # no reference picture: draw one from the description
+    P="$what, a single isolated 3D game asset, three-quarter front view, whole structure fully visible, centred, plain white background, no people, accurate real-world proportions and architectural details, clean semi-realistic anime game-art style like Persona 3 Reload"
+    tripo generate text-to-image "$P" --model banana_pro -o "$LOG/$n-img" --yes --json > "$LOG/$n-img.json" 2> "$LOG/$n-img.err" || \
+    tripo generate text-to-image "$P" -o "$LOG/$n-img" --yes --json > "$LOG/$n-img.json" 2> "$LOG/$n-img.err"
+  else
+    tripo generate image-to-image "$ref" --model banana_pro --prompt "$P" -o "$LOG/$n-img" --yes --json > "$LOG/$n-img.json" 2> "$LOG/$n-img.err"
+  fi
   echo "$n img exit=$?"; tail -3 "$LOG/$n-img.err"
   img=$(find "$LOG/$n-img" -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.webp" \) | head -1)
   [ -z "$img" ] && continue
