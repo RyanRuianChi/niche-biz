@@ -7,18 +7,18 @@ steps:
   2. rig  [2mPOST /v3/animations/rig[22m — auto-rig a skeleton
 [1m──────────────────────────────────[22m
 model: P1-20260311 (face budget 16000 ≤ 20000 → P1)
-task created 5f26db20-89c2-429a-a2d0-d6c595279964 (@npc-casual-m)
+task created 227bbee4-1764-4eb2-b131-dba5950e8abd (@npc-casual-m)
 image_to_model · queued
-image_to_model · running 7% · 5f26db20
-image_to_model · running 20% · 5f26db20
-image_to_model · running 31% · 5f26db20
-image_to_model · running 48% · 5f26db20
-image_to_model · success 100% · 5f26db20
-[32m✓[39m image_to_model · 5f26db20-89c2-429a-a2d0-d6c595279964 · 50 credits
-task created a01029ca-075c-458c-81df-c98915c4b1b2 (@npc-casual-m-rig)
+image_to_model · running 12% · 227bbee4
+image_to_model · running 31% · 227bbee4
+image_to_model · running 49% · 227bbee4
+image_to_model · running 77% · 227bbee4
+image_to_model · success 100% · 227bbee4
+[32m✓[39m image_to_model · 227bbee4-1764-4eb2-b131-dba5950e8abd · 50 credits
+task created a3a5ab39-7743-4301-9a69-d79fb0cebe13 (@npc-casual-m-rig)
 animate_rig · queued
-animate_rig · running 44% · a01029ca
-animate_rig · success 100% · a01029ca
-[32m✓[39m animate_rig · a01029ca-075c-458c-81df-c98915c4b1b2 · 25 credits
+animate_rig · running 22% · a3a5ab39
+animate_rig · success 100% · a3a5ab39
+[32m✓[39m animate_rig · a3a5ab39-7743-4301-9a69-d79fb0cebe13 · 25 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/casual-m/tripo-out/npc-casual-m-rig-a01029ca
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/casual-m/tripo-out/npc-casual-m-rig-a3a5ab39

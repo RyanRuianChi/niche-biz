@@ -5,9 +5,14 @@ steps:
   1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
 [2m     model="P1-20260311" face_limit=6000[22m
 [1m──────────────────────────────────[22m
-[33m! balance is down to 5 credits; tasks may fail (run "tripo topup")[39m
 model: P1-20260311 (face budget 6000 ≤ 20000 → P1)
-[31m✗ Insufficient credits (You don't have enough credit to create this task)[39m
-[2m  → Please purchase more credit
-[22m[2m  request_id: 8fd1785d-bf84-44f7-921a-a65bd29ea43f
-[22m
+task created 51ba703b-f42c-4c92-b788-e1e279e1fcdd (@prop-palm)
+image_to_model · queued
+image_to_model · running 10% · 51ba703b
+image_to_model · running 31% · 51ba703b
+image_to_model · running 50% · 51ba703b
+image_to_model · running 76% · 51ba703b
+image_to_model · success 100% · 51ba703b
+[32m✓[39m image_to_model · 51ba703b-f42c-4c92-b788-e1e279e1fcdd · 50 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/palm/tripo-out/prop-palm-51ba703b

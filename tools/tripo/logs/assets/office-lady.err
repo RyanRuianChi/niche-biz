@@ -7,20 +7,19 @@ steps:
   2. rig  [2mPOST /v3/animations/rig[22m — auto-rig a skeleton
 [1m──────────────────────────────────[22m
 model: P1-20260311 (face budget 16000 ≤ 20000 → P1)
-task created 242e1fbf-bcb3-40c7-a9f4-bd946a9c8ac7 (@npc-office-lady)
+task created 2d38aff8-609e-4bf7-9598-e5e5e4c5675c (@npc-office-lady)
 image_to_model · queued
-image_to_model · running 10% · 242e1fbf
-image_to_model · running 30% · 242e1fbf
-image_to_model · running 47% · 242e1fbf
-image_to_model · running 73% · 242e1fbf
-image_to_model · success 100% · 242e1fbf
-[32m✓[39m image_to_model · 242e1fbf-bcb3-40c7-a9f4-bd946a9c8ac7 · 50 credits
-task created f74e5d56-97fb-4b1f-84c0-570186d4ff1e (@npc-office-lady-rig)
+image_to_model · running 10% · 2d38aff8
+image_to_model · running 31% · 2d38aff8
+image_to_model · running 48% · 2d38aff8
+image_to_model · running 76% · 2d38aff8
+image_to_model · success 100% · 2d38aff8
+[32m✓[39m image_to_model · 2d38aff8-609e-4bf7-9598-e5e5e4c5675c · 50 credits
+task created 4029bbd5-0437-4a57-8b8a-dc863a4dc191 (@npc-office-lady-rig)
 animate_rig · queued
-animate_rig · running 74% · f74e5d56
-animate_rig · running 99% · f74e5d56
-animate_rig · running 99% · f74e5d56
-animate_rig · success 100% · f74e5d56
-[32m✓[39m animate_rig · f74e5d56-97fb-4b1f-84c0-570186d4ff1e · 25 credits
+animate_rig · running 26% · 4029bbd5
+animate_rig · running 82% · 4029bbd5
+animate_rig · success 100% · 4029bbd5
+[32m✓[39m animate_rig · 4029bbd5-0437-4a57-8b8a-dc863a4dc191 · 25 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/office-lady/tripo-out/npc-office-lady-rig-f74e5d56
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/office-lady/tripo-out/npc-office-lady-rig-4029bbd5

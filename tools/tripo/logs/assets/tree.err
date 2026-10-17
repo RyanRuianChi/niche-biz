@@ -6,13 +6,13 @@ steps:
 [2m     model="P1-20260311" face_limit=6000[22m
 [1m──────────────────────────────────[22m
 model: P1-20260311 (face budget 6000 ≤ 20000 → P1)
-task created 3eee7c16-8f38-4d96-b4db-71cfab112eb9 (@prop-tree)
+task created 596c3424-7e3f-42e7-a287-a2c10b5de348 (@prop-tree)
 image_to_model · queued
-image_to_model · running 10% · 3eee7c16
-image_to_model · running 24% · 3eee7c16
-image_to_model · running 38% · 3eee7c16
-image_to_model · running 59% · 3eee7c16
-image_to_model · success 100% · 3eee7c16
-[32m✓[39m image_to_model · 3eee7c16-8f38-4d96-b4db-71cfab112eb9 · 50 credits
+image_to_model · running 11% · 596c3424
+image_to_model · running 28% · 596c3424
+image_to_model · running 44% · 596c3424
+image_to_model · running 69% · 596c3424
+image_to_model · success 100% · 596c3424
+[32m✓[39m image_to_model · 596c3424-7e3f-42e7-a287-a2c10b5de348 · 50 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/tree/tripo-out/prop-tree-3eee7c16
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/tree/tripo-out/prop-tree-596c3424

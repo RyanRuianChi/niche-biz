@@ -1,3 +1,9 @@
-[31m✗ Insufficient credits[39m
-[2m  → run "tripo topup" to add credits
-[22m
+task created 52c2345e-2273-4d79-b3f2-bc55cd089179 (@a-japanese-drink-vending-machine)
+text_to_image · queued
+text_to_image · running · 52c2345e
+text_to_image · running · 52c2345e
+text_to_image · running · 52c2345e
+text_to_image · success 100% · 52c2345e
+[32m✓[39m text_to_image · 52c2345e-2273-4d79-b3f2-bc55cd089179 · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/vending-img/tripo-out/a-japanese-drink-vending-machine-52c2345e

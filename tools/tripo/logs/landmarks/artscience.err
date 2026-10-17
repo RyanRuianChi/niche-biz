@@ -8,18 +8,17 @@ cost impact:
   · texture_quality detailed: higher price tier
 [1m──────────────────────────────────[22m
 model: v3.1-20260211 (default high-fidelity → v3.1)
-task created 3851e34b-9b39-4cd0-b55e-7696ff219d76 (@lm-artscience)
+task created e563eda1-fb5a-4b69-ac95-f1648e05c1c9 (@lm-artscience)
 image_to_model · queued
-image_to_model · running 5% · 3851e34b
-image_to_model · running 12% · 3851e34b
-image_to_model · running 18% · 3851e34b
-image_to_model · running 28% · 3851e34b
-image_to_model · running 42% · 3851e34b
-image_to_model · running 61% · 3851e34b
-image_to_model · running 80% · 3851e34b
-image_to_model · running 99% · 3851e34b
-image_to_model · running 99% · 3851e34b
-image_to_model · success 100% · 3851e34b
-[32m✓[39m image_to_model · 3851e34b-9b39-4cd0-b55e-7696ff219d76 · 40 credits
+image_to_model · running 5% · e563eda1
+image_to_model · running 14% · e563eda1
+image_to_model · running 22% · e563eda1
+image_to_model · running 34% · e563eda1
+image_to_model · running 52% · e563eda1
+image_to_model · running 76% · e563eda1
+image_to_model · running 99% · e563eda1
+image_to_model · running 99% · e563eda1
+image_to_model · success 100% · e563eda1
+[32m✓[39m image_to_model · e563eda1-fb5a-4b69-ac95-f1648e05c1c9 · 40 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-3851e34b
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-e563eda1

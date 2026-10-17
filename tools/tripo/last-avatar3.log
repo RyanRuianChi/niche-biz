@@ -1,35 +1,35 @@
-{"balance":935,"frozen":0}
+{"balance":290,"frozen":40}
 fetch exit=0
 npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
 npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 info: model.glb (91.61 MB) → s.glb (23.86 MB)
 [33m❯[39m dedup
-[32m✔[39m dedup               [2m 2ms[0m
+[32m✔[39m dedup               [2m 3ms[0m
 [33m❯[39m instance
 [32m✔[39m instance            [2m 1ms[0m
 [33m❯[39m palette
-[32m✔[39m palette             [2m 0ms[0m
+[32m✔[39m palette             [2m 1ms[0m
 [33m❯[39m flatten
-[32m✔[39m flatten             [2m 1ms[0m
+[32m✔[39m flatten             [2m 2ms[0m
 [33m❯[39m join
-[32m✔[39m join                [2m 0ms[0m
+[32m✔[39m join                [2m 1ms[0m
 [33m❯[39m weld
-[32m✔[39m weld                [2m 51ms[0m
+[32m✔[39m weld                [2m 86ms[0m
 [33m❯[39m resample
 [32m✔[39m resample            [2m 0ms[0m
 [33m❯[39m prune
-[32m✔[39m prune               [2m 224ms[0m
+[32m✔[39m prune               [2m 337ms[0m
 [33m❯[39m sparse
-[32m✔[39m sparse              [2m 28ms[0m
+[32m✔[39m sparse              [2m 60ms[0m
 [33m❯[39m textureCompress
-[32m✔[39m textureCompress     [2m 428ms[0m
+[32m✔[39m textureCompress     [2m 690ms[0m
 [33m❯[39m meshopt
-[32m✔[39m meshopt             [2m 342ms[0m
+[32m✔[39m meshopt             [2m 589ms[0m
 
 info: s.glb (23.86 MB) → avatar-v3.glb (1.9 MB)
--rw-r--r-- 1 runner runner 1898536 Oct 17 15:48 assets/models/avatar-v3.glb
-{"balance":860,"frozen":75}
-tools/tripo/logs/avatar3/balance-fetch-after.json 28
+-rw-r--r-- 1 runner runner 1898536 Oct 17 00:16 assets/models/avatar-v3.glb
+{"balance":290,"frozen":0}
+tools/tripo/logs/avatar3/balance-fetch-after.json 27
 tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c/preview.png 4023618
 tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c/generated_image.png 4023618
 tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c/task.json 1087
@@ -51,7 +51,7 @@ tools/tripo/logs/avatar3/prep-2.json 373
 tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e/preview.png 111182
 tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e/task.json 1244
 tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e/rendered_image.webp 111182
-tools/tripo/logs/avatar3/balance-fetch-before.json 27
+tools/tripo/logs/avatar3/balance-fetch-before.json 28
 tools/tripo/logs/avatar3/prep-1.json 369
 tools/tripo/logs/avatar3/balance-build-before.json 27
 tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01/preview.png 111894
