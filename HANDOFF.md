@@ -71,7 +71,7 @@ Branch: `claude/pensive-bardeen-h0se4f` (auto-deploys to https://niche-biz.verce
 
 ## User feedback still open
 - Avatar: user wants it as close to the design sheets as possible and approved spending more credits.
-- Flip `LIVE = true` only after the user approves the 3D section.
+- 3D section is LIVE (user approved); production = default branch `claude/pensive-bardeen-h0se4f` -> ryanchi.com (Vercel DNS).
 
 Commit attribution lines used so far:
 `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`

@@ -30,7 +30,7 @@ let AVATAR_URL = params.get("avatar");
 if (!AVATAR_URL) for (const u of ["assets/models/avatar-v3.glb", "assets/models/avatar-v2.glb", "assets/models/avatar.glb"]) if (await exists(u)) { AVATAR_URL = u; break; }
 const hasAvatar = !!AVATAR_URL && (await exists(AVATAR_URL));
 const hasVRM = !hasAvatar && (await exists(VRM_URL));
-const LIVE = false;   // flip once the user approves the 3D section
+const LIVE = true;   // approved by the user
 if ((!LIVE || (!hasAvatar && !hasVRM)) && params.get("scene") !== "preview") await new Promise(() => {});   // stay hidden until the avatar exists
 root.hidden = false;
 
@@ -236,7 +236,8 @@ const spotText = (k) => TXT[lang()].s[k] ?? TXT.en.s[k];
 const canvas = root.querySelector("canvas");
 const stage = root.querySelector(".world__stage");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: "high-performance" });
-const PR = Math.min(devicePixelRatio, 1.75);
+const LITE = matchMedia("(pointer: coarse)").matches || innerWidth < 760;   // phones / tablets: lighter settings
+const PR = Math.min(devicePixelRatio, LITE ? 1.25 : 1.75);
 renderer.setPixelRatio(PR);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -1950,7 +1951,7 @@ function loadProps() {
 // nearest shop window / lamp / neon sign so the character is lit by the street as it walks
 const hemi = new THREE.HemisphereLight("#ffffff", "#222222", 1);
 const sun = new THREE.DirectionalLight("#ffc68a", 3.4);
-sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.mapSize.set(LITE ? 1024 : 2048, LITE ? 1024 : 2048);
 Object.assign(sun.shadow.camera, { left: -26, right: 26, top: 26, bottom: -26, near: 1, far: 120 });
 sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.02;
 renderer.shadowMap.enabled = true;
