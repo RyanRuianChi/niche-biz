@@ -16,7 +16,7 @@ jobs:
       - name: Landmarks
         env:
           TRIPO_API_KEY: ${{ secrets.TRIPO_API_KEY }}
-        run: bash tools/tripo/avatar3.sh $(head -1 tools/tripo/RUN_LANDMARKS | cut -d" " -f1-2) 2>&1 | tee tools/tripo/last-avatar3.log
+        run: bash tools/tripo/landmarks.sh 2>&1 | tee tools/tripo/last-landmarks.log
       - name: Commit results
         if: always()
         run: |
