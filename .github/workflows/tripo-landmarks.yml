@@ -23,4 +23,4 @@ jobs:
           git config user.name "tripo-bot"; git config user.email "tripo-bot@users.noreply.github.com"
           git add tools/tripo assets/models || true
           git commit -m "Tripo landmarks output (CI)" || echo "nothing to commit"
-          git pull --rebase origin "${GITHUB_REF_NAME}" && git push
+          git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push

@@ -29,9 +29,10 @@ build)
     echo "cand $s exit=$?"; cat "$LOG/cand-$s.json"; tail -5 "$LOG/cand-$s.err"
     p=$(find "$LOG/cand-$s" -name "preview.png" | head -1); [ -n "$p" ] && cp "$p" "$LOG/cand-$s.png"
   done ;;
-rig)
-  tripo anim rig "$ARG" --rig-type biped --out-format glb --name rc-v3-rig -o "$LOG/rig" --yes --json > "$LOG/rig.json" 2> "$LOG/rig.err"
-  echo "rig exit=$?"; cat "$LOG/rig.json"; tail -10 "$LOG/rig.err"
+rig|fetch)
+  if [ "$MODE" = rig ]; then tripo anim rig "$ARG" --rig-type biped --out-format glb --name rc-v3-rig -o "$LOG/rig" --yes --json > "$LOG/rig.json" 2> "$LOG/rig.err"
+  else tripo task get "$ARG" --download -o "$LOG/rig" --yes --json > "$LOG/fetch.json" 2> "$LOG/fetch.err"; fi   # fetch: re-download a finished rig task (no credits)
+  echo "$MODE exit=$?"; tail -10 "$LOG/$MODE.err"
   glb=$(find "$LOG/rig" -name "*.glb" | head -1)
   if [ -n "$glb" ]; then
     npx -y @gltf-transform/cli@4.1.1 simplify "$glb" "$LOG/s.glb" --ratio 0.1 --error 0.002 && \
