@@ -1189,7 +1189,6 @@ function areaCentral() {
   plane(g, 3.6, 0.6, signMat("電車站 TRAM STOP", { bg: "#1f6b45", fg: "#fff6dc", w: 512, h: 80, vertical: false }, 1.5), ts, 3.25, CURB + 0.6, Math.PI);
   pool(g, ts, CURB + 1, 2.4, "#fff2d0", 0.35); E.push({ p: V(ts, 2.4, CURB + 1), c: "#fff2d0", k: 5 });
   tram(A, -1.8, ts + 3);
-  cars(A, [[10, 1.8, -1], [-20, 1.8, -1], [-50, 1.8, -1], [5, -2.0, 1], [40, -2.0, 1]], -L - 30, L + 30);
   // crowd
   walkers(A, 16, [4.6, 5.6, 6.8]); walkers(A, 8, [-5, -6.6], -L - 10, WF); walkers(A, 5, [-4.6, -5.4], WF, L + 10, 0.5);
   standers(A, [[-40.2, FRONT - 1.2, 0], [14.5, FRONT - 1.1, 0], [-3, 9.8, Math.PI], [-6, -11.5, 0.3], [-30.5, CURB + 1.1, Math.PI / 2]]);
@@ -1484,7 +1483,6 @@ function areaSingapore() {
   for (let x = -L - 6; x <= L + 6; x += 6) if (Math.abs(x + 30) > 4 && Math.abs(x - hx) > 3) palm(g, R, x, 5.2, 5 + R() * 2);
   for (let x = -L - 6; x <= L + 6; x += 12) globeLamp(g, E, x + 3, -5.6, "#ffe8c8");
   for (let x = -L; x <= L; x += 12) lampPost(g, E, x, 12.8, 1);
-  cars(A, [[0, 7.6, 1], [-30, 7.6, 1], [20, 10.8, -1], [-45, 10.8, -1]], -L - 30, L + 30, "#2b2b30", "#3a3a40", "#9fe0ff");
   walkers(A, 22, [-5, -3.2, -1.2, 1, 3.4], -L - 10, L + 10, 0.55);
   standers(A, [[-30, -4.8, Math.PI], [-26, -5.4, Math.PI], [4, -5.6, Math.PI], [18, -5.6, Math.PI]]);
   spot(A, "flyer", -54, -4.4, 3, [-62, 26, -95]);
@@ -1613,7 +1611,6 @@ function areaNewYork() {
   for (const x of [-50, -16, 8]) { cyl(g, 0.16, 0.7, toon("#c22a2a"), x, 0, CURB + 0.5, 10); ball(g, 0.16, toon("#c22a2a"), x, 0.75, CURB + 0.5); }
   for (const x of [-44, -6, 20]) trash(g, x, CURB + 0.7);
   for (let x = RIVER + 3; x < L + 10; x += 6) { const b = new THREE.Group(); b.position.set(x, 0, -5.2); g.add(b); box(b, 1.6, 0.08, 0.45, toon("#5a3a22"), 0, 0.45, 0); box(b, 1.6, 0.4, 0.06, toon("#5a3a22"), 0, 0.55, 0.22); }
-  cars(A, [[10, 1.8, -1], [-20, 1.8, -1], [-44, 1.8, -1], [5, -2.0, 1], [-30, -2.0, 1], [-52, -2.0, 1]], -L - 30, RIVER - 4, "#f2c21a", "#f2c21a", "#ffffff");
   walkers(A, 16, [4.6, 5.6, 6.8], -L - 10, RIVER); walkers(A, 8, [-5, -6.6], -L - 10, 24); walkers(A, 6, [-4.6, -3, 0, 3], RIVER, L + 10, 0.5);
   standers(A, [[-46, FRONT - 0.8, Math.PI], [-38, -7.4, 0], [14, -6.8, 0.2], [34, -7.4, 0]]);
   spot(A, "times", -42, 5.6, 3.2, [-42, 12, -8]);
