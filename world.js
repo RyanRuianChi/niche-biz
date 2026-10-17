@@ -36,7 +36,7 @@ root.hidden = false;
 // ------------------------------------------------------------------ text (5 languages)
 // s.<spot> = [place name, Mr.RC's line]
 const TXT = {
-  en: { hint: "WASD / arrows to walk · Shift to run · E or tap ! to check a place", eve: "Evening", next: "To", check: "Check",
+  en: { day: "After School", goal: "Places checked", hint: "WASD / arrows to walk · Shift to run · E or tap ! to check a place", eve: "Evening", next: "To", check: "Check",
     areas: ["Central · Hong Kong", "UPenn · Philadelphia", "CUHK · Hong Kong", "Marina Bay · Singapore", "Manhattan · New York"],
     s: {
       neon: ["Des Voeux Road", "Central at night. Where I started cofounding crypto projects at 19."],
@@ -74,7 +74,7 @@ const TXT = {
       bethesda: ["Bethesda Fountain", "The Angel of the Waters, in the middle of Central Park."],
       brooklyn: ["Brooklyn Bridge", "Walk it at night with Manhattan lit up behind you."],
     } },
-  "zh-Hant": { hint: "WASD / 方向鍵 行走 · Shift 跑步 · 按 E 或點擊 ! 查看地點", eve: "傍晚", next: "前往", check: "查看",
+  "zh-Hant": { day: "放學後", goal: "已查看地點", hint: "WASD / 方向鍵 行走 · Shift 跑步 · 按 E 或點擊 ! 查看地點", eve: "傍晚", next: "前往", check: "查看",
     areas: ["中環 · 香港", "賓州大學 · 費城", "香港中文大學 · 香港", "濱海灣 · 新加坡", "曼哈頓 · 紐約"],
     s: {
       neon: ["德輔道中", "夜晚的中環。我 19 歲開始聯合創辦加密項目的地方。"],
@@ -112,7 +112,7 @@ const TXT = {
       bethesda: ["畢士達噴泉", "中央公園正中的水之天使。"],
       brooklyn: ["布魯克林大橋", "晚上走一趟，身後是亮起的曼哈頓。"],
     } },
-  ja: { hint: "WASD / 矢印キーで歩く · Shift で走る · E か ! をタップで調べる", eve: "夕方", next: "行き先", check: "調べる",
+  ja: { day: "放課後", goal: "調べた場所", hint: "WASD / 矢印キーで歩く · Shift で走る · E か ! をタップで調べる", eve: "夕方", next: "行き先", check: "調べる",
     areas: ["中環 · 香港", "ペンシルベニア大学 · フィラデルフィア", "香港中文大学 · 香港", "マリーナベイ · シンガポール", "マンハッタン · ニューヨーク"],
     s: {
       neon: ["デ・ヴー・ロード", "夜の中環。19歳でクリプト事業を共同創業し始めた場所。"],
@@ -150,7 +150,7 @@ const TXT = {
       bethesda: ["ベセスダの噴水", "セントラルパークの真ん中に立つ水の天使。"],
       brooklyn: ["ブルックリン橋", "夜に渡ろう。背後に輝くマンハッタン。"],
     } },
-  ko: { hint: "WASD / 방향키로 걷기 · Shift 달리기 · E 또는 ! 를 탭해 살펴보기", eve: "저녁", next: "이동", check: "살펴보기",
+  ko: { day: "방과 후", goal: "살펴본 장소", hint: "WASD / 방향키로 걷기 · Shift 달리기 · E 또는 ! 를 탭해 살펴보기", eve: "저녁", next: "이동", check: "살펴보기",
     areas: ["센트럴 · 홍콩", "펜실베이니아대 · 필라델피아", "홍콩중문대 · 홍콩", "마리나 베이 · 싱가포르", "맨해튼 · 뉴욕"],
     s: {
       neon: ["데보로드", "밤의 센트럴. 19살에 크립토 프로젝트를 공동 창업하기 시작한 곳."],
@@ -188,7 +188,7 @@ const TXT = {
       bethesda: ["베데스다 분수", "센트럴 파크 한가운데의 물의 천사."],
       brooklyn: ["브루클린 브리지", "밤에 걸어 봐. 뒤로 빛나는 맨해튼."],
     } },
-  fr: { hint: "ZQSD / flèches pour marcher · Maj pour courir · E ou touche ! pour examiner", eve: "Soir", next: "Vers", check: "Examiner",
+  fr: { day: "Après les cours", goal: "Lieux visités", hint: "ZQSD / flèches pour marcher · Maj pour courir · E ou touche ! pour examiner", eve: "Soir", next: "Vers", check: "Examiner",
     areas: ["Central · Hong Kong", "UPenn · Philadelphie", "CUHK · Hong Kong", "Marina Bay · Singapour", "Manhattan · New York"],
     s: {
       neon: ["Des Voeux Road", "Central la nuit. Là où j’ai commencé à cofonder des projets crypto à 19 ans."],
@@ -257,14 +257,20 @@ const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.6, 0.42, 0.95);
 composer.addPass(bloom);
 composer.addPass(new OutputPass());
 const grade = new ShaderPass({
-  uniforms: { tDiffuse: { value: null }, time: { value: 0 }, res: { value: new THREE.Vector2(1, 1) } },
+  uniforms: { tDiffuse: { value: null }, time: { value: 0 }, day: { value: 1 }, res: { value: new THREE.Vector2(1, 1) } },
   vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
   fragmentShader: `
-    uniform sampler2D tDiffuse; uniform float time; uniform vec2 res; varying vec2 vUv;
+    uniform sampler2D tDiffuse; uniform float time, day; uniform vec2 res; varying vec2 vUv;
     float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
     void main(){
-      vec3 c = texture2D(tDiffuse, vUv).rgb;
+      vec3 c0 = texture2D(tDiffuse, vUv).rgb, c = c0;
       float l = dot(c, vec3(0.299, 0.587, 0.114));
+      vec2 dd = vUv - 0.5; dd.x *= res.x / res.y;
+      // day: warm golden hour, saturated, purple-lifted shadows, light vignette
+      vec3 cd = mix(vec3(l), c0, 1.12) * vec3(1.05, 0.99, 0.92);
+      cd += vec3(0.05, 0.012, 0.07) * pow(1.0 - l, 2.0);
+      cd = mix(cd, cd * cd * (3.0 - 2.0 * cd), 0.12);
+      cd *= mix(0.84, 1.0, smoothstep(1.15, 0.4, length(dd)));
       c = mix(vec3(l), c, 0.8 + 0.35 * smoothstep(0.55, 0.95, l));    // muted mids, neon keeps its punch
       c *= vec3(0.9, 0.99, 1.1);                                       // overcast blue
       c += vec3(0.012, 0.03, 0.055) * (1.0 - l);                       // lifted teal shadows
@@ -273,7 +279,7 @@ const grade = new ShaderPass({
       float v = smoothstep(1.05, 0.28, length(d));
       c = c * mix(0.38, 1.0, v) + vec3(0.0, 0.008, 0.025) * (1.0 - v);
       c += (hash(vUv * res + fract(time) * 91.0) - 0.5) * 0.03;
-      gl_FragColor = vec4(c, 1.0);
+      gl_FragColor = vec4(mix(c, cd, day), 1.0);
     }`,
 });
 composer.addPass(grade);
@@ -319,18 +325,36 @@ const canvasTex = (w, h, draw, repeat) => {
   if (repeat) { tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(...repeat); }
   return tex;
 };
-// night window grid: dark wall, some warm / cool lit windows, curtains, AC boxes
-const windowsTex = (cols, rows, wall, seed, ratio = 0.45, ground = true) => canvasTex(cols * 24, rows * 32, (g, w, h) => {
-  const R = rng(seed);
-  g.fillStyle = wall; g.fillRect(0, 0, w, h);
-  for (let y = 0; y < rows - (ground ? 1 : 0); y++) for (let x = 0; x < cols; x++) {
-    const lit = R() < ratio;
-    g.fillStyle = lit ? pick(R, ["#ffd79a", "#ffe6b8", "#cfe2ff", "#ffc477", "#fff3d6"]) : pick(R, ["#0d1018", "#151a24", "#1b2130"]);
-    g.fillRect(x * 24 + 4, y * 32 + 6, 16, 20);
-    if (lit && R() < 0.5) { g.fillStyle = "rgba(60,30,20,.45)"; g.fillRect(x * 24 + 4, y * 32 + 6, R() < 0.5 ? 7 : 16, 20); }
-    g.fillStyle = "rgba(0,0,0,.35)"; g.fillRect(x * 24 + 3, y * 32 + 26, 18, 2);
-  }
-});
+// Facades come as a pair: the day texture (lit by the sun) and an emissive "lit windows" texture that
+// takes over at night. dayWall() lifts the dark night palette to a daylight colour of the same hue.
+const dayWall = (c) => { const col = new THREE.Color(c), hsl = {}; col.getHSL(hsl); return "#" + col.setHSL(hsl.h, Math.min(0.45, hsl.s * 1.1), hsl.l + (0.6 - hsl.l) * 0.62).getHexString(); };
+const texPair = (w, h, drawDay, drawLit) => { const t = canvasTex(w, h, drawDay); t.userData.lit = canvasTex(w, h, drawLit); return t; };
+const glassFill = (g, x, y, w, h) => { const gr = g.createLinearGradient(x, y, x + w, y + h); gr.addColorStop(0, "#9db4cc"); gr.addColorStop(0.55, "#4c5f78"); gr.addColorStop(1, "#33435a"); g.fillStyle = gr; g.fillRect(x, y, w, h); };
+// window grid: wall, glass by day; at night some warm / cool lit windows, curtains
+const windowsTex = (cols, rows, wall, seed, ratio = 0.45, ground = true) => {
+  const lit = [], R = rng(seed), top = rows - (ground ? 1 : 0);
+  for (let i = 0; i < cols * rows; i++) lit.push(R() < ratio ? [pick(R, ["#ffd79a", "#ffe6b8", "#cfe2ff", "#ffc477", "#fff3d6"]), R() < 0.5 ? (R() < 0.5 ? 7 : 16) : 0] : null);
+  return texPair(cols * 24, rows * 32, (g, w, h) => {
+    g.fillStyle = dayWall(wall); g.fillRect(0, 0, w, h);
+    g.fillStyle = "rgba(0,0,0,.08)"; for (let y = 0; y < h; y += 8) g.fillRect(0, y, w, 1);
+    for (let y = 0; y < top; y++) for (let x = 0; x < cols; x++) {
+      g.fillStyle = "rgba(255,255,255,.35)"; g.fillRect(x * 24 + 3, y * 32 + 5, 18, 22);
+      glassFill(g, x * 24 + 4, y * 32 + 6, 16, 20);
+      const l = lit[y * cols + x]; if (l && l[1]) { g.fillStyle = "rgba(230,220,200,.75)"; g.fillRect(x * 24 + 4, y * 32 + 6, l[1], 20); }
+      g.fillStyle = "rgba(0,0,0,.3)"; g.fillRect(x * 24 + 3, y * 32 + 26, 18, 2);
+    }
+  }, (g, w, h) => {
+    g.fillStyle = "#000"; g.fillRect(0, 0, w, h);
+    for (let y = 0; y < top; y++) for (let x = 0; x < cols; x++) {
+      const l = lit[y * cols + x]; if (!l) continue;
+      g.fillStyle = l[0]; g.fillRect(x * 24 + 4, y * 32 + 6, 16, 20);
+      if (l[1]) { g.fillStyle = "rgba(60,30,20,.55)"; g.fillRect(x * 24 + 4, y * 32 + 6, l[1], 20); }
+    }
+  });
+};
+// facade material: sunlit by day, windows glow at night (emissiveIntensity set by the time of day)
+const FACADES = [];
+const facadeMat = (tex, k = 1) => { const m = noLine(new THREE.MeshStandardMaterial({ map: tex, emissiveMap: tex.userData.lit || null, emissive: new THREE.Color(k, k, k), emissiveIntensity: 1, roughness: 0.85, metalness: 0 })); FACADES.push(m); return m; };
 const signTex = (text, { bg = "#0b0710", fg = "#ffe14d", w = 128, h = 512, vertical = true, border, size } = {}) => canvasTex(w, h, (g) => {
   g.fillStyle = bg; g.fillRect(0, 0, w, h);
   if (border) { g.strokeStyle = border; g.lineWidth = 6; g.strokeRect(6, 6, w - 12, h - 12); }
@@ -341,6 +365,9 @@ const signTex = (text, { bg = "#0b0710", fg = "#ffe14d", w = 128, h = 512, verti
   if (vertical) chars.forEach((ch, i) => g.fillText(ch, w / 2, h / (chars.length + 1) * (i + 1)));
   else g.fillText(text, w / 2, h / 2 + 2);
 });
+// lit shop windows: glowing at night, plain glass-and-goods by day
+const SHOPS = [];
+const shopMat = (tex) => { const m = noLine(new THREE.MeshBasicMaterial({ map: tex, color: new THREE.Color(0.78, 0.76, 0.74) })); SHOPS.push(m); return m; };
 const signMat = (text, opts, k = 1.8) => noLine(new THREE.MeshBasicMaterial({ map: signTex(text, opts), color: new THREE.Color(k, k, k), side: THREE.DoubleSide }));
 const poolTex = canvasTex(64, 64, (g) => {
   const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
@@ -356,7 +383,7 @@ const blobTex = canvasTex(64, 64, (g) => {
 const poolCache = new Map();
 const pool = (p, x, z, r, color, k = 0.4) => {
   const key = color + k;
-  if (!poolCache.has(key)) poolCache.set(key, noLine(new THREE.MeshBasicMaterial({ map: poolTex, color: new THREE.Color(color).multiplyScalar(k), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false })));
+  if (!poolCache.has(key)) { const pm = noLine(new THREE.MeshBasicMaterial({ map: poolTex, color: new THREE.Color(color).multiplyScalar(k), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false })); pm.userData.base = pm.color.clone(); poolCache.set(key, pm); }
   const m = plane(p, r * 2, r * 2, poolCache.get(key), x, 0.012, z);
   m.rotation.x = -Math.PI / 2;
   return m;
@@ -396,7 +423,7 @@ const GroundShader = {
   uniforms: THREE.UniformsUtils.merge([THREE.UniformsLib.fog, {
     color: { value: null }, tDiffuse: { value: null }, textureMatrix: { value: null },
     map: { value: null }, wetMap: { value: null }, mapInfo: { value: new THREE.Vector4(0, 8, -10, 20) },
-    time: { value: 0 }, ambient: { value: new THREE.Color(0.32, 0.36, 0.46) }, mirror: { value: 0 },
+    time: { value: 0 }, ambient: { value: new THREE.Color(0.32, 0.36, 0.46) }, mirror: { value: 0 }, wetK: { value: 1 }, dayLift: { value: 0 },
     cuts: { value: [new THREE.Vector4(), new THREE.Vector4()] },
   }]),
   vertexShader: `
@@ -411,7 +438,7 @@ const GroundShader = {
     }`,
   fragmentShader: `
     uniform vec3 color; uniform sampler2D tDiffuse; uniform sampler2D map; uniform sampler2D wetMap;
-    uniform vec4 mapInfo; uniform float time, mirror; uniform vec3 ambient; uniform vec4 cuts[2];
+    uniform vec4 mapInfo; uniform float time, mirror, wetK, dayLift; uniform vec3 ambient; uniform vec4 cuts[2];
     varying vec4 vUv; varying vec2 vW;
     #include <fog_pars_fragment>
     float h21(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -421,22 +448,24 @@ const GroundShader = {
       for (int i = 0; i < 2; i++) { vec4 c = cuts[i]; if (c.w > 0.5 && vW.x > c.x && vW.x < c.y && vW.y < c.z) discard; }   // water cut-outs
       vec2 muv = vec2((vW.x - mapInfo.x) / mapInfo.y, (vW.y - mapInfo.z) / mapInfo.w);
       vec3 alb = texture2D(map, muv).rgb;
+      alb = mix(alb, pow(alb, vec3(0.5)) * vec3(1.02, 0.97, 0.92), dayLift * (1.0 - mirror));   // night paint -> sunlit pavement
       float wet = texture2D(wetMap, muv).r;
       float n = vn(vW * 0.42) * 0.65 + vn(vW * 1.9 + 3.0) * 0.35;
-      float puddle = max(smoothstep(0.5, 0.66, n) * wet, mirror);
+      float puddle = max(smoothstep(0.5, 0.66, n) * wet * wetK, mirror);
       vec2 rip = vec2(vn(vW * 3.0 + time * 1.3), vn(vW * 3.0 - time * 1.5 + 7.0)) - 0.5;
       float smear = mix(0.02, 0.006, puddle) + mirror * 0.01;
       vec4 uv = vUv; uv.xy += rip * (mix(0.008, 0.003, puddle) + mirror * 0.012) * uv.w;
       vec3 refl = vec3(0.0); float tot = 0.0;
       for (int i = -2; i <= 5; i++) { float k = 1.0 - abs(float(i)) / 6.0; vec4 u = uv; u.y += float(i) * smear * u.w; refl += texture2DProj(tDiffuse, u).rgb * k; tot += k; }
       refl /= tot;
-      float spec = wet * mix(0.42, 0.95, puddle);
+      float spec = wet * mix(0.42, 0.95, puddle) * mix(0.4, 1.0, max(wetK, mirror));
       vec3 c = alb * ambient * (1.0 - 0.55 * puddle * (1.0 - mirror)) + refl * spec * color;
       gl_FragColor = vec4(c, 1.0);
       #include <fog_fragment>
     }`,
 };
 const reflectors = [];
+const shadowCatcher = noLine(new THREE.ShadowMaterial({ color: "#2a1440", opacity: 0.42, depthWrite: false }));
 const mirrorRes = (k) => Math.min(1024, Math.round(innerWidth * PR * k));
 const makeMirror = (w, d, k, color = 0xd8e2ff) => {
   const s = mirrorRes(k);
@@ -465,6 +494,8 @@ const wetGround = (g, { x0, len, z0, span, paint, cuts = [] }) => {
   cuts.forEach((c, i) => u.cuts.value[i].set(c[0], c[1], c[2], 1));
   m.position.set(x0 + len / 2, 0, z0 + span / 2);
   g.add(m);
+  const sc = plane(g, len, span, shadowCatcher, x0 + len / 2, 0.006, z0 + span / 2);
+  sc.rotation.x = -Math.PI / 2; sc.receiveShadow = true; sc.userData.dyn = true; noRefl(sc);
   return m;
 };
 const waterTex = canvasTex(2, 2, (g) => { g.fillStyle = "#0a1520"; g.fillRect(0, 0, 2, 2); });
@@ -590,13 +621,19 @@ noRefl(splash);
 scene.add(rain, splash);
 
 // ------------------------------------------------------------------ silhouette crowd (P5's faceless passers-by)
+const NPCS = [];   // every passer-by: day = coloured outfits (P3R crowds), rain = P5 silhouettes
 const NPC = (() => {
+  const strip = (g) => { g.deleteAttribute("uv"); return g; };
   const torso = new THREE.CapsuleGeometry(0.17, 0.48, 4, 10); torso.scale(1, 1, 0.68); torso.translate(0, 1.16, 0);
   const head = new THREE.SphereGeometry(0.115, 14, 10); head.scale(0.92, 1.08, 1); head.translate(0, 1.66, 0);
+  const hair = new THREE.SphereGeometry(0.125, 14, 8, 0, Math.PI * 2, 0, Math.PI * 0.55); hair.scale(0.95, 1.05, 1.05); hair.translate(0, 1.685, -0.012);
   const neck = new THREE.CylinderGeometry(0.05, 0.06, 0.12, 8); neck.translate(0, 1.52, 0);
-  const body = mergeGeometries([torso, head, neck].map((g) => { g.deleteAttribute("uv"); return g; }));
-  const leg = new THREE.CapsuleGeometry(0.075, 0.74, 4, 8); leg.translate(0, -0.42, 0); leg.deleteAttribute("uv");
-  const arm = new THREE.CapsuleGeometry(0.05, 0.56, 4, 8); arm.translate(0, -0.32, 0); arm.deleteAttribute("uv");
+  const leg = new THREE.CapsuleGeometry(0.075, 0.74, 4, 8); leg.translate(0, -0.42, 0);
+  const shoe = new THREE.BoxGeometry(0.11, 0.08, 0.24); shoe.translate(0, -0.86, 0.04);
+  const arm = new THREE.CapsuleGeometry(0.05, 0.56, 4, 8); arm.translate(0, -0.32, 0);
+  const hand = new THREE.SphereGeometry(0.045, 8, 6); hand.translate(0, -0.66, 0);
+  const bagG = new THREE.BoxGeometry(0.08, 0.28, 0.36); bagG.translate(0, -0.78, 0);
+  [torso, head, hair, neck, leg, shoe, arm, hand].forEach(strip);
   const canopy = new THREE.ConeGeometry(0.56, 0.24, 10, 1, true); canopy.translate(0, 2.08, 0.08);
   const stick = new THREE.CylinderGeometry(0.008, 0.008, 0.9, 5); stick.translate(0, 1.66, 0.08);
   const tints = ["#10131c", "#151a26", "#1b2030", "#14151d", "#212736", "#181c28"].map((c) => noLine(new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: 0.92 })));
@@ -606,29 +643,53 @@ const NPC = (() => {
     noLine(new THREE.MeshStandardMaterial({ color: "#1d2a4a", roughness: 0.35, side: THREE.DoubleSide })),
     noLine(new THREE.MeshStandardMaterial({ color: "#5a1420", roughness: 0.35, side: THREE.DoubleSide })),
   ];
+  const o = (c) => thin(toon(c, { roughness: 0.75 }));
+  const OUTFITS = [   // [jacket, trousers, shirt-ish accent, shoes, bag]
+    ["#1f2a48", "#3c4150", "#e8e6e0", "#1a1a1e", "#2a1e16"],   // school blazer
+    ["#1f2a48", "#2a3048", "#e8e6e0", "#1a1a1e", null],
+    ["#2c2f36", "#2c2f36", "#dfe3ea", "#121214", "#1a1a1e"],   // salaryman
+    ["#3a3e46", "#3a3e46", "#e8e6e0", "#121214", "#1a1a1e"],
+    ["#c94a3a", "#34507a", "#f0ece4", "#e8e8e8", null],         // casual
+    ["#3a7ac9", "#2a2a30", "#f0ece4", "#f0f0f0", null],
+    ["#e0b040", "#34507a", "#f0ece4", "#8a5a3a", null],
+    ["#5a8a4a", "#d8cbb0", "#f0ece4", "#3a2a20", null],
+    ["#d8d4cc", "#2a2a30", "#f0ece4", "#1a1a1e", "#7a2a2a"],
+    ["#7a3a5a", "#2a2a30", "#f0ece4", "#1a1a1e", null],
+  ];
+  const SKIN = ["#f1c9a5", "#e0b08a", "#c68c62", "#f5d6bc"], HAIR = ["#1a1412", "#2a1c14", "#3a2618", "#121214", "#5a3a22"];
   return (p, R, { x, z, dir = 0, speed = 0, umbrella = R() < 0.6, scale = 0.92 + R() * 0.14, phone = false }) => {
-    const mat = pick(R, tints);
+    const sil = pick(R, tints), [jc, pc, ac, sc, bc] = pick(R, OUTFITS);
+    const mJ = o(jc), mP = o(pc), mS = o(pick(R, SKIN)), mH = o(pick(R, HAIR)), mSh = o(sc);
     const g = new THREE.Group();
     g.position.set(x, 0, z);
     g.scale.setScalar(scale);
-    add(g, body, mat);
+    const swaps = [];
+    const part = (parent, geo, day, px = 0, py = 0, pz = 0) => { const m = add(parent, geo, day, px, py, pz); m.castShadow = true; swaps.push([m, day]); return m; };
+    part(g, torso, mJ); part(g, head, mS); part(g, hair, mH); part(g, neck, mS);
+    const collar = add(g, new THREE.BoxGeometry(0.09, 0.22, 0.02), o(ac), 0, 1.3, 0.118); swaps.push([collar, collar.material]);
     const parts = [];
     for (const s of [-1, 1]) {
-      const hip = new THREE.Group(); hip.position.set(s * 0.09, 0.9, 0); g.add(hip); add(hip, leg, mat);
-      const sh = new THREE.Group(); sh.position.set(s * 0.22, 1.42, 0); sh.rotation.z = s * 0.08; g.add(sh); add(sh, arm, mat);
+      const hip = new THREE.Group(); hip.position.set(s * 0.09, 0.9, 0); g.add(hip); part(hip, leg, mP); part(hip, shoe, mSh);
+      const sh = new THREE.Group(); sh.position.set(s * 0.22, 1.42, 0); sh.rotation.z = s * 0.08; g.add(sh); part(sh, arm, mJ); part(sh, hand, mS);
       parts.push(hip, sh);
     }
-    if (umbrella) {
-      const u = pick(R, umbrellas);
-      add(g, canopy, u); add(g, stick, toon("#222"));
-      parts[3].rotation.set(-1.2, 0, 0.35);   // right hand up holding the umbrella
-    }
+    if (bc && !phone) part(parts[1], bagG, o(bc), 0.06, 0, 0);
+    const umb = [];
+    if (umbrella) { umb.push(add(g, canopy, pick(R, umbrellas)), add(g, stick, toon("#222"))); }
     if (phone) { parts[1].rotation.x = -1.1; parts[3].rotation.x = -1.1; }
     g.rotation.y = dir > 0 ? Math.PI / 2 : dir < 0 ? -Math.PI / 2 : R() * Math.PI * 2;
     p.add(g);
-    return { g, parts, dir, speed, umbrella, phone, phase: R() * 6, z0: z, push: 0 };
+    const n = { g, parts, dir, speed, umbrella, phone, phase: R() * 6, z0: z, push: 0, umb, swaps, sil };
+    NPCS.push(n);
+    return n;
   };
 })();
+// rain: everyone becomes a faceless silhouette with an umbrella; day: full colour, umbrellas away
+const dressCrowd = (rain) => NPCS.forEach((n) => {
+  n.swaps.forEach(([m, day]) => { m.material = rain ? n.sil : day; m.castShadow = !rain; });
+  n.umb.forEach((m) => (m.visible = rain));
+  if (n.umbrella && !n.phone) n.parts[3].rotation.set(rain ? -1.2 : 0, 0, rain ? 0.35 : 0.08);
+});
 const tickCrowd = (crowd, dt, time) => {
   for (const n of crowd) {
     if (n.speed) {
@@ -638,7 +699,7 @@ const tickCrowd = (crowd, dt, time) => {
       n.phase += dt * n.speed * 4.4;
       const s = Math.sin(n.phase);
       n.parts[0].rotation.x = s * 0.42; n.parts[2].rotation.x = -s * 0.42;
-      n.parts[1].rotation.x = -s * 0.32; if (!n.umbrella) n.parts[3].rotation.x = s * 0.32;
+      n.parts[1].rotation.x = -s * 0.32; if (!(n.umbrella && rainMode)) n.parts[3].rotation.x = s * 0.32;
       n.g.position.y = Math.abs(Math.cos(n.phase)) * 0.03;
       // sidestep the player
       const dx = hero.position.x - n.g.position.x, dz = hero.position.z - n.g.position.z;
@@ -746,13 +807,13 @@ const shopRow = (p, E, R, side, x0, x1, cfg) => {
     const w = cfg.wMin + R() * (cfg.wMax - cfg.wMin), h = cfg.hMin + R() * (cfg.hMax - cfg.hMin), cx = x + w / 2;
     const wall = pick(R, cfg.walls);
     const tex = windowsTex(Math.max(2, Math.round(w / 1.3)), Math.max(2, Math.round(h / 2.9)), wall, Math.round(R() * 1e5), cfg.lit ?? 0.45);
-    const side_ = noLine(new THREE.MeshBasicMaterial({ map: tex, color: new THREE.Color(0.85, 0.85, 0.9) }));
+    const side_ = facadeMat(tex, 0.9);
     box(p, w - 0.06, h, 10, [side_, side_, toon("#1b1e26"), toon("#1b1e26"), side_, side_], cx, 0, fz + side * 5);
     // ledge between floors
     box(p, w - 0.06, 0.14, 0.18, toon("#30343e"), cx, 3.3, fz + out * 0.09);
     if (cfg.shops !== false) {
       const shopC = pick(R, ["#fff1d6", "#eaf4ff", "#ffe2b8", "#f6fbff"]);
-      const shop = noLine(new THREE.MeshBasicMaterial({ map: shopTex(R, shopC), color: new THREE.Color(0.78, 0.76, 0.74) }));
+      const shop = shopMat(shopTex(R, shopC));
       plane(p, w - 0.8, 2.55, shop, cx, 1.32, fz + out * 0.03, ry);
       for (const s of [-1, 1]) box(p, 0.35, 3.2, 0.3, toon("#22252d"), cx + s * (w / 2 - 0.25), 0, fz + out * 0.12);
       box(p, w - 0.1, 0.55, 0.32, toon(pick(R, ["#2a2d36", "#3b2a26", "#26303a"])), cx, 2.65, fz + out * 0.14);
@@ -841,23 +902,30 @@ const strut = (p, a, b, r, mat, seg = 6) => {
 };
 const lines = (p, pts, color = "#0a0b10") => { const geo = new THREE.BufferGeometry(); geo.setAttribute("position", new THREE.Float32BufferAttribute(pts, 3)); const l = new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color })); p.add(l); return l; };
 // window textures: gothic / round-arched / square, lit warm at night
-const archTex = (cols, rows, wall, seed, lit = 0.55, kind = "gothic") => canvasTex(cols * 32, rows * 48, (g, w, h) => {
-  const R = rng(seed);
-  g.fillStyle = wall; g.fillRect(0, 0, w, h);
-  g.fillStyle = "rgba(0,0,0,.16)"; for (let y = 0; y < h; y += 12) g.fillRect(0, y, w, 1);
-  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
-    const x = c * 32 + 8, y = r * 48 + 8, ww = 16, hh = 34, on = R() < lit;
-    g.fillStyle = on ? pick(R, ["#ffd38a", "#ffe2a8", "#ffc46b", "#fff0cc"]) : "#121620";
+const archTex = (cols, rows, wall, seed, lit = 0.55, kind = "gothic") => {
+  const R = rng(seed), on = Array.from({ length: cols * rows }, () => (R() < lit ? pick(R, ["#ffd38a", "#ffe2a8", "#ffc46b", "#fff0cc"]) : null));
+  const shape = (g, x, y, ww, hh) => {
     g.beginPath(); g.moveTo(x, y + hh); g.lineTo(x, y + 10);
     if (kind === "gothic") { g.quadraticCurveTo(x, y, x + ww / 2, y - 3); g.quadraticCurveTo(x + ww, y, x + ww, y + 10); }
     else if (kind === "round") g.arc(x + ww / 2, y + 10, ww / 2, Math.PI, 0);
     else { g.lineTo(x, y); g.lineTo(x + ww, y); }
-    g.lineTo(x + ww, y + hh); g.closePath(); g.fill();
-    g.fillStyle = "rgba(20,15,10,.6)"; g.fillRect(x + ww / 2 - 1, y + 4, 2, hh - 4); g.fillRect(x, y + hh * 0.55, ww, 2);
-    g.fillStyle = "rgba(0,0,0,.35)"; g.fillRect(x - 2, y + hh, ww + 4, 3);
-  }
-});
-const litMat = (tex, k = 0.85) => noLine(new THREE.MeshBasicMaterial({ map: tex, color: new THREE.Color(k, k, k) }));
+    g.lineTo(x + ww, y + hh); g.closePath();
+  };
+  const each = (fn) => { for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) fn(c * 32 + 8, r * 48 + 8, on[r * cols + c]); };
+  return texPair(cols * 32, rows * 48, (g, w, h) => {
+    g.fillStyle = dayWall(wall); g.fillRect(0, 0, w, h);
+    g.fillStyle = "rgba(0,0,0,.12)"; for (let y = 0; y < h; y += 12) g.fillRect(0, y, w, 1);
+    each((x, y) => {
+      g.fillStyle = "rgba(255,250,240,.4)"; g.fillRect(x - 3, y + 34, 22, 4);
+      shape(g, x, y, 16, 34); const gr = g.createLinearGradient(x, y, x + 16, y + 34); gr.addColorStop(0, "#8ea6bf"); gr.addColorStop(1, "#2e3c52"); g.fillStyle = gr; g.fill();
+      g.fillStyle = "rgba(240,235,225,.8)"; g.fillRect(x + 7, y + 4, 2, 30); g.fillRect(x, y + 18, 16, 2);
+    });
+  }, (g, w, h) => {
+    g.fillStyle = "#000"; g.fillRect(0, 0, w, h);
+    each((x, y, c) => { if (!c) return; shape(g, x, y, 16, 34); g.fillStyle = c; g.fill(); g.fillStyle = "rgba(20,15,10,.6)"; g.fillRect(x + 7, y + 4, 2, 30); g.fillRect(x, y + 18, 16, 2); });
+  });
+};
+const litMat = (tex, k = 0.85) => facadeMat(tex, k);
 const doorMat = noLine(new THREE.MeshBasicMaterial({ color: new THREE.Color(1.5, 1.4, 1.25), map: canvasTex(64, 96, (g, w, h) => {
   g.fillStyle = "#1a1410"; g.fillRect(0, 0, w, h);
   const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, "#ffe0a0"); gr.addColorStop(1, "#ffb860");
@@ -996,7 +1064,10 @@ const newArea = (seed) => ({ group: new THREE.Group(), E: [], crowd: [], spots: 
 // walkers along a lane (wrap within [xa, xb]) and standing figures
 const walkers = (A, n, zs, xa = -L - 10, xb = L + 10, umb = 0.65) => { for (let i = 0; i < n; i++) { const c = NPC(A.group, A.R, { x: xa + A.R() * (xb - xa), z: pick(A.R, zs) + (A.R() - 0.5) * 0.8, dir: A.R() < 0.5 ? 1 : -1, speed: 0.9 + A.R() * 0.6, umbrella: A.R() < umb }); c.xa = xa; c.xb = xb; A.crowd.push(c); } };
 const standers = (A, list) => list.forEach(([x, z, ry]) => { const n = NPC(A.group, A.R, { x, z, phone: A.R() < 0.6, umbrella: A.R() < 0.5 }); if (ry !== undefined) n.g.rotation.y = ry; A.crowd.push(n); });
-const finish = (A, extra) => { bake(A.group); return Object.assign(A, extra, { tick(dt, time) { A.ticks.forEach((f) => f(dt, time)); } }); };
+const finish = (A, extra) => {
+  bake(A.group);
+  A.group.traverse((o) => { if (o.isMesh && !o.userData.dyn && [].concat(o.material).some((m) => m.isMeshStandardMaterial)) o.castShadow = o.receiveShadow = true; });
+  return Object.assign(A, extra, { tick(dt, time) { A.ticks.forEach((f) => f(dt, time)); } }); };
 const tram = (A, z, stopX) => {
   const t = new THREE.Group(); t.userData.dyn = true;
   const green = toon("#1f6b45", { roughness: 0.35 });
@@ -1530,15 +1601,15 @@ const landmark = (g, name, x, z, h, ry = 0, fallback) => {
     m.scale.setScalar(s);
     const c = b.getCenter(new THREE.Vector3());
     m.position.set(-c.x * s, -b.min.y * s, -c.z * s);
-    m.traverse((o) => { if (o.isMesh) [].concat(o.material).forEach((mt) => { mt.color?.multiplyScalar(0.6); mt.emissive?.set("#8a8478"); mt.emissiveMap = mt.map; mt.emissiveIntensity = 0.75; mt.userData.outlineParameters = { thickness: 0.001, color: [0.04, 0.05, 0.09] }; }); });
+    m.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; if (o.isMesh) [].concat(o.material).forEach((mt) => { mt.color?.multiplyScalar(0.6); mt.emissive?.set("#8a8478"); mt.emissiveMap = mt.map; mt.emissiveIntensity = 0.75; mt.userData.outlineParameters = { thickness: 0.001, color: [0.04, 0.05, 0.09] }; }); });
     holder.add(m);
   }, undefined, () => fallback && fallback(holder));
   return holder;
 };
 const tower = (g, x, z, w, h, d, wall = "#1c2232", seed = 1) => {
   const tex = windowsTex(Math.max(3, Math.round(w / 1.2)), Math.max(4, Math.round(h / 2.6)), wall, seed, 0.38, false);
-  const side = noLine(new THREE.MeshBasicMaterial({ map: tex }));
-  box(g, w, h, d, [side, side, toon("#141822"), toon("#141822"), side, side], x, 0, z);
+  const side = facadeMat(tex);
+  box(g, w, h, d, [side, side, toon(dayWall(wall)), toon(dayWall(wall)), side, side], x, 0, z);
   box(g, 0.3, 0.3, 0.3, glow("#ff2a2a", 4), x, h, z);   // aircraft warning light
 };
 
@@ -1605,7 +1676,7 @@ const loadAvatar = () => new Promise((res) => {
     const model = gltf.scene;
     model.traverse((o) => {
       if (!o.isMesh) return;
-      o.frustumCulled = false;
+      o.frustumCulled = false; o.castShadow = true;
       [].concat(o.material).forEach((m) => { m.roughness = 0.7; m.metalness = 0; rimify(m); m.userData.outlineParameters = { thickness: 0.0032, color: [0.02, 0.02, 0.04] }; });
     });
     const bones = {};
@@ -1755,10 +1826,44 @@ const pose = (phase, amount, time) => {
 // dim overcast fill + a few point lights that follow the hero, each borrowing the colour of the
 // nearest shop window / lamp / neon sign so the character is lit by the street as it walks
 const hemi = new THREE.HemisphereLight("#ffffff", "#222222", 1);
-const moon = new THREE.DirectionalLight("#a9bde0", 0.55);
-moon.position.set(-10, 30, 12);
+const sun = new THREE.DirectionalLight("#ffc68a", 3.4);
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -26, right: 26, top: 26, bottom: -26, near: 1, far: 120 });
+sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.02;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.autoUpdate = false;   // rendered once per frame, not again for each reflection
+scene.add(sun.target);
 const heroLights = Array.from({ length: 4 }, () => { const l = new THREE.PointLight("#ffffff", 0, 11, 1.7); scene.add(l); return l; });
-scene.add(hemi, moon);
+scene.add(hemi, sun);
+// Time of day. "day" = Persona 3 Reload after-school golden hour; "rain" = Persona 5 Royal evening rain.
+const MODES = {
+  day: { sky: SKY("#5a7cc8", "#f0b496", "#ffe0b0"), fog: "#e8c0a4", fogK: 0.3, hemi: ["#ffe8d4", "#8a7a90", 1.6], sun: ["#ffcf96", 4.6], glow: 0.06, shop: 0.6, pools: 0, lights: 0.15, wet: 0, ambient: [1.0, 0.93, 0.86], exposure: 1.3, bloom: [0.3, 0.4, 1.1] },
+  rain: { glow: 1, shop: 0.78, pools: 1, lights: 1, wet: 1, ambient: [0.32, 0.36, 0.46], exposure: 1.15, bloom: [0.6, 0.42, 0.95], sun: ["#a9bde0", 0.4] },
+};
+let mode = (() => { try { return localStorage.getItem("world-mode") === "rain" ? "rain" : "day"; } catch { return "day"; } })();
+let rainMode = mode === "rain";
+const sunOff = new THREE.Vector3(-30, 26, 22);
+function applyMode() {
+  const M = MODES[mode], day = mode === "day";
+  rainMode = !day;
+  scene.background = day ? M.sky : area.sky;
+  scene.fog = new THREE.FogExp2(day ? M.fog : area.fog[0], area.fog[1] * (day ? M.fogK : 1));
+  const h = day ? M.hemi : [area.hemi[0], area.hemi[1], area.hemi[2] * 0.8];
+  hemi.color.set(h[0]); hemi.groundColor.set(h[1]); hemi.intensity = h[2];
+  sun.color.set(M.sun[0]); sun.intensity = M.sun[1]; sun.castShadow = day;
+  FACADES.forEach((m) => (m.emissiveIntensity = M.glow));
+  SHOPS.forEach((m) => m.color.setScalar(M.shop));
+  poolCache.forEach((m) => { m.color.copy(m.userData.base).multiplyScalar(M.pools); m.visible = M.pools > 0; });
+  reflectors.forEach((m) => { const u = m.material.uniforms; u.wetK.value = M.wet; u.dayLift.value = day ? 1 : 0; u.ambient.value.setRGB(...M.ambient); });
+  rain.visible = splash.visible = !day;
+  renderer.toneMappingExposure = M.exposure;
+  [bloom.strength, bloom.radius, bloom.threshold] = M.bloom;
+  grade.uniforms.day.value = day ? 1 : 0;
+  dressCrowd(!day);
+  updateEdges();
+}
+const setMode = (m) => { mode = m; try { localStorage.setItem("world-mode", m); } catch {} applyMode(); };
 const _col = new THREE.Color();
 const updateLights = () => {
   const near = area.E.map((e) => ({ e, d: e.p.distanceToSquared(hero.position) })).sort((a, b) => a.d - b.d).slice(0, heroLights.length);
@@ -1767,7 +1872,7 @@ const updateLights = () => {
     if (!n) { l.intensity = 0; return; }
     l.position.lerp(n.e.p, 0.2);
     l.color.lerp(_col.set(n.e.c), 0.2);
-    l.intensity += (n.e.k * 0.75 - l.intensity) * 0.2;
+    l.intensity += (n.e.k * 0.75 * MODES[mode].lights - l.intensity) * 0.2;
   });
 };
 
@@ -1786,9 +1891,8 @@ function setArea(i, fromEdge = 0) {
   if (area) scene.remove(area.group);
   area = built[areaIndex] || (built[areaIndex] = builders[areaIndex]());
   scene.add(area.group);
-  scene.background = area.sky;
-  scene.fog = new THREE.FogExp2(...area.fog);
-  hemi.color.set(area.hemi[0]); hemi.groundColor.set(area.hemi[1]); hemi.intensity = area.hemi[2];
+  applyMode();
+  buildMinimap();
   hero.position.set(fromEdge ? -fromEdge * (L - 1) : -L + 8, 0, area.lane);
   hero.rotation.y = fromEdge < 0 ? -Math.PI / 2 : Math.PI / 2;
   camYaw = hero.rotation.y + (fromEdge < 0 ? -0.35 : 0.35);
@@ -1808,16 +1912,27 @@ const updateEdges = () => {
   // P5-style calendar badge: date, weekday, rain, time of day
   const d = new Date();
   const wd = new Intl.DateTimeFormat(lang(), { weekday: "short" }).format(d);
-  timeEl.innerHTML = `<b>${d.getMonth() + 1}/${d.getDate()}</b><span>${wd}</span><i aria-hidden="true">☂</i><small>${t("eve")}</small>`;
+  timeEl.innerHTML = `<b>${d.getMonth() + 1}/${d.getDate()}</b><span>${wd}</span><i aria-hidden="true">${mode === "day" ? "☀" : "☂"}</i><small>${t(mode === "day" ? "day" : "eve")}</small>`;
+  updateGoal();
 };
 tabs.forEach((b) => b.addEventListener("click", () => setArea(+b.dataset.area)));
+timeEl.addEventListener("click", () => setMode(mode === "day" ? "rain" : "day"));
+// places checked (kept per browser)
+const visited = new Set((() => { try { return JSON.parse(localStorage.getItem("world-visited") || "[]"); } catch { return []; } })());
+const goalEl = root.querySelector(".world__goal");
+const updateGoal = () => { if (!area) return; const n = area.spots.filter((s) => visited.has(s.key)).length; goalEl.innerHTML = `<b>★</b> ${t("goal")} <span>${n} / ${area.spots.length}</span>`; };
 new MutationObserver(() => { titleCard.textContent = t("areas")[areaIndex]; updateEdges(); lastSpot = null; lastPrompt = null; }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 
 // ------------------------------------------------------------------ input (camera-relative) + checking places
 const keys = {};
 let target = null, active = false, near = null, cine = null;
 const KEYMAP = { ArrowLeft: "l", a: "l", q: "l", ArrowRight: "r", d: "r", ArrowUp: "u", w: "u", z: "u", ArrowDown: "dn", s: "dn" };
-const interact = (s) => { if (!s) return; cine = { s, t: 0 }; showSpot(s, true); showPrompt(null); };
+const interact = (s) => {
+  if (!s) return;
+  cine = { s, t: 0 }; showSpot(s, true); showPrompt(null);
+  visited.add(s.key); try { localStorage.setItem("world-visited", JSON.stringify([...visited])); } catch {}
+  updateGoal();
+};
 addEventListener("keydown", (e) => {
   if (!active) return;
   const k = KEYMAP[e.key.length === 1 ? e.key.toLowerCase() : e.key];
@@ -1827,8 +1942,19 @@ addEventListener("keydown", (e) => {
 });
 addEventListener("keyup", (e) => { const k = KEYMAP[e.key.length === 1 ? e.key.toLowerCase() : e.key]; if (k) keys[k] = false; if (e.key === "Shift") keys.run = false; });
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
-canvas.addEventListener("pointerdown", (e) => {
-  active = true; root.classList.add("is-active");
+let drag = null, camDist = 6.4, dragT = -9;
+canvas.addEventListener("pointerdown", (e) => { active = true; root.classList.add("is-active"); drag = { x: e.clientX, y: e.clientY, moved: false }; canvas.setPointerCapture(e.pointerId); });
+canvas.addEventListener("pointermove", (e) => {
+  if (!drag) return;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (!drag.moved && Math.hypot(dx, dy) < 7) return;
+  drag.moved = true; drag.x = e.clientX; drag.y = e.clientY;
+  camYaw -= dx * 0.006; camDist = THREE.MathUtils.clamp(camDist + dy * 0.02, 2.8, 10); dragT = clock.elapsedTime;
+});
+canvas.addEventListener("wheel", (e) => { if (!active) return; e.preventDefault(); camDist = THREE.MathUtils.clamp(camDist * (1 + e.deltaY * 0.0012), 2.8, 10); }, { passive: false });
+canvas.addEventListener("pointerup", (e) => {
+  const d = drag; drag = null;
+  if (!d || d.moved) return;
   const r = canvas.getBoundingClientRect();
   ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
   ray.setFromCamera(ndc, camera);
@@ -1860,6 +1986,79 @@ const showPrompt = (s) => {
   prompt.hidden = !s;
   if (s) prompt.innerHTML = `<kbd>E</kbd> ${t("check")} <b>${spotText(s.key)[0]}</b>`;
 };
+
+// ------------------------------------------------------------------ minimap (P5 colours: black, white, red)
+// Each area's map is drawn once from above (buildings white, low props grey, the walkable street dark),
+// then shown rotated with the camera, the hero arrow in the centre and the "!" places in red.
+const mapEl = root.querySelector(".world__map"), mapName = root.querySelector(".world__mapname");
+const MAP = { ppm: 3, x0: -L - 30, x1: L + 30, z0: -45, z1: 45 };
+const mapCam = new THREE.OrthographicCamera(-(MAP.x1 - MAP.x0) / 2, (MAP.x1 - MAP.x0) / 2, (MAP.z1 - MAP.z0) / 2, -(MAP.z1 - MAP.z0) / 2, 1, 600);
+mapCam.position.set((MAP.x0 + MAP.x1) / 2, 300, (MAP.z0 + MAP.z1) / 2); mapCam.up.set(0, 0, -1); mapCam.lookAt((MAP.x0 + MAP.x1) / 2, 0, (MAP.z0 + MAP.z1) / 2);
+mapCam.layers.enableAll();
+const mapRT = new THREE.WebGLRenderTarget((MAP.x1 - MAP.x0) * MAP.ppm, (MAP.z1 - MAP.z0) * MAP.ppm);
+const mapMat = new THREE.ShaderMaterial({
+  vertexShader: "varying float vY; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vY = w.y; gl_Position = projectionMatrix * viewMatrix * w; }",
+  fragmentShader: "varying float vY; void main(){ if (vY < 0.3) discard; gl_FragColor = vec4(vY > 2.6 ? vec3(1.0) : vec3(0.45), 1.0); }",
+  side: THREE.DoubleSide,
+});
+function buildMinimap() {
+  const A = area, W = mapRT.width, H = mapRT.height;
+  const hidden = [];
+  A.group.traverse((o) => { if (o.visible && (o.isSprite || o.isLine || o === o.parent?.userData?.npc || reflectors.includes(o))) { o.visible = false; hidden.push(o); } });
+  NPCS.forEach((n) => { if (n.g.visible) { n.g.visible = false; hidden.push(n.g); } });
+  const keep = [scene.background, scene.fog, hero.visible, rain.visible, splash.visible, renderer.getClearAlpha()];
+  scene.background = null; scene.fog = null; hero.visible = rain.visible = splash.visible = false;
+  scene.overrideMaterial = mapMat;
+  renderer.setRenderTarget(mapRT); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(scene, mapCam);
+  const buf = new Uint8Array(W * H * 4); renderer.readRenderTargetPixels(mapRT, 0, 0, W, H, buf);
+  renderer.setRenderTarget(null); scene.overrideMaterial = null; renderer.setClearColor(0x000000, keep[5]);
+  [scene.background, scene.fog, hero.visible, rain.visible, splash.visible] = keep;
+  hidden.forEach((o) => (o.visible = true));
+  const c = A.mapCanvas || (A.mapCanvas = document.createElement("canvas")); c.width = W; c.height = H;
+  const g = c.getContext("2d");
+  g.fillStyle = "#101012"; g.fillRect(0, 0, W, H);
+  g.fillStyle = "#3b3b40";
+  for (let x = MAP.x0; x < MAP.x1; x += 0.5) { const [a, b] = A.zr(x); g.fillRect((x - MAP.x0) * MAP.ppm, (a - 1 - MAP.z0) * MAP.ppm, MAP.ppm * 0.5 + 1, (b - a + 2) * MAP.ppm); }
+  const img = g.getImageData(0, 0, W, H);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const si = ((H - 1 - y) * W + x) * 4, di = (y * W + x) * 4;
+    if (buf[si + 3] > 0) { const v = buf[si] > 200 ? 236 : 120; img.data[di] = img.data[di + 1] = img.data[di + 2] = v; }
+  }
+  g.putImageData(img, 0, 0);
+  if (!A.mapRetry) { A.mapRetry = true; setTimeout(() => area === A && buildMinimap(), 4000); }   // again once the GLB landmarks have loaded
+}
+function drawMinimap() {
+  const A = area; if (!A.mapCanvas || mapEl.offsetParent === null) return;
+  const dpr = Math.min(devicePixelRatio, 2), S = Math.round(mapEl.clientWidth * dpr);
+  if (mapEl.width !== S) mapEl.width = mapEl.height = S;
+  const g = mapEl.getContext("2d"), r = S / 2, k = (r / 38) / MAP.ppm;   // ~38 m radius
+  const th = -Math.PI / 2 - Math.atan2(Math.cos(camYaw), Math.sin(camYaw));
+  g.clearRect(0, 0, S, S);
+  g.save();
+  g.beginPath(); g.arc(r, r, r - 3 * dpr, 0, Math.PI * 2); g.clip();
+  g.fillStyle = "#101012"; g.fillRect(0, 0, S, S);
+  g.translate(r, r); g.rotate(th); g.scale(k, k);
+  g.translate(-(hero.position.x - MAP.x0) * MAP.ppm, -(hero.position.z - MAP.z0) * MAP.ppm);
+  g.drawImage(A.mapCanvas, 0, 0);
+  for (const s of A.spots) {
+    const x = (s.x - MAP.x0) * MAP.ppm, y = (s.z - MAP.z0) * MAP.ppm, rr = 7 * dpr / k;
+    g.fillStyle = visited.has(s.key) ? "#7a7a80" : "#e60012"; g.strokeStyle = "#fff"; g.lineWidth = 2 * dpr / k;
+    g.beginPath(); g.arc(x, y, rr, 0, Math.PI * 2); g.fill(); g.stroke();
+    g.save(); g.translate(x, y); g.rotate(-th); g.fillStyle = "#fff"; g.font = `900 ${11 * dpr / k}px "Arial Black", sans-serif`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(visited.has(s.key) ? "✓" : "!", 0, 0.5 * dpr / k); g.restore();
+  }
+  g.restore();
+  // hero arrow (relative to the map rotation)
+  const ha = th + Math.atan2(Math.cos(hero.rotation.y), Math.sin(hero.rotation.y));
+  g.save(); g.translate(r, r); g.rotate(ha);
+  g.beginPath(); g.moveTo(11 * dpr, 0); g.lineTo(-7 * dpr, 7 * dpr); g.lineTo(-3 * dpr, 0); g.lineTo(-7 * dpr, -7 * dpr); g.closePath();
+  g.fillStyle = "#e60012"; g.fill(); g.lineWidth = 2 * dpr; g.strokeStyle = "#fff"; g.stroke(); g.restore();
+  g.lineWidth = 4 * dpr; g.strokeStyle = "#fff"; g.beginPath(); g.arc(r, r, r - 3 * dpr, 0, Math.PI * 2); g.stroke();
+  // location label: area + nearest place
+  let best = null, bd = 30;
+  for (const s of A.spots) { const d = Math.hypot(s.x - hero.position.x, s.z - hero.position.z); if (d < bd) { bd = d; best = s; } }
+  const label = t("areas")[areaIndex].split(" · ")[0], sub = best ? spotText(best.key)[0] : "";
+  if (mapName.dataset.k !== label + sub) { mapName.dataset.k = label + sub; mapName.innerHTML = `<b>${label}</b>${sub ? `<small>${sub}</small>` : ""}`; }
+}
 
 // ------------------------------------------------------------------ loop
 let phase = 0, walkAmt = 0, visible = true, runAmt = 0, clockDt = 0, autoDir = 1, camYaw = Math.PI / 2, snapCam = true, lightT = 0;
@@ -1926,9 +2125,9 @@ function step(dt, time) {
     showPrompt(cine ? null : near);
   }
   // low, close chase camera over the right shoulder; swings round behind the hero as it turns
-  if (moving) {
+  if (moving && time - dragT > 2.5) {
     let dy = hero.rotation.y - camYaw; dy = Math.atan2(Math.sin(dy), Math.cos(dy));
-    if (Math.abs(dy) < 2.3) camYaw += dy * Math.min(1, dt * 1.6);
+    if (Math.abs(dy) < 2.3) camYaw += dy * Math.min(1, dt * 1.2);
   }
   fwd.set(Math.sin(camYaw), 0, Math.cos(camYaw));
   right.set(-Math.cos(camYaw), 0, Math.sin(camYaw));
@@ -1940,9 +2139,9 @@ function step(dt, time) {
     want.copy(hero.position).addScaledVector(_v, 3.4).add(_a.set(-_v.z, 0, _v.x).multiplyScalar(0.9)); want.y = 1.25;
     lookWant.copy(cine.s.look);
   } else {
-    want.copy(hero.position).addScaledVector(fwd, -3.2).addScaledVector(right, 0.55);
-    want.y = 1.42 + walkAmt * 0.04;
-    lookWant.copy(hero.position).addScaledVector(fwd, 3.5).addScaledVector(right, 0.25).setY(1.3);
+    want.copy(hero.position).addScaledVector(fwd, -camDist).addScaledVector(right, 0.3);
+    want.y = 0.9 + camDist * 0.52;
+    lookWant.copy(hero.position).addScaledVector(fwd, 1.4).setY(1.15);
   }
   want.z = THREE.MathUtils.clamp(want.z, cz0, cz1);
   const k = snapCam ? 1 : Math.min(1, dt * (cine ? 2 : 4));
@@ -1950,6 +2149,9 @@ function step(dt, time) {
   look.lerp(lookWant, snapCam ? 1 : Math.min(1, dt * (cine ? 2.5 : 5)));
   snapCam = false;
   camera.lookAt(look);
+  sun.position.copy(hero.position).add(sunOff); sun.target.position.copy(hero.position);
+  renderer.shadowMap.needsUpdate = true;
+  drawMinimap();
   rainUniforms.time.value = time;
   rainUniforms.center.value.copy(camera.position).addScaledVector(fwd, 8);
   rainUniforms.cam.value.copy(camera.position);

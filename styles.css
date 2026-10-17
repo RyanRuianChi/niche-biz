@@ -557,13 +557,31 @@ img { display: block; max-width: 100%; }
 .world__loc span { font: clamp(18px, 2.4vw, 28px)/1 var(--display); letter-spacing: 1px; text-transform: uppercase; }
 .world__time {
   position: absolute; top: 14px; right: 14px; display: flex; align-items: baseline; gap: 6px; padding: 2px 14px 4px;
-  background: var(--ink); color: var(--white); border: 2px solid var(--white); transform: rotate(2deg) skewX(var(--skew)); pointer-events: none;
+  background: var(--ink); color: var(--white); border: 2px solid var(--white); transform: rotate(2deg) skewX(var(--skew)); cursor: pointer; font: inherit;
 }
 .world__time b { font: clamp(20px, 2.6vw, 30px)/1 var(--display); letter-spacing: 1px; }
 .world__time span { font: 12px var(--heavy); text-transform: uppercase; color: var(--yellow); }
 .world__time i { font-style: normal; font-size: 16px; color: #8fc4ff; }
 .world__time small { font: 10px var(--heavy); letter-spacing: 2px; text-transform: uppercase; opacity: .8; }
 .world__time:empty { display: none; }
+.world__time:hover { box-shadow: 4px 4px 0 var(--red); }
+.world__goal {
+  position: absolute; top: 62px; right: 18px; padding: 2px 12px 3px; background: var(--white); color: var(--ink);
+  font: 11px var(--heavy); letter-spacing: 1px; text-transform: uppercase; transform: skewX(var(--skew)); pointer-events: none;
+}
+.world__goal b { color: var(--red); } .world__goal span { color: var(--red); margin-left: 4px; }
+.world__map {
+  position: absolute; left: 14px; bottom: 44px; width: clamp(110px, 15vw, 170px); height: clamp(110px, 15vw, 170px);
+  border-radius: 50%; box-shadow: 6px 6px 0 var(--red); pointer-events: none;
+}
+.world__mapname {
+  position: absolute; left: 10px; bottom: 14px; display: flex; align-items: baseline; gap: 8px; padding: 2px 12px 4px;
+  background: var(--ink); color: var(--white); border: 2px solid var(--white); transform: skewX(var(--skew)); pointer-events: none;
+}
+.world__mapname b { font: 14px var(--display); letter-spacing: 1px; text-transform: uppercase; }
+.world__mapname small { font: 10px var(--heavy); letter-spacing: 1px; text-transform: uppercase; color: var(--red); }
+.world__edge--l { display: none; }
+@media (max-width: 700px) { .world__goal { top: 56px; } }
 .world__edge {
   position: absolute; bottom: 14px; font: 13px var(--heavy); text-transform: uppercase; letter-spacing: 1px;
   background: var(--ink); color: var(--yellow); padding: 3px 10px; transform: skewX(var(--skew)); pointer-events: none; opacity: .85;
