@@ -1,52 +1,42 @@
-{"balance":455,"frozen":25}
-college-hall img exit=0
-[32m✓[39m generate_image · 02e0a5bf-fee5-4ee2-b57d-76d7e67632ad · 15 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/college-hall-img/tripo-out/assets-ref-upenn-college-hall-02e0a5bf
-college-hall model exit=0
-{"task_id":"9501751c-2b44-45da-a103-8923f5d57821","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/college-hall/tripo-out/lm-college-hall-9501751c","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/college-hall/tripo-out/lm-college-hall-9501751c/model.glb","preview":"tools/tripo/logs/landmarks/college-hall/tripo-out/lm-college-hall-9501751c/preview.png"}
-[32m✓[39m image_to_model · 9501751c-2b44-45da-a103-8923f5d57821 · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/college-hall/tripo-out/lm-college-hall-9501751c
--rw-r--r-- 1 runner runner 4640908 Oct 17 00:08 assets/models/lm/college-hall.glb
-fisher img exit=0
-[32m✓[39m generate_image · 232d5f8a-ffb3-45a5-a270-f6ba1f8bb787 · 15 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/fisher-img/tripo-out/assets-ref-upenn-fisher-library-232d5f8a
-fisher model exit=0
-{"task_id":"66f90f57-2981-45f6-92a9-f6d49ca8b3f7","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/fisher/tripo-out/lm-fisher-66f90f57","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/fisher/tripo-out/lm-fisher-66f90f57/model.glb","preview":"tools/tripo/logs/landmarks/fisher/tripo-out/lm-fisher-66f90f57/preview.png"}
-[32m✓[39m image_to_model · 66f90f57-2981-45f6-92a9-f6d49ca8b3f7 · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/fisher/tripo-out/lm-fisher-66f90f57
--rw-r--r-- 1 runner runner 2773256 Oct 17 00:12 assets/models/lm/fisher.glb
-love img exit=0
-[32m✓[39m generate_image · 29a833d6-5039-403d-9a74-cfd109091320 · 15 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/love-img/tripo-out/assets-ref-upenn-love-locust-wal-29a833d6
-love model exit=0
-{"task_id":"d4ad1c96-0a6e-47c4-81af-820a692abdd6","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/love/tripo-out/lm-love-d4ad1c96","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/love/tripo-out/lm-love-d4ad1c96/model.glb","preview":"tools/tripo/logs/landmarks/love/tripo-out/lm-love-d4ad1c96/preview.png"}
-[32m✓[39m image_to_model · d4ad1c96-0a6e-47c4-81af-820a692abdd6 · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/love/tripo-out/lm-love-d4ad1c96
--rw-r--r-- 1 runner runner 1573724 Oct 17 00:16 assets/models/lm/love.glb
-science img exit=0
-[32m✓[39m generate_image · cf8dfaa4-2926-43f7-8a32-3ff01f9affee · 15 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/science-img/tripo-out/assets-ref-cuhk-02-cuhk-science-cf8dfaa4
-science model exit=0
-{"task_id":"e89d0f3d-6c37-4e51-b492-7978650bedfe","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/science/tripo-out/lm-science-e89d0f3d","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/science/tripo-out/lm-science-e89d0f3d/model.glb","preview":"tools/tripo/logs/landmarks/science/tripo-out/lm-science-e89d0f3d/preview.png"}
-[32m✓[39m image_to_model · e89d0f3d-6c37-4e51-b492-7978650bedfe · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/science/tripo-out/lm-science-e89d0f3d
--rw-r--r-- 1 runner runner 2684888 Oct 17 00:19 assets/models/lm/science.glb
-water-tower img exit=0
-[32m✓[39m generate_image · 1f4af61c-4e08-4cf1-9f48-894e652756bb · 15 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/water-tower-img/tripo-out/assets-ref-cuhk-05-cuhk-new-asia-1f4af61c
-water-tower model exit=0
-{"task_id":"1c9450b6-41d2-40c1-afc4-1d3e3951226f","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/water-tower/tripo-out/lm-water-tower-1c9450b6","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/water-tower/tripo-out/lm-water-tower-1c9450b6/model.glb","preview":"tools/tripo/logs/landmarks/water-tower/tripo-out/lm-water-tower-1c9450b6/preview.png"}
-[32m✓[39m image_to_model · 1c9450b6-41d2-40c1-afc4-1d3e3951226f · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/water-tower/tripo-out/lm-water-tower-1c9450b6
--rw-r--r-- 1 runner runner 1609740 Oct 17 00:22 assets/models/lm/water-tower.glb
 {"balance":180,"frozen":0}
+merlion img exit=0
+[32m✓[39m text_to_image · f775dbc6-fadc-4809-a153-80abe827b655 · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/merlion-img/tripo-out/the-merlion-statue-in-singapore-f775dbc6
+merlion model exit=0
+{"task_id":"10eee293-fb41-454a-9325-0a6f4bfb15ec","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/merlion/tripo-out/lm-merlion-10eee293","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/merlion/tripo-out/lm-merlion-10eee293/model.glb","preview":"tools/tripo/logs/landmarks/merlion/tripo-out/lm-merlion-10eee293/preview.png"}
+[32m✓[39m image_to_model · 10eee293-fb41-454a-9325-0a6f4bfb15ec · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/merlion/tripo-out/lm-merlion-10eee293
+-rw-r--r-- 1 runner runner 2059632 Oct 17 00:26 assets/models/lm/merlion.glb
+mbs img exit=0
+[32m✓[39m text_to_image · 58192b2d-5167-4abf-a3cd-4664e91669b2 · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/mbs-img/tripo-out/marina-bay-sands-hotel-in-singap-58192b2d
+mbs model exit=0
+{"task_id":"26d2240c-a106-4a63-b898-20744f145229","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/mbs/tripo-out/lm-mbs-26d2240c","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/mbs/tripo-out/lm-mbs-26d2240c/model.glb","preview":"tools/tripo/logs/landmarks/mbs/tripo-out/lm-mbs-26d2240c/preview.png"}
+[32m✓[39m image_to_model · 26d2240c-a106-4a63-b898-20744f145229 · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/mbs/tripo-out/lm-mbs-26d2240c
+-rw-r--r-- 1 runner runner 2032632 Oct 17 00:29 assets/models/lm/mbs.glb
+flatiron img exit=0
+[32m✓[39m text_to_image · 75eca95f-76fd-4a83-bd91-b6a0017a1363 · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/flatiron-img/tripo-out/the-flatiron-building-in-new-yor-75eca95f
+flatiron model exit=0
+{"task_id":"76778e31-a247-43cf-a7c3-a17e502a0c88","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/flatiron/tripo-out/lm-flatiron-76778e31","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/flatiron/tripo-out/lm-flatiron-76778e31/model.glb","preview":"tools/tripo/logs/landmarks/flatiron/tripo-out/lm-flatiron-76778e31/preview.png"}
+[32m✓[39m image_to_model · 76778e31-a247-43cf-a7c3-a17e502a0c88 · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/flatiron/tripo-out/lm-flatiron-76778e31
+-rw-r--r-- 1 runner runner 4259380 Oct 17 00:33 assets/models/lm/flatiron.glb
+artscience img exit=0
+[32m✓[39m text_to_image · 08993cdf-42d1-4c69-bf94-8eefe94eb6e2 · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience-img/tripo-out/the-artscience-museum-in-singapo-08993cdf
+artscience model exit=4
+{"error":"Insufficient credits","exit_code":4,"api_code":2010,"suggestion":"run \"tripo topup\" to add credits"}
+[31m✗ Insufficient credits[39m
+[2m  → run "tripo topup" to add credits
+[22mfind: ‘tools/tripo/logs/landmarks/artscience’: No such file or directory
+find: ‘tools/tripo/logs/landmarks/artscience’: No such file or directory
+{"balance":0,"frozen":0}
