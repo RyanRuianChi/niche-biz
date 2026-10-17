@@ -1,0 +1,26 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/gen/student-f.png
+model: P1-20260311[2m — face budget 16000 ≤ 20000 → P1[22m
+steps:
+  1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
+[2m     model="P1-20260311" face_limit=16000[22m
+  2. rig  [2mPOST /v3/animations/rig[22m — auto-rig a skeleton
+[1m──────────────────────────────────[22m
+model: P1-20260311 (face budget 16000 ≤ 20000 → P1)
+task created 6b743631-7464-4aca-ba9b-1c61f08cdbf2 (@npc-student-f)
+image_to_model · queued
+image_to_model · running 9% · 6b743631
+image_to_model · running 27% · 6b743631
+image_to_model · running 42% · 6b743631
+image_to_model · running 65% · 6b743631
+image_to_model · success 100% · 6b743631
+[32m✓[39m image_to_model · 6b743631-7464-4aca-ba9b-1c61f08cdbf2 · 50 credits
+task created dffed6a4-9cc8-4d3f-9968-8dab989648ba (@npc-student-f-rig)
+animate_rig · queued
+animate_rig · running 99% · dffed6a4
+animate_rig · running 99% · dffed6a4
+animate_rig · running 99% · dffed6a4
+animate_rig · success 100% · dffed6a4
+[32m✓[39m animate_rig · dffed6a4-9cc8-4d3f-9968-8dab989648ba · 25 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/student-f/tripo-out/npc-student-f-rig-dffed6a4

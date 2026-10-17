@@ -1,0 +1,25 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/gen/casual-f.png
+model: P1-20260311[2m — face budget 16000 ≤ 20000 → P1[22m
+steps:
+  1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
+[2m     model="P1-20260311" face_limit=16000[22m
+  2. rig  [2mPOST /v3/animations/rig[22m — auto-rig a skeleton
+[1m──────────────────────────────────[22m
+model: P1-20260311 (face budget 16000 ≤ 20000 → P1)
+task created 2c3510cf-c20b-47db-a784-376e7fda6b56 (@npc-casual-f)
+image_to_model · queued
+image_to_model · running 12% · 2c3510cf
+image_to_model · running 31% · 2c3510cf
+image_to_model · running 50% · 2c3510cf
+image_to_model · running 76% · 2c3510cf
+image_to_model · success 100% · 2c3510cf
+[32m✓[39m image_to_model · 2c3510cf-c20b-47db-a784-376e7fda6b56 · 50 credits
+task created 7f3ace7b-2db5-4634-96cd-107a38016040 (@npc-casual-f-rig)
+animate_rig · queued
+animate_rig · running 99% · 7f3ace7b
+animate_rig · running 99% · 7f3ace7b
+animate_rig · success 100% · 7f3ace7b
+[32m✓[39m animate_rig · 7f3ace7b-2db5-4634-96cd-107a38016040 · 25 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/casual-f/tripo-out/npc-casual-f-rig-7f3ace7b

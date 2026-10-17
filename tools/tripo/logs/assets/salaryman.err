@@ -1,0 +1,25 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/gen/salaryman.png
+model: P1-20260311[2m — face budget 16000 ≤ 20000 → P1[22m
+steps:
+  1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
+[2m     model="P1-20260311" face_limit=16000[22m
+  2. rig  [2mPOST /v3/animations/rig[22m — auto-rig a skeleton
+[1m──────────────────────────────────[22m
+model: P1-20260311 (face budget 16000 ≤ 20000 → P1)
+task created b48cd07a-bfed-4ac7-a75f-890cd863238a (@npc-salaryman)
+image_to_model · queued
+image_to_model · running 9% · b48cd07a
+image_to_model · running 24% · b48cd07a
+image_to_model · running 40% · b48cd07a
+image_to_model · running 61% · b48cd07a
+image_to_model · success 100% · b48cd07a
+[32m✓[39m image_to_model · b48cd07a-bfed-4ac7-a75f-890cd863238a · 50 credits
+task created ce6dc481-21e0-4f78-b443-41ed1d6fb6f7 (@npc-salaryman-rig)
+animate_rig · queued
+animate_rig · running 24% · ce6dc481
+animate_rig · running 72% · ce6dc481
+animate_rig · success 100% · ce6dc481
+[32m✓[39m animate_rig · ce6dc481-21e0-4f78-b443-41ed1d6fb6f7 · 25 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/salaryman/tripo-out/npc-salaryman-rig-ce6dc481

@@ -1,0 +1,18 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/gen/tree.png
+model: P1-20260311[2m — face budget 6000 ≤ 20000 → P1[22m
+steps:
+  1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
+[2m     model="P1-20260311" face_limit=6000[22m
+[1m──────────────────────────────────[22m
+model: P1-20260311 (face budget 6000 ≤ 20000 → P1)
+task created 596c3424-7e3f-42e7-a287-a2c10b5de348 (@prop-tree)
+image_to_model · queued
+image_to_model · running 11% · 596c3424
+image_to_model · running 28% · 596c3424
+image_to_model · running 44% · 596c3424
+image_to_model · running 69% · 596c3424
+image_to_model · success 100% · 596c3424
+[32m✓[39m image_to_model · 596c3424-7e3f-42e7-a287-a2c10b5de348 · 50 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/tree/tripo-out/prop-tree-596c3424
