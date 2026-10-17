@@ -8,16 +8,7 @@ cost impact:
   · texture_quality detailed: higher price tier
 [1m──────────────────────────────────[22m
 model: v3.1-20260211 (default high-fidelity → v3.1)
-task created b126a3f3-7917-45fd-b7d7-9c55b447e79f (@lm-bethesda)
-image_to_model · queued
-image_to_model · running 6% · b126a3f3
-image_to_model · running 16% · b126a3f3
-image_to_model · running 26% · b126a3f3
-image_to_model · running 40% · b126a3f3
-image_to_model · running 62% · b126a3f3
-image_to_model · running 90% · b126a3f3
-image_to_model · running 99% · b126a3f3
-image_to_model · success 100% · b126a3f3
-[32m✓[39m image_to_model · b126a3f3-7917-45fd-b7d7-9c55b447e79f · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/bethesda/tripo-out/lm-bethesda-b126a3f3
+[31m✗ Insufficient credits (You don't have enough credit to create this task)[39m
+[2m  → Please purchase more credit
+[22m[2m  request_id: b727b496-ce09-4ae0-8da3-de76702badf3
+[22m

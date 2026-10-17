@@ -1,6 +1,9 @@
-task created d112bbfb-de8b-4c89-ac56-9c4308cdecad (@the-artscience-museum-in-singapo)
+task created 75a37964-cf2a-49da-8a4a-0d9c85b0ed4c (@the-artscience-museum-in-singapo)
 text_to_image · queued
-text_to_image · running · d112bbfb
-[32m✓[39m text_to_image · d112bbfb-de8b-4c89-ac56-9c4308cdecad · 5 credits
+text_to_image · running · 75a37964
+text_to_image · running · 75a37964
+text_to_image · running · 75a37964
+text_to_image · success 100% · 75a37964
+[32m✓[39m text_to_image · 75a37964-cf2a-49da-8a4a-0d9c85b0ed4c · 15 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience-img/tripo-out/the-artscience-museum-in-singapo-d112bbfb
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience-img/tripo-out/the-artscience-museum-in-singapo-75a37964

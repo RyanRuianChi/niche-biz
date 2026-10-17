@@ -1,56 +1,58 @@
-{"balance":1985,"frozen":15}
+{"balance":935,"frozen":0}
 artscience img exit=0
-[32m✓[39m text_to_image · d112bbfb-de8b-4c89-ac56-9c4308cdecad · 5 credits
+[32m✓[39m text_to_image · 75a37964-cf2a-49da-8a4a-0d9c85b0ed4c · 15 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience-img/tripo-out/the-artscience-museum-in-singapo-d112bbfb
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience-img/tripo-out/the-artscience-museum-in-singapo-75a37964
 artscience model exit=0
-{"task_id":"e563eda1-fb5a-4b69-ac95-f1648e05c1c9","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-e563eda1","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-e563eda1/model.glb","preview":"tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-e563eda1/preview.png"}
-[32m✓[39m image_to_model · e563eda1-fb5a-4b69-ac95-f1648e05c1c9 · 40 credits
+{"task_id":"3851e34b-9b39-4cd0-b55e-7696ff219d76","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-3851e34b","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-3851e34b/model.glb","preview":"tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-3851e34b/preview.png"}
+[32m✓[39m image_to_model · 3851e34b-9b39-4cd0-b55e-7696ff219d76 · 40 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-e563eda1
--rw-r--r-- 1 runner runner 2799024 Oct 17 00:45 assets/models/lm/artscience.glb
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-3851e34b
+-rw-r--r-- 1 runner runner 2141964 Oct 17 15:53 assets/models/lm/artscience.glb
 supertree img exit=0
-[32m✓[39m text_to_image · d7e26e1f-e7b9-475c-af46-cb111ac9dd1a · 15 credits
+[32m✓[39m text_to_image · b5f99e9f-cffc-4f8d-99c2-c9cae2eca102 · 15 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/supertree-img/tripo-out/a-supertree-from-gardens-by-the-d7e26e1f
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/supertree-img/tripo-out/a-supertree-from-gardens-by-the-b5f99e9f
 supertree model exit=0
-{"task_id":"fe5749b9-7eee-4a9b-a955-26af848c884d","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-fe5749b9","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-fe5749b9/model.glb","preview":"tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-fe5749b9/preview.png"}
-[32m✓[39m image_to_model · fe5749b9-7eee-4a9b-a955-26af848c884d · 40 credits
+{"task_id":"a00894be-a5f2-48c3-a4c7-462a9b93bda4","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-a00894be","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-a00894be/model.glb","preview":"tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-a00894be/preview.png"}
+[32m✓[39m image_to_model · a00894be-a5f2-48c3-a4c7-462a9b93bda4 · 40 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-fe5749b9
--rw-r--r-- 1 runner runner 4529680 Oct 17 00:49 assets/models/lm/supertree.glb
-esplanade img exit=9
-[2m  → Try again later. You can also check `Retry-After` header.
-[22m[2m  request_id: 7ac24721-d696-4455-bd85-33b383f5e972
-[22mfind: ‘tools/tripo/logs/landmarks/esplanade-img’: No such file or directory
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-a00894be
+-rw-r--r-- 1 runner runner 4689360 Oct 17 15:56 assets/models/lm/supertree.glb
+esplanade img exit=0
+[32m✓[39m text_to_image · f5fffa45-52f8-4c22-8402-910bab1b16ce · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/esplanade-img/tripo-out/esplanade-theatres-on-the-bay-in-f5fffa45
+esplanade model exit=0
+{"task_id":"8734fcb2-3ee7-4aa6-be36-356127bfe2c1","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/esplanade/tripo-out/lm-esplanade-8734fcb2","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/esplanade/tripo-out/lm-esplanade-8734fcb2/model.glb","preview":"tools/tripo/logs/landmarks/esplanade/tripo-out/lm-esplanade-8734fcb2/preview.png"}
+[32m✓[39m image_to_model · 8734fcb2-3ee7-4aa6-be36-356127bfe2c1 · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/esplanade/tripo-out/lm-esplanade-8734fcb2
+-rw-r--r-- 1 runner runner 4160000 Oct 17 16:00 assets/models/lm/esplanade.glb
 gct img exit=0
-[32m✓[39m text_to_image · 1b214e08-a2fb-4352-82e3-9998c8ca224b · 15 credits
+[32m✓[39m text_to_image · 3045d691-1b87-48aa-8a8b-235565fa2215 · 15 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/gct-img/tripo-out/the-front-facade-of-grand-centra-1b214e08
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/gct-img/tripo-out/the-front-facade-of-grand-centra-3045d691
 gct model exit=0
-{"task_id":"2af31be4-d3fd-4cd5-b4e9-9c552a2cf312","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-2af31be4","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-2af31be4/model.glb","preview":"tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-2af31be4/preview.png"}
-[32m✓[39m image_to_model · 2af31be4-d3fd-4cd5-b4e9-9c552a2cf312 · 40 credits
+{"task_id":"d499d8ce-d7f6-436a-be61-53ad68ebf643","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-d499d8ce","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-d499d8ce/model.glb","preview":"tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-d499d8ce/preview.png"}
+[32m✓[39m image_to_model · d499d8ce-d7f6-436a-be61-53ad68ebf643 · 40 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-2af31be4
--rw-r--r-- 1 runner runner 2814772 Oct 17 00:52 assets/models/lm/gct.glb
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-d499d8ce
+-rw-r--r-- 1 runner runner 2945592 Oct 17 16:03 assets/models/lm/gct.glb
 bethesda img exit=0
-[32m✓[39m text_to_image · 65bc87ad-6691-4e7c-8d78-2635b5af6124 · 15 credits
+[32m✓[39m text_to_image · 84707956-66a8-4d61-9f7e-9fcde0c80632 · 5 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/bethesda-img/tripo-out/bethesda-fountain-in-central-par-65bc87ad
-bethesda model exit=0
-{"task_id":"b126a3f3-7917-45fd-b7d7-9c55b447e79f","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/bethesda/tripo-out/lm-bethesda-b126a3f3","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/bethesda/tripo-out/lm-bethesda-b126a3f3/model.glb","preview":"tools/tripo/logs/landmarks/bethesda/tripo-out/lm-bethesda-b126a3f3/preview.png"}
-[32m✓[39m image_to_model · b126a3f3-7917-45fd-b7d7-9c55b447e79f · 40 credits
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/bethesda-img/tripo-out/bethesda-fountain-in-central-par-84707956
+bethesda model exit=4
+{"error":"Insufficient credits (You don't have enough credit to create this task)","exit_code":4,"api_code":2010,"request_id":"b727b496-ce09-4ae0-8da3-de76702badf3","http_status":403,"suggestion":"Please purchase more credit"}
+[2m  → Please purchase more credit
+[22m[2m  request_id: b727b496-ce09-4ae0-8da3-de76702badf3
+[22mbrooklyn-tower img exit=0
+[32m✓[39m text_to_image · a4927536-96c5-4e1a-973e-b2ce7391cdd7 · 15 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/bethesda/tripo-out/lm-bethesda-b126a3f3
--rw-r--r-- 1 runner runner 2710040 Oct 17 00:56 assets/models/lm/bethesda.glb
-brooklyn-tower img exit=0
-[32m✓[39m text_to_image · efa87098-eb87-4896-90c8-046940b6628b · 15 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/brooklyn-tower-img/tripo-out/one-stone-tower-of-the-brooklyn-efa87098
-brooklyn-tower model exit=0
-{"task_id":"cc6234cd-b81b-4311-868f-157213c914ec","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/brooklyn-tower/tripo-out/lm-brooklyn-tower-cc6234cd","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/brooklyn-tower/tripo-out/lm-brooklyn-tower-cc6234cd/model.glb","preview":"tools/tripo/logs/landmarks/brooklyn-tower/tripo-out/lm-brooklyn-tower-cc6234cd/preview.png"}
-[32m✓[39m image_to_model · cc6234cd-b81b-4311-868f-157213c914ec · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/brooklyn-tower/tripo-out/lm-brooklyn-tower-cc6234cd
--rw-r--r-- 1 runner runner 3007444 Oct 17 01:00 assets/models/lm/brooklyn-tower.glb
-{"balance":1000,"frozen":50}
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/brooklyn-tower-img/tripo-out/one-stone-tower-of-the-brooklyn-a4927536
+brooklyn-tower model exit=4
+{"error":"Insufficient credits (You don't have enough credit to create this task)","exit_code":4,"api_code":2010,"request_id":"04772e77-d416-4c0b-9c16-31f23d280e10","http_status":403,"suggestion":"Please purchase more credit"}
+[2m  → Please purchase more credit
+[22m[2m  request_id: 04772e77-d416-4c0b-9c16-31f23d280e10
+[22m{"balance":20,"frozen":0}

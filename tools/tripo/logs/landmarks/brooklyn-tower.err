@@ -7,18 +7,9 @@ steps:
 cost impact:
   · texture_quality detailed: higher price tier
 [1m──────────────────────────────────[22m
+[33m! balance is down to 20 credits; tasks may fail (run "tripo topup")[39m
 model: v3.1-20260211 (default high-fidelity → v3.1)
-task created cc6234cd-b81b-4311-868f-157213c914ec (@lm-brooklyn-tower)
-image_to_model · queued
-image_to_model · running 5% · cc6234cd
-image_to_model · running 14% · cc6234cd
-image_to_model · running 23% · cc6234cd
-image_to_model · running 35% · cc6234cd
-image_to_model · running 54% · cc6234cd
-image_to_model · running 78% · cc6234cd
-image_to_model · running 99% · cc6234cd
-image_to_model · running 99% · cc6234cd
-image_to_model · success 100% · cc6234cd
-[32m✓[39m image_to_model · cc6234cd-b81b-4311-868f-157213c914ec · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/brooklyn-tower/tripo-out/lm-brooklyn-tower-cc6234cd
+[31m✗ Insufficient credits (You don't have enough credit to create this task)[39m
+[2m  → Please purchase more credit
+[22m[2m  request_id: 04772e77-d416-4c0b-9c16-31f23d280e10
+[22m

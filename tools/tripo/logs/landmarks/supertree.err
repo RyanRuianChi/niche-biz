@@ -8,16 +8,16 @@ cost impact:
   · texture_quality detailed: higher price tier
 [1m──────────────────────────────────[22m
 model: v3.1-20260211 (default high-fidelity → v3.1)
-task created fe5749b9-7eee-4a9b-a955-26af848c884d (@lm-supertree)
+task created a00894be-a5f2-48c3-a4c7-462a9b93bda4 (@lm-supertree)
 image_to_model · queued
-image_to_model · running 5% · fe5749b9
-image_to_model · running 14% · fe5749b9
-image_to_model · running 23% · fe5749b9
-image_to_model · running 35% · fe5749b9
-image_to_model · running 53% · fe5749b9
-image_to_model · running 77% · fe5749b9
-image_to_model · running 99% · fe5749b9
-image_to_model · success 100% · fe5749b9
-[32m✓[39m image_to_model · fe5749b9-7eee-4a9b-a955-26af848c884d · 40 credits
+image_to_model · running 5% · a00894be
+image_to_model · running 11% · a00894be
+image_to_model · running 18% · a00894be
+image_to_model · running 27% · a00894be
+image_to_model · running 41% · a00894be
+image_to_model · running 60% · a00894be
+image_to_model · running 79% · a00894be
+image_to_model · success 100% · a00894be
+[32m✓[39m image_to_model · a00894be-a5f2-48c3-a4c7-462a9b93bda4 · 40 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-fe5749b9
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-a00894be

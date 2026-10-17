@@ -8,16 +8,16 @@ cost impact:
   · texture_quality detailed: higher price tier
 [1m──────────────────────────────────[22m
 model: v3.1-20260211 (default high-fidelity → v3.1)
-task created 2af31be4-d3fd-4cd5-b4e9-9c552a2cf312 (@lm-gct)
+task created d499d8ce-d7f6-436a-be61-53ad68ebf643 (@lm-gct)
 image_to_model · queued
-image_to_model · running 6% · 2af31be4
-image_to_model · running 19% · 2af31be4
-image_to_model · running 29% · 2af31be4
-image_to_model · running 45% · 2af31be4
-image_to_model · running 69% · 2af31be4
-image_to_model · running 99% · 2af31be4
-image_to_model · running 99% · 2af31be4
-image_to_model · success 100% · 2af31be4
-[32m✓[39m image_to_model · 2af31be4-d3fd-4cd5-b4e9-9c552a2cf312 · 40 credits
+image_to_model · running 5% · d499d8ce
+image_to_model · running 14% · d499d8ce
+image_to_model · running 21% · d499d8ce
+image_to_model · running 33% · d499d8ce
+image_to_model · running 49% · d499d8ce
+image_to_model · running 71% · d499d8ce
+image_to_model · running 93% · d499d8ce
+image_to_model · success 100% · d499d8ce
+[32m✓[39m image_to_model · d499d8ce-d7f6-436a-be61-53ad68ebf643 · 40 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-2af31be4
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-d499d8ce

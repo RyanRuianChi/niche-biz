@@ -1,0 +1,19 @@
+{
+  "task_id": "b5f99e9f-cffc-4f8d-99c2-c9cae2eca102",
+  "type": "text_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "A Supertree from Gardens by the Bay in Singapore (tall tapering steel trunk wrapped in green vertical-garden plants and purple flowers, topped by a wide open purple steel-lattice canopy like an umbrella), a single isolated 3D game asset, three-quarter front view, whole structure fully visible, centred, plain white background, no people, accurate real-world proportions and architectural details, clean semi-realistic anime game-art style like Persona 3 Reload",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-17T15:53:06.757943Z",
+  "completed_at": "2026-10-17T15:53:37.094003Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}
