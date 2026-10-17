@@ -1,19 +1,7 @@
-{"balance":620,"frozen":0}
-cand 11 exit=0
-{"task_id":"9da18d4e-0c3e-49ba-8962-991882be15c1","type":"multiview_to_model","status":"success","credits_consumed":70,"output_dir":"tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e/model.glb","preview":"tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e/preview.png"}
-multiview_to_model · running 99% · 9da18d4e
-multiview_to_model · success 100% · 9da18d4e
-[32m✓[39m multiview_to_model · 9da18d4e-0c3e-49ba-8962-991882be15c1 · 70 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e
-cand 22 exit=0
-{"task_id":"9e69ed01-174e-4700-9cc5-1aa80f7cbb06","type":"multiview_to_model","status":"success","credits_consumed":70,"output_dir":"tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01/model.glb","preview":"tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01/preview.png"}
-multiview_to_model · running 96% · 9e69ed01
-multiview_to_model · success 100% · 9e69ed01
-[32m✓[39m multiview_to_model · 9e69ed01-174e-4700-9cc5-1aa80f7cbb06 · 70 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01
-{"balance":480,"frozen":0}
+tee: 'tools/tripo/logs/avatar3/balance-college-hall|assets/ref/upenn/college-hall.jpg|College-before.json': No such file or directory
+{"balance":455,"frozen":25}
+tee: 'tools/tripo/logs/avatar3/balance-college-hall|assets/ref/upenn/college-hall.jpg|College-after.json': No such file or directory
+{"balance":455,"frozen":25}
 tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c/preview.png 4023618
 tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c/generated_image.png 4023618
 tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c/task.json 1087
