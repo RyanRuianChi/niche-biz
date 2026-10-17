@@ -7,19 +7,18 @@ steps:
   2. rig  [2mPOST /v3/animations/rig[22m — auto-rig a skeleton
 [1m──────────────────────────────────[22m
 model: P1-20260311 (face budget 16000 ≤ 20000 → P1)
-task created b48cd07a-bfed-4ac7-a75f-890cd863238a (@npc-salaryman)
+task created 042b7353-85ea-4356-acad-d755ba14a974 (@npc-salaryman)
 image_to_model · queued
-image_to_model · running 9% · b48cd07a
-image_to_model · running 24% · b48cd07a
-image_to_model · running 40% · b48cd07a
-image_to_model · running 61% · b48cd07a
-image_to_model · success 100% · b48cd07a
-[32m✓[39m image_to_model · b48cd07a-bfed-4ac7-a75f-890cd863238a · 50 credits
-task created ce6dc481-21e0-4f78-b443-41ed1d6fb6f7 (@npc-salaryman-rig)
+image_to_model · running 8% · 042b7353
+image_to_model · running 26% · 042b7353
+image_to_model · running 40% · 042b7353
+image_to_model · running 63% · 042b7353
+image_to_model · success 100% · 042b7353
+[32m✓[39m image_to_model · 042b7353-85ea-4356-acad-d755ba14a974 · 50 credits
+task created 412ab757-6be2-4460-859d-7ac5ce4d1c70 (@npc-salaryman-rig)
 animate_rig · queued
-animate_rig · running 24% · ce6dc481
-animate_rig · running 72% · ce6dc481
-animate_rig · success 100% · ce6dc481
-[32m✓[39m animate_rig · ce6dc481-21e0-4f78-b443-41ed1d6fb6f7 · 25 credits
+animate_rig · running 21% · 412ab757
+animate_rig · success 100% · 412ab757
+[32m✓[39m animate_rig · 412ab757-6be2-4460-859d-7ac5ce4d1c70 · 25 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/salaryman/tripo-out/npc-salaryman-rig-ce6dc481
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/salaryman/tripo-out/npc-salaryman-rig-412ab757

@@ -7,18 +7,20 @@ steps:
   2. rig  [2mPOST /v3/animations/rig[22m — auto-rig a skeleton
 [1m──────────────────────────────────[22m
 model: P1-20260311 (face budget 16000 ≤ 20000 → P1)
-task created 529eb525-dbf3-4e8e-ab4c-baecf7642e84 (@npc-student-m)
+task created e54fb630-2481-4abe-8d0e-2ddf1db050c4 (@npc-student-m)
 image_to_model · queued
-image_to_model · running 11% · 529eb525
-image_to_model · running 33% · 529eb525
-image_to_model · running 51% · 529eb525
-image_to_model · running 79% · 529eb525
-image_to_model · success 100% · 529eb525
-[32m✓[39m image_to_model · 529eb525-dbf3-4e8e-ab4c-baecf7642e84 · 50 credits
-task created 9519fa29-5d24-4000-889a-3fd5c380fd0d (@npc-student-m-rig)
+image_to_model · running 9% · e54fb630
+image_to_model · running 26% · e54fb630
+image_to_model · running 42% · e54fb630
+image_to_model · running 65% · e54fb630
+image_to_model · running 99% · e54fb630
+image_to_model · success 100% · e54fb630
+[32m✓[39m image_to_model · e54fb630-2481-4abe-8d0e-2ddf1db050c4 · 50 credits
+task created a766ccc1-1432-4651-80be-583a77fd2413 (@npc-student-m-rig)
 animate_rig · queued
-animate_rig · running 99% · 9519fa29
-animate_rig · success 100% · 9519fa29
-[32m✓[39m animate_rig · 9519fa29-5d24-4000-889a-3fd5c380fd0d · 25 credits
+animate_rig · running 50% · a766ccc1
+animate_rig · running 99% · a766ccc1
+animate_rig · success 100% · a766ccc1
+[32m✓[39m animate_rig · a766ccc1-1432-4651-80be-583a77fd2413 · 25 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/student-m/tripo-out/npc-student-m-rig-9519fa29
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/student-m/tripo-out/npc-student-m-rig-a766ccc1

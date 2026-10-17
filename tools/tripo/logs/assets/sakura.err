@@ -5,15 +5,6 @@ steps:
   1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
 [2m     model="P1-20260311" face_limit=6000[22m
 [1m──────────────────────────────────[22m
-model: P1-20260311 (face budget 6000 ≤ 20000 → P1)
-task created ee6ee8fe-981f-4310-9ac4-f272ef755bf3 (@prop-sakura)
-image_to_model · queued
-image_to_model · running 11% · ee6ee8fe
-image_to_model · running 31% · ee6ee8fe
-image_to_model · running 51% · ee6ee8fe
-image_to_model · running 79% · ee6ee8fe
-image_to_model · running 99% · ee6ee8fe
-image_to_model · success 100% · ee6ee8fe
-[32m✓[39m image_to_model · ee6ee8fe-981f-4310-9ac4-f272ef755bf3 · 50 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/sakura/tripo-out/prop-sakura-ee6ee8fe
+[31m✗ Insufficient credits[39m
+[2m  → run "tripo topup" to add credits
+[22m

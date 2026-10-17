@@ -1,8 +1,10 @@
-task created 0d5bb9e3-5499-41a0-9401-35b56c4728d4 (@a-single-tall-coconut-palm-tree)
+[33m! balance is down to 20 credits; tasks may fail (run "tripo topup")[39m
+task created f34b7594-cd9d-47de-ad99-03a937c17472 (@a-single-tall-coconut-palm-tree)
 text_to_image · queued
-text_to_image · running · 0d5bb9e3
-text_to_image · running · 0d5bb9e3
-text_to_image · success 100% · 0d5bb9e3
-[32m✓[39m text_to_image · 0d5bb9e3-5499-41a0-9401-35b56c4728d4 · 15 credits
+text_to_image · running · f34b7594
+text_to_image · running · f34b7594
+text_to_image · running · f34b7594
+text_to_image · success 100% · f34b7594
+[32m✓[39m text_to_image · f34b7594-cd9d-47de-ad99-03a937c17472 · 15 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/palm-img/tripo-out/a-single-tall-coconut-palm-tree-0d5bb9e3
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/palm-img/tripo-out/a-single-tall-coconut-palm-tree-f34b7594

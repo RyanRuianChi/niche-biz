@@ -1,1 +1,1 @@
-{"task_id":"ee6ee8fe-981f-4310-9ac4-f272ef755bf3","type":"image_to_model","status":"success","credits_consumed":50,"output_dir":"tools/tripo/logs/assets/sakura/tripo-out/prop-sakura-ee6ee8fe","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/assets/sakura/tripo-out/prop-sakura-ee6ee8fe/model.glb","preview":"tools/tripo/logs/assets/sakura/tripo-out/prop-sakura-ee6ee8fe/preview.png"}
+{"error":"Insufficient credits","exit_code":4,"api_code":2010,"suggestion":"run \"tripo topup\" to add credits"}

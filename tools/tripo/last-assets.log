@@ -1,62 +1,56 @@
-{"balance":2000,"frozen":0}
+{"balance":935,"frozen":0}
 student-m img=tools/tripo/logs/assets/student-m-img/tripo-out/full-body-3d-game-character-conc-076f3516/preview.png
 student-m model exit=0
-[32m✓[39m animate_rig · 9519fa29-5d24-4000-889a-3fd5c380fd0d · 25 credits
+[32m✓[39m animate_rig · a766ccc1-1432-4651-80be-583a77fd2413 · 25 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/student-m/tripo-out/npc-student-m-rig-9519fa29
--rw-r--r-- 1 runner runner 465312 Oct 17 00:44 assets/models/npc/student-m.glb
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/student-m/tripo-out/npc-student-m-rig-a766ccc1
+-rw-r--r-- 1 runner runner 510420 Oct 17 15:51 assets/models/npc/student-m.glb
 student-f img=tools/tripo/logs/assets/student-f-img/tripo-out/full-body-3d-game-character-conc-2-7a0aafcc/preview.png
 student-f model exit=0
-[32m✓[39m animate_rig · dffed6a4-9cc8-4d3f-9968-8dab989648ba · 25 credits
+[32m✓[39m animate_rig · 43e2040f-7506-4878-bb0f-8e395181d90c · 25 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/student-f/tripo-out/npc-student-f-rig-dffed6a4
--rw-r--r-- 1 runner runner 530660 Oct 17 00:46 assets/models/npc/student-f.glb
-salaryman img=tools/tripo/logs/assets/salaryman-img/tripo-out/full-body-3d-game-character-conc-3-7ac83da5/preview.png
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/student-f/tripo-out/npc-student-f-rig-43e2040f
+-rw-r--r-- 1 runner runner 521044 Oct 17 15:53 assets/models/npc/student-f.glb
+salaryman img=tools/tripo/logs/assets/salaryman-img/tripo-out/full-body-3d-game-character-conc-2-4ffafcea/preview.png
 salaryman model exit=0
-[32m✓[39m animate_rig · ce6dc481-21e0-4f78-b443-41ed1d6fb6f7 · 25 credits
+[32m✓[39m animate_rig · 412ab757-6be2-4460-859d-7ac5ce4d1c70 · 25 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/salaryman/tripo-out/npc-salaryman-rig-ce6dc481
--rw-r--r-- 1 runner runner 469772 Oct 17 00:49 assets/models/npc/salaryman.glb
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/salaryman/tripo-out/npc-salaryman-rig-412ab757
+-rw-r--r-- 1 runner runner 429380 Oct 17 15:55 assets/models/npc/salaryman.glb
 office-lady img=tools/tripo/logs/assets/office-lady-img/tripo-out/full-body-3d-game-character-conc-4-796ab7fc/preview.png
 office-lady model exit=0
-[32m✓[39m animate_rig · 4029bbd5-0437-4a57-8b8a-dc863a4dc191 · 25 credits
+[32m✓[39m animate_rig · f74e5d56-97fb-4b1f-84c0-570186d4ff1e · 25 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/office-lady/tripo-out/npc-office-lady-rig-4029bbd5
--rw-r--r-- 1 runner runner 521168 Oct 17 00:51 assets/models/npc/office-lady.glb
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/office-lady/tripo-out/npc-office-lady-rig-f74e5d56
+-rw-r--r-- 1 runner runner 507764 Oct 17 15:58 assets/models/npc/office-lady.glb
 casual-m img=tools/tripo/logs/assets/casual-m-img/tripo-out/full-body-3d-game-character-conc-5-9fb29ce1/preview.png
 casual-m model exit=0
-[32m✓[39m animate_rig · a3a5ab39-7743-4301-9a69-d79fb0cebe13 · 25 credits
+[32m✓[39m animate_rig · a01029ca-075c-458c-81df-c98915c4b1b2 · 25 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/casual-m/tripo-out/npc-casual-m-rig-a3a5ab39
--rw-r--r-- 1 runner runner 510412 Oct 17 00:53 assets/models/npc/casual-m.glb
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/casual-m/tripo-out/npc-casual-m-rig-a01029ca
+-rw-r--r-- 1 runner runner 509744 Oct 17 16:00 assets/models/npc/casual-m.glb
 casual-f img=tools/tripo/logs/assets/casual-f-img/tripo-out/full-body-3d-game-character-conc-6-14738933/preview.png
 casual-f model exit=0
-[32m✓[39m animate_rig · 7f3ace7b-2db5-4634-96cd-107a38016040 · 25 credits
+[32m✓[39m animate_rig · 55fa9110-1296-4960-a121-4f2a3bec90d3 · 25 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/casual-f/tripo-out/npc-casual-f-rig-7f3ace7b
--rw-r--r-- 1 runner runner 483552 Oct 17 00:55 assets/models/npc/casual-f.glb
-tree img=tools/tripo/logs/assets/tree-img/tripo-out/a-single-leafy-street-tree-zelko-d29999ca/preview.png
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/casual-f/tripo-out/npc-casual-f-rig-55fa9110
+-rw-r--r-- 1 runner runner 538168 Oct 17 16:03 assets/models/npc/casual-f.glb
+tree img=tools/tripo/logs/assets/tree-img/tripo-out/a-single-leafy-street-tree-zelko-4a369544/preview.png
 tree model exit=0
-[32m✓[39m image_to_model · 596c3424-7e3f-42e7-a287-a2c10b5de348 · 50 credits
+[32m✓[39m image_to_model · 3eee7c16-8f38-4d96-b4db-71cfab112eb9 · 50 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/tree/tripo-out/prop-tree-596c3424
--rw-r--r-- 1 runner runner 140664 Oct 17 00:57 assets/models/props/tree.glb
-palm img=tools/tripo/logs/assets/palm-img/tripo-out/a-single-tall-coconut-palm-tree-0d5bb9e3/preview.png
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/tree/tripo-out/prop-tree-3eee7c16
+-rw-r--r-- 1 runner runner 75104 Oct 17 16:05 assets/models/props/tree.glb
+palm img=tools/tripo/logs/assets/palm-img/tripo-out/a-single-tall-coconut-palm-tree-f34b7594/preview.png
 palm model exit=0
-[32m✓[39m image_to_model · 51ba703b-f42c-4c92-b788-e1e279e1fcdd · 50 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/palm/tripo-out/prop-palm-51ba703b
--rw-r--r-- 1 runner runner 149576 Oct 17 00:59 assets/models/props/palm.glb
-sakura img=tools/tripo/logs/assets/sakura-img/tripo-out/a-single-cherry-blossom-tree-in-b2f09d9a/preview.png
+[2m  → Please purchase more credit
+[22m[2m  request_id: 8fd1785d-bf84-44f7-921a-a65bd29ea43f
+[22msakura img=tools/tripo/logs/assets/sakura-img/tripo-out/a-single-cherry-blossom-tree-in-b2f09d9a/preview.png
 sakura model exit=0
-[32m✓[39m image_to_model · ee6ee8fe-981f-4310-9ac4-f272ef755bf3 · 50 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/sakura/tripo-out/prop-sakura-ee6ee8fe
--rw-r--r-- 1 runner runner 86384 Oct 17 01:01 assets/models/props/sakura.glb
-vending img=tools/tripo/logs/assets/vending-img/tripo-out/a-japanese-drink-vending-machine-52c2345e/preview.png
+[31m✗ Insufficient credits[39m
+[2m  → run "tripo topup" to add credits
+[22mvending img=tools/tripo/logs/assets/vending-img/tripo-out/a-japanese-drink-vending-machine-52c2345e/preview.png
 vending model exit=0
-[32m✓[39m image_to_model · d9108b6f-1b9a-42e3-a236-ebe6b847a0e1 · 50 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/assets/vending/tripo-out/prop-vending-d9108b6f
--rw-r--r-- 1 runner runner 137588 Oct 17 01:03 assets/models/props/vending.glb
-{"balance":935,"frozen":0}
+[31m✗ Insufficient credits[39m
+[2m  → run "tripo topup" to add credits
+[22m{"balance":0,"frozen":0}
