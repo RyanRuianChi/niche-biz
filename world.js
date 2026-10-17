@@ -1247,7 +1247,7 @@ function areaUPenn() {
   hall(g, E, { x: 40, z: 15, side: 1, w: 24, h: 12, wall: "#563026", seed: 44, gables: 4 });
   skyline(g, R, -L - 60, L + 60, -170, -120, 22, 40, 120);   // Center City beyond
   // LOVE (Robert Indiana) under cherry trees
-  landmark(g, "lm/love", -14, -6.6, 3.8, 0, () => {
+  landmark(g, "lm/love", -14, -6.6, 3.8, Math.PI / 2, () => {
     box(g, 3, 0.7, 1.8, toon("#1a1a1e"), -14, 0, -6.5);
     const red = toon("#d4202c", { roughness: 0.3 }), blue = toon("#2d4fa3"), grn = toon("#1f6a3a");
     fontReady.then(() => {
@@ -1425,7 +1425,7 @@ function areaSingapore() {
   floodlight(g, E, asx, -44, "#ffe9c8", 6, 4);
   // Marina Bay Sands: three towers + SkyPark
   const mx = 34, mz = -84;
-  landmark(g, "lm/mbs", mx + 4, mz, 62, 0, () => {
+  landmark(g, "lm/mbs", mx + 4, mz, 62, Math.PI / 2, () => {
     const glass = (s) => litMat(windowsTex(8, 22, "#26324a", s, 0.6, false), 0.95);
     for (let i = 0; i < 3; i++) {
       const tx = mx - 26 + i * 26, m = glass(100 + i);
@@ -1457,7 +1457,7 @@ function areaSingapore() {
   // promenade side: Merlion on its platform, The Fullerton, CBD towers, palms
   const my = 0, mzz = EDGE - 3.4, mxx = -30;
   box(g, 7, 0.6, 5, toon("#6a6660"), mxx, -0.5, mzz);
-  landmark(g, "lm/merlion", mxx, mzz, 8.6, Math.PI, () => {
+  landmark(g, "lm/merlion", mxx, mzz, 8.6, -0.5, () => {
     const white = toon("#eceae6", { roughness: 0.5 });
     cyl(g, 2.2, 1.6, toon("#2a4f9a", { roughness: 0.3 }), mxx, 0, mzz, 16);
     cyl(g, 1.25, 4.6, white, mxx, 1.4, mzz, 14, 1.7);
