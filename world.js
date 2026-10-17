@@ -1744,34 +1744,47 @@ const rigLayout = (B) => B["1_Right_Limb_3"] ? {
 function buildMap() {
   const B = rig.bones, S = motion.S;
   const wp = (o) => o.getWorldPosition(new THREE.Vector3());
+  // Reference pose = the mocap's own idle stance (arms hanging), not its T-pose bind pose. Every bone then
+  // copies the motion *relative* to that stance onto the character's relaxed stance, so the walk only adds
+  // the swing and the wrists/elbows keep the character's natural shape.
+  const { acts, mixer, src } = motion;
+  Object.values(acts).forEach((a) => { a.time = 0; a.setEffectiveWeight(0); });
+  acts.idle.setEffectiveWeight(1); mixer.update(0); src.updateMatrixWorld(true);
+  rig.rest.forEach((q, o) => o.quaternion.copy(q));
   rig.holder.updateMatrixWorld(true);
   const inv = new THREE.Matrix4().copy(rig.holder.matrixWorld).invert();
   const sideOf = (o) => Math.sign(wp(o).applyMatrix4(inv).x);   // +X = character's left (faces +Z)
-  const lay = rig.lay;
-  const map = lay.spine.map(([a, b, c, d]) => [B[a], B[b], S[c], S[d]]);
-  const follow = [];
-  for (const a of lay.arms) {
-    const [c, u, f, hd] = a.map((n) => B[n]); if (!c || !u || !f) continue;
-    const P = sideOf(u) > 0 ? "Left" : "Right";
-    map.push([c, u, S[P + "Arm"], S[P + "ForeArm"]], [u, f, S[P + "ForeArm"], S[P + "Hand"]]);
-    if (hd) map.push([f, hd, S[P + "Hand"], S[P + "HandMiddle1"]]);
+  const heroInv = hero.getWorldQuaternion(new THREE.Quaternion()).invert();
+  const dirOf = (a, b) => wp(b).sub(wp(a)).normalize();
+  const lay = rig.lay, map = [], follow = [];
+  // relaxed arm: the A-pose arm pulled in to hang by the side, slightly forward, elbow a touch bent
+  const relax = (d, k, side) => d.clone().lerp(new THREE.Vector3(side * 0.06, -1, 0.04), k).normalize();
+  const entry = (a, b, sa, sb, avDir) => { if (a && b && sa && sb) map.push([a, b, sa, sb, { src: dirOf(sa, sb), av: (avDir || dirOf(a, b).applyQuaternion(heroInv)) }]); };
+  for (const [a, b, c, d] of lay.spine) entry(B[a], B[b], S[c], S[d]);
+  for (const arm of lay.arms) {
+    const [c, u, f, hd] = arm.map((n) => B[n]); if (!c || !u || !f) continue;
+    const side = sideOf(u), P = side > 0 ? "Left" : "Right";
+    const up = relax(dirOf(c, u).applyQuaternion(heroInv), 0.8, side), fo = relax(dirOf(u, f).applyQuaternion(heroInv), 0.7, side).add(new THREE.Vector3(0, 0, 0.12)).normalize();
+    entry(c, u, S[P + "Arm"], S[P + "ForeArm"], up);
+    entry(u, f, S[P + "ForeArm"], S[P + "Hand"], fo);
+    if (hd) entry(f, hd, S[P + "Hand"], S[P + "HandMiddle1"], fo.clone());   // hand continues the forearm
   }
   for (const l of lay.legs) {
     const [h, k, a, t, e] = [l.hip, l.knee, l.ankle, l.toe, l.heel].map((n) => B[n]); if (!h || !k || !a) continue;
     const P = sideOf(k) > 0 ? "Left" : "Right";
-    map.push([h, k, S[P + "UpLeg"], S[P + "Leg"]], [k, a, S[P + "Leg"], S[P + "Foot"]]);
-    if (t) map.push([a, t, S[P + "Foot"], S[P + "ToeBase"]]);
+    entry(h, k, S[P + "UpLeg"], S[P + "Leg"]); entry(k, a, S[P + "Leg"], S[P + "Foot"]);
+    if (t) entry(a, t, S[P + "Foot"], S[P + "ToeBase"]);
     if (e) follow.push([e, a]);   // heel bone copies the ankle bone's rotation
   }
-  rig.map = map.filter((m) => m.length === 4 && m.every(Boolean));
+  rig.map = map;
   rig.follow = follow.map(([e, a]) => [e, a, rig.rest.get(a).clone().invert().multiply(rig.rest.get(e))]);
   rig.root = B.Root;
   rig.hipsRestY = S.Hips.getWorldPosition(new THREE.Vector3()).y;
   rig.hipsRestQ = S.Hips.getWorldQuaternion(new THREE.Quaternion()).invert();
   rig.rootRestW = B.Root.getWorldQuaternion(new THREE.Quaternion());
-  rig.heroRestInv = hero.getWorldQuaternion(new THREE.Quaternion()).invert();
+  rig.heroRestInv = heroInv.clone();
 }
-const _a = new THREE.Vector3(), _b = new THREE.Vector3(), _c = new THREE.Vector3(), _q = new THREE.Quaternion(), _p = new THREE.Quaternion(), _w = new THREE.Quaternion(), _h = new THREE.Quaternion(), _d = new THREE.Quaternion();
+const _a = new THREE.Vector3(), _b = new THREE.Vector3(), _c = new THREE.Vector3(), _e = new THREE.Vector3(), _q = new THREE.Quaternion(), _p = new THREE.Quaternion(), _w = new THREE.Quaternion(), _h = new THREE.Quaternion(), _d = new THREE.Quaternion();
 function retarget() {
   motion.src.updateMatrixWorld(true);
   rig.rest.forEach((q, o) => o.quaternion.copy(q));
@@ -1788,8 +1801,10 @@ function retarget() {
     rig.root.quaternion.copy(_p.multiply(_w));
     rig.root.updateMatrixWorld(true);
   }
-  for (const [bone, child, sb, sc] of rig.map) {
-    const want = sc.getWorldPosition(_a).sub(sb.getWorldPosition(_b)).normalize().applyQuaternion(_h);
+  for (const [bone, child, sb, sc, rel] of rig.map) {
+    let want = sc.getWorldPosition(_a).sub(sb.getWorldPosition(_b)).normalize();
+    want = _e.copy(rel.av).applyQuaternion(_p.setFromUnitVectors(rel.src, want));
+    want.applyQuaternion(_h);
     const have = child.getWorldPosition(_b).sub(bone.getWorldPosition(_c)).normalize();
     _q.setFromUnitVectors(have, want);
     bone.getWorldQuaternion(_w).premultiply(_q);
