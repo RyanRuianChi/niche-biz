@@ -1,0 +1,9 @@
+[33m! balance is down to 15 credits; tasks may fail (run "tripo topup")[39m
+task created 08993cdf-42d1-4c69-bf94-8eefe94eb6e2 (@the-artscience-museum-in-singapo)
+text_to_image · queued
+text_to_image · running · 08993cdf
+text_to_image · running · 08993cdf
+text_to_image · success 100% · 08993cdf
+[32m✓[39m text_to_image · 08993cdf-42d1-4c69-bf94-8eefe94eb6e2 · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience-img/tripo-out/the-artscience-museum-in-singapo-08993cdf
