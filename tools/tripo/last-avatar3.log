@@ -1,32 +1,40 @@
-{"balance":645,"frozen":0}
-prep 1 exit=0
-{"task_id":"0ea1e76c-7c05-40e8-9b96-09a8e2b01230","type":"generate_image","status":"success","credits_consumed":15,"output_dir":"tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c","files":["generated_image.png","preview.png"],"preview":"tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c/preview.png"}
-generate_image · running · 0ea1e76c
-generate_image · success 100% · 0ea1e76c
-[32m✓[39m generate_image · 0ea1e76c-7c05-40e8-9b96-09a8e2b01230 · 15 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c
-Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-ModuleNotFoundError: No module named 'PIL'
-prep 2 exit=0
-{"task_id":"8a027121-0fff-44c9-988f-db1123717aa6","type":"generate_image","status":"success","credits_consumed":10,"output_dir":"tools/tripo/logs/avatar3/prep-2/tripo-out/assets-ref-white-hq-front-face-r-2-8a027121","files":["generated_image.png","preview.png"],"preview":"tools/tripo/logs/avatar3/prep-2/tripo-out/assets-ref-white-hq-front-face-r-2-8a027121/preview.png"}
-generate_image · running · 8a027121
-generate_image · success 100% · 8a027121
-[32m✓[39m generate_image · 8a027121-0fff-44c9-988f-db1123717aa6 · 10 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/avatar3/prep-2/tripo-out/assets-ref-white-hq-front-face-r-2-8a027121
-Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-ModuleNotFoundError: No module named 'PIL'
 {"balance":620,"frozen":0}
+cand 11 exit=0
+{"task_id":"9da18d4e-0c3e-49ba-8962-991882be15c1","type":"multiview_to_model","status":"success","credits_consumed":70,"output_dir":"tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e/model.glb","preview":"tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e/preview.png"}
+multiview_to_model · running 99% · 9da18d4e
+multiview_to_model · success 100% · 9da18d4e
+[32m✓[39m multiview_to_model · 9da18d4e-0c3e-49ba-8962-991882be15c1 · 70 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e
+cand 22 exit=0
+{"task_id":"9e69ed01-174e-4700-9cc5-1aa80f7cbb06","type":"multiview_to_model","status":"success","credits_consumed":70,"output_dir":"tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01/model.glb","preview":"tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01/preview.png"}
+multiview_to_model · running 96% · 9e69ed01
+multiview_to_model · success 100% · 9e69ed01
+[32m✓[39m multiview_to_model · 9e69ed01-174e-4700-9cc5-1aa80f7cbb06 · 70 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01
+{"balance":480,"frozen":0}
 tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c/preview.png 4023618
 tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c/generated_image.png 4023618
 tools/tripo/logs/avatar3/prep-1/tripo-out/assets-ref-white-hq-front-face-r-0ea1e76c/task.json 1087
+tools/tripo/logs/avatar3/cand-11.err 1441
+tools/tripo/logs/avatar3/cand-11.json 425
 tools/tripo/logs/avatar3/balance-prep-before.json 27
+tools/tripo/logs/avatar3/cand-22.png 111894
+tools/tripo/logs/avatar3/cand-11.png 111182
 tools/tripo/logs/avatar3/prep-2.err 497
+tools/tripo/logs/avatar3/balance-build-after.json 27
+tools/tripo/logs/avatar3/cand-22.json 425
+tools/tripo/logs/avatar3/cand-22.err 1487
 tools/tripo/logs/avatar3/prep-2.json 373
+tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e/preview.png 111182
+tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e/task.json 1244
+tools/tripo/logs/avatar3/cand-11/tripo-out/rc-v3-11-9da18d4e/rendered_image.webp 111182
 tools/tripo/logs/avatar3/prep-1.json 369
+tools/tripo/logs/avatar3/balance-build-before.json 27
+tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01/preview.png 111894
+tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01/task.json 1244
+tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01/rendered_image.webp 111894
 tools/tripo/logs/avatar3/prep-1.err 531
 tools/tripo/logs/avatar3/balance-prep-after.json 27
 tools/tripo/logs/avatar3/prep-2/tripo-out/assets-ref-white-hq-front-face-r-2-8a027121/preview.png 3056703
