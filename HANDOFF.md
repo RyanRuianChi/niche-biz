@@ -52,11 +52,22 @@ Branch: `claude/pensive-bardeen-h0se4f` (auto-deploys to https://niche-biz.verce
 - Crypto Quest game cancelled by the user; its i18n strings were removed.
 
 ## Avatar
-- v2 (`assets/models/avatar-v2.glb`): Tripo v3.1 detailed multiview + rig (85 credits), simplified locally to 80k tris.
-- v3 in progress (`tools/tripo/avatar3.sh`, workflow `tripo-avatar3`, stage set by `tools/tripo/RUN_AVATAR3`):
-  `prep` -> AI-refined front view with the face from `assets/ref/white-sheet-detail.webp`;
-  `build <front.png>` -> 3 candidates (extreme texture, detailed geometry); `rig <task_id>` -> `avatar-v3.glb`.
-  world.js loads avatar-v3 > v2 > v1 automatically; `rigLayout()` handles both Tripo bone layouts.
+- `assets/models/avatar-v3.glb` (loaded first): Tripo v3.1 (detailed geometry, extreme texture) from an AI-refined front view
+  (`assets/ref/white-hq/front-ai-1.png`, face matched to `white-sheet-detail.webp`) + right/back crops; rigged; ~1.9 MB.
+- Walk: the Mixamo clips are retargeted *relative to the mocap's idle stance* onto the character's relaxed stance
+  (`buildMap(rig, owner)` / `retarget(rig, owner)`), which fixed the backward-bent arms/hands and head tilt.
+- Pipeline: `tools/tripo/avatar3.sh` stages `prep` / `build <front>` / `rig <task>` / `fetch <task>` via `RUN_AVATAR3`.
+
+## Look (P3R level, P5 colours)
+- Default "After School" golden hour (P3R): sun + shadows, warm grade, dry glossy pavements, coloured crowds.
+  Click the calendar badge for P5R "Evening Rain" (silhouettes, umbrellas, neon, wet reflections). Saved in localStorage.
+- Elevated 3/4 follow camera (drag to orbit, wheel to zoom); P5 red/black/white minimap + place counter.
+- No cars (user: P3R hides traffic); only the Central tram remains (it is a checkable spot).
+- Tripo assets: landmarks `assets/models/lm/*` (College Hall, Fisher, LOVE, Science Centre, water tower, Merlion,
+  MBS, Flatiron, ArtScience, Supertree, Grand Central, Bethesda, Brooklyn tower), crowd `assets/models/npc/*`
+  (6 rigged characters; walk/idle baked per type in `bakeClips`), props `assets/models/props/*` (tree, palm, sakura,
+  vending) swapped into `slot()`s. Everything keeps a procedural fallback. The user said no more landmarks for now.
+- Tripo credits left: ~935 (user topped up). Pipelines: `tools/tripo/{landmarks,assets}.sh` driven by RUN_* files.
 
 ## User feedback still open
 - Avatar: user wants it as close to the design sheets as possible and approved spending more credits.
