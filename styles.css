@@ -582,7 +582,20 @@ img { display: block; max-width: 100%; }
 .world__mapname b { font: 14px var(--display); letter-spacing: 1px; text-transform: uppercase; }
 .world__mapname small { font: 10px var(--heavy); letter-spacing: 1px; text-transform: uppercase; color: var(--red); }
 .world__edge--l { display: none; }
-@media (max-width: 700px) { .world__goal { top: 56px; } }
+@media (max-width: 700px) {
+  .world__loc { display: none; }
+  .world__time { top: 10px; right: 10px; gap: 4px; padding: 1px 8px 3px; transform: skewX(var(--skew)); }
+  .world__time b { font-size: 17px; } .world__time span { font-size: 9px; } .world__time i { font-size: 12px; }
+  .world__time small { font-size: 8px; letter-spacing: 1px; }
+  .world__goal { top: 42px; right: 12px; font-size: 8px; padding: 1px 8px 2px; }
+  .world__map { width: 92px; height: 92px; left: 10px; bottom: 38px; box-shadow: 4px 4px 0 var(--red); }
+  .world__mapname { left: 6px; bottom: 8px; gap: 5px; padding: 1px 8px 3px; max-width: 58%; }
+  .world__mapname b { font-size: 11px; } .world__mapname small { font-size: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .world__edge { bottom: 8px; font-size: 9px; padding: 2px 6px; }
+  .world__dialog { top: 70px; bottom: auto; width: 92%; }
+  .world__prompt { left: auto; right: 10px; bottom: 40px; transform: skewX(var(--skew)); font-size: 10px; padding: 4px 10px 5px; }
+  @keyframes world-prompt { to { transform: skewX(var(--skew)) translateY(-3px); } }
+}
 .world__edge {
   position: absolute; bottom: 14px; font: 13px var(--heavy); text-transform: uppercase; letter-spacing: 1px;
   background: var(--ink); color: var(--yellow); padding: 3px 10px; transform: skewX(var(--skew)); pointer-events: none; opacity: .85;
