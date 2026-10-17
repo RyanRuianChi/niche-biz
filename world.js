@@ -242,6 +242,7 @@ renderer.setPixelRatio(PR);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.15;
+renderer.localClippingEnabled = true;
 const effect = new OutlineEffect(renderer, { defaultThickness: 0.0026, defaultColor: [0.015, 0.015, 0.03] });
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, 16 / 9, 0.1, 420);
@@ -467,6 +468,12 @@ const GroundShader = {
     }`,
 };
 const reflectors = [];
+// cutaway (P3R-style): everything nearer the camera than the hero on the near side is clipped away
+const cutPlane = new THREE.Plane(new THREE.Vector3(0, 0, -1), 999);
+const clipAll = (root) => root.traverse((o) => {
+  if (!o.isMesh || o.userData.noClip || reflectors.includes(o)) return;
+  [].concat(o.material).forEach((m) => { if (m && !m.isShadowMaterial && !m.clippingPlanes) m.clippingPlanes = [cutPlane]; });
+});
 const shadowCatcher = noLine(new THREE.ShadowMaterial({ color: "#2a1440", opacity: 0.42, depthWrite: false }));
 const mirrorRes = (k) => Math.min(1024, Math.round(innerWidth * PR * k));
 const makeMirror = (w, d, k, color = 0xd8e2ff) => {
@@ -1076,6 +1083,7 @@ const walkers = (A, n, zs, xa = -L - 10, xb = L + 10, umb = 0.65) => { for (let 
 const standers = (A, list) => list.forEach(([x, z, ry]) => { const n = NPC(A.group, A.R, { x, z, phone: A.R() < 0.6, umbrella: A.R() < 0.5 }); if (ry !== undefined) n.g.rotation.y = ry; A.crowd.push(n); });
 const finish = (A, extra) => {
   bake(A.group);
+  clipAll(A.group);
   A.group.traverse((o) => { if (o.isMesh && !o.userData.dyn && [].concat(o.material).some((m) => m.isMeshStandardMaterial)) o.castShadow = o.receiveShadow = true; });
   return Object.assign(A, extra, { tick(dt, time) { A.ticks.forEach((f) => f(dt, time)); } }); };
 const tram = (A, z, stopX) => {
@@ -1128,11 +1136,11 @@ function areaCentral() {
   const A = newArea(7), g = A.group, E = A.E, R = A.R;
   const CURB = 3.6, FRONT = 8.2, SQ0 = -14, SQ1 = 8, WF = 18;
   wetGround(g, {
-    x0: -L - 40, len: 2 * L + 80, z0: -12, span: 26, cuts: [[WF, 999, -6.2]], paint(P) {
-      street(P, R, -L - 40, L + 40, CURB, { far: -12, near: 14, rails: true });
+    x0: -L - 90, len: 2 * L + 180, z0: -12, span: 26, cuts: [[WF, 999, -6.2]], paint(P) {
+      street(P, R, -L - 90, L + 90, CURB, { far: -12, near: 14, rails: true });
       P.tiles(SQ0, SQ1, CURB, 14, "#5a5a60", "#46464c", 1.2, 0.9);            // Statue Square granite
-      P.tiles(WF, L + 40, -12, -CURB, "#4a4640", "#3a3632", 0.5, 0.9);          // harbour promenade
-      P.tiles(WF, L + 40, CURB, 14, "#45464c", "#34353b", 0.8, 0.9);
+      P.tiles(WF, L + 90, -12, -CURB, "#4a4640", "#3a3632", 0.5, 0.9);          // harbour promenade
+      P.tiles(WF, L + 90, CURB, 14, "#45464c", "#34353b", 0.8, 0.9);
       P.zebra(-22, -CURB + 0.3, CURB).zebra(12, -CURB + 0.3, CURB);
     },
   });
@@ -1156,7 +1164,7 @@ function areaCentral() {
   skyline(g, R, -L - 30, 16, -110, -40, 14, 40, 85);
   // harbour front: water, sea wall, railing, Central Pier + Star Ferry, Observation Wheel, IFC
   water(g, WF, L + 120, -150, -6.2);
-  seawall(g, WF, L + 120, -6.7); railing(g, WF, L + 40, -6.0);
+  seawall(g, WF, L + 120, -6.7); railing(g, WF, L + 90, -6.0);
   landmark(g, "central-pier", 46, -22, 11, 0, (h) => { box(h, 16, 6, 7, toon("#2f5f4a"), 0, 0, 0); box(h, 2.6, 13, 2.6, toon("#e8e1cf"), 6, 0, 0); });
   floodlight(g, E, 46, -14, "#bfe0ff", 4, 4);
   const boat = ferryBoat(); boat.position.set(40, -0.35, -30); g.add(boat);
@@ -1171,7 +1179,7 @@ function areaCentral() {
   const poles = [];
   for (let x = -L - 20; x <= SQ0; x += 13) poles.push(telePole(g, x, -(CURB + 0.35)));
   wires(g, poles, [[V(-34, 0, -CURB - 0.35), V(-34, 0, FRONT), 7.0]]);
-  const tw = []; for (let x = -L - 40; x <= L + 40; x += 6) tw.push(x, 6.1, -1.8, x + 6, 6.1, -1.8);
+  const tw = []; for (let x = -L - 90; x <= L + 90; x += 6) tw.push(x, 6.1, -1.8, x + 6, 6.1, -1.8);
   lines(g, tw);
   for (let x = -L - 6; x <= L + 6; x += 12) lampPost(g, E, x, CURB + 0.3, 1);
   for (let x = -L; x <= WF; x += 12) lampPost(g, E, x + 6, -CURB - 0.3, -1, "#cfe0ff");
@@ -1214,10 +1222,10 @@ function areaUPenn() {
   const A = newArea(31), g = A.group, E = A.E, R = A.R;
   const WALK = 4.4;
   wetGround(g, {
-    x0: -L - 40, len: 2 * L + 80, z0: -22, span: 44, paint(P) {
-      P.noise(-L - 40, L + 40, -22, 22, "#1d2a1d", R, 26, 0.25);                       // lawns
-      P.bricks(-L - 40, L + 40, -WALK, WALK, R, ["#7a3426", "#8a3d2c", "#6e2f23", "#93432f"]);
-      P.stripe(-L - 40, L + 40, -WALK, 0.25, "#8f877a").stripe(-L - 40, L + 40, WALK, 0.25, "#8f877a");
+    x0: -L - 90, len: 2 * L + 180, z0: -22, span: 44, paint(P) {
+      P.noise(-L - 90, L + 90, -22, 22, "#1d2a1d", R, 26, 0.25);                       // lawns
+      P.bricks(-L - 90, L + 90, -WALK, WALK, R, ["#7a3426", "#8a3d2c", "#6e2f23", "#93432f"]);
+      P.stripe(-L - 90, L + 90, -WALK, 0.25, "#8f877a").stripe(-L - 90, L + 90, WALK, 0.25, "#8f877a");
       for (const [x, s, to] of [[-42, 1, 14], [12, -1, -15], [44, -1, -14], [-14, -1, -6]]) P.bricks(x - 1.6, x + 1.6, s > 0 ? WALK : to, s > 0 ? to : -WALK, R, ["#7a3426", "#8a3d2c", "#6e2f23"]);
     },
   });
@@ -1299,11 +1307,11 @@ function areaCUHK() {
   const A = newArea(57), g = A.group, E = A.E, R = A.R;
   const LAKE = [-62, -26], SEA = 46;
   wetGround(g, {
-    x0: -L - 40, len: 2 * L + 80, z0: -32, span: 52, cuts: [[LAKE[0], LAKE[1], -8], [SEA, 999, -8]], paint(P) {
-      P.noise(-L - 40, L + 40, -32, 20, "#1c2a1e", R, 24, 0.3);
-      P.tiles(-L - 40, L + 40, -8, 7, "#55555a", "#3c3c42", 1.0);
+    x0: -L - 90, len: 2 * L + 180, z0: -32, span: 52, cuts: [[LAKE[0], LAKE[1], -8], [SEA, 999, -8]], paint(P) {
+      P.noise(-L - 90, L + 90, -32, 20, "#1c2a1e", R, 24, 0.3);
+      P.tiles(-L - 90, L + 90, -8, 7, "#55555a", "#3c3c42", 1.0);
       P.tiles(-24, 4, -20, -8, "#5a5a5e", "#404046", 1.0).tiles(8, 26, -24, -8, "#5a5a5e", "#404046", 1.0).tiles(30, 46, -20, -8, "#58585c", "#3e3e44", 1.0);
-      P.meander(-L - 40, L + 40, -7.6).meander(-L - 40, L + 40, 6.6).meander(-24, 4, -19.6);
+      P.meander(-L - 90, L + 90, -7.6).meander(-L - 90, L + 90, 6.6).meander(-24, 4, -19.6);
       P.tiles(-58, -46, 7, 13, "#4a4a50", "#36363c", 0.8);
     },
   });
@@ -1402,16 +1410,16 @@ function areaSingapore() {
   const A = newArea(83), g = A.group, E = A.E, R = A.R;
   const EDGE = -6.6;
   wetGround(g, {
-    x0: -L - 40, len: 2 * L + 80, z0: -8, span: 32, cuts: [[-999, 999, EDGE]], paint(P) {
-      P.tiles(-L - 40, L + 40, -8, 5.8, "#5a5650", "#45423d", 0.75);
-      P.stripe(-L - 40, L + 40, 5.8, 0.25, "#6c6f78");
-      P.noise(-L - 40, L + 40, 6, 12.5, "#24262c", R, 22).stripe(-L - 40, L + 40, 9.2, 0.14, "#d8d8d0", 2);
-      P.tiles(-L - 40, L + 40, 12.5, 24, "#45464c", "#34353b", 0.6);
+    x0: -L - 90, len: 2 * L + 180, z0: -8, span: 32, cuts: [[-999, 999, EDGE]], paint(P) {
+      P.tiles(-L - 90, L + 90, -8, 5.8, "#5a5650", "#45423d", 0.75);
+      P.stripe(-L - 90, L + 90, 5.8, 0.25, "#6c6f78");
+      P.noise(-L - 90, L + 90, 6, 12.5, "#24262c", R, 22).stripe(-L - 90, L + 90, 9.2, 0.14, "#d8d8d0", 2);
+      P.tiles(-L - 90, L + 90, 12.5, 24, "#45464c", "#34353b", 0.6);
       P.zebra(-20, 6.2, 12.4).zebra(24, 6.2, 12.4);
     },
   });
   water(g, -260, 260, -260, EDGE);
-  seawall(g, -L - 40, L + 40, EDGE - 0.5); railing(g, -L - 40, L + 40, EDGE + 0.1);
+  seawall(g, -L - 90, L + 90, EDGE - 0.5); railing(g, -L - 90, L + 90, EDGE + 0.1);
   // across the bay: Singapore Flyer, Esplanade, ArtScience, Marina Bay Sands, Supertrees
   const fl = wheel(g, E, -62, -95, 24, { hub: 28, gond: 28, led: "#bfe6ff", gondColor: ["#cfe4f4"] }); A.ticks.push(fl.tick);
   const spikes = canvasTex(128, 128, (c) => { c.fillStyle = "#3a3a32"; c.fillRect(0, 0, 128, 128); for (let y = 0; y < 128; y += 16) for (let x = (y / 16) % 2 * 8; x < 128; x += 16) { c.fillStyle = "#b9ae82"; c.beginPath(); c.moveTo(x, y + 14); c.lineTo(x + 8, y); c.lineTo(x + 16, y + 14); c.fill(); } }, [6, 3]);
@@ -1505,9 +1513,9 @@ function areaNewYork() {
   const A = newArea(97), g = A.group, E = A.E, R = A.R;
   const CURB = 3.6, FRONT = 8.2, RIVER = 40;
   wetGround(g, {
-    x0: -L - 40, len: 2 * L + 80, z0: -12, span: 26, cuts: [[RIVER, 999, -6.2]], paint(P) {
-      street(P, R, -L - 40, RIVER, CURB, { far: -12, near: 14 });
-      P.tiles(RIVER, L + 40, -12, 14, "#4a4640", "#3a3632", 0.6, 0.9);
+    x0: -L - 90, len: 2 * L + 180, z0: -12, span: 26, cuts: [[RIVER, 999, -6.2]], paint(P) {
+      street(P, R, -L - 90, RIVER, CURB, { far: -12, near: 14 });
+      P.tiles(RIVER, L + 90, -12, 14, "#4a4640", "#3a3632", 0.6, 0.9);
       P.zebra(-24, -CURB + 0.3, CURB, "#e0e0dc").zebra(0, -CURB + 0.3, CURB, "#e0e0dc").zebra(27, -CURB + 0.3, CURB, "#e0e0dc");
       P.fill(24, RIVER, -12, -CURB, "#2a2c26", 0.5).fill(28, 44, -12, -7, "#3e2a24");   // park edge + Bethesda terrace bricks
     },
@@ -1585,7 +1593,7 @@ function areaNewYork() {
   for (let x = 22; x <= 46; x += 4) { tree(g, R, x, -9 - R() * 2, 1.2); tree(g, R, x + 2, -24 - R() * 3, 1.3); }
   // Brooklyn Bridge across the East River, Lower Manhattan + One World Trade beyond
   water(g, RIVER, 320, -260, -6.2);
-  seawall(g, RIVER, L + 40, -6.7); railing(g, RIVER, L + 40, -6.0);
+  seawall(g, RIVER, L + 90, -6.7); railing(g, RIVER, L + 90, -6.0);
   const bz = -46, bdeck = 13, stone = toon("#7a6a58", { roughness: 0.8 });
   const btex = canvasTex(64, 128, (c) => { c.fillStyle = "#7a6a58"; c.fillRect(0, 0, 64, 128); c.fillStyle = "#14161c"; for (const x of [8, 36]) { c.beginPath(); c.moveTo(x, 128); c.lineTo(x, 60); c.quadraticCurveTo(x, 34, x + 10, 26); c.quadraticCurveTo(x + 20, 34, x + 20, 60); c.lineTo(x + 20, 128); c.fill(); } });
   const bt = noLine(new THREE.MeshBasicMaterial({ map: btex, color: new THREE.Color(0.8, 0.78, 0.75) }));
@@ -1637,7 +1645,7 @@ const landmark = (g, name, x, z, h, ry = 0, fallback) => {
     const c = b.getCenter(new THREE.Vector3());
     m.position.set(-c.x * s, -b.min.y * s, -c.z * s);
     m.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; if (o.isMesh) [].concat(o.material).forEach((mt) => { mt.emissive?.set("#8a8478"); mt.emissiveMap = mt.map; LANDMARK_MATS.push(mt); mt.emissiveIntensity = mode === "day" ? 0 : 0.6; mt.userData.outlineParameters = { thickness: 0.001, color: [0.04, 0.05, 0.09] }; }); });
-    holder.add(m);
+    holder.add(m); clipAll(m);
   }, undefined, () => fallback && fallback(holder));
   return holder;
 };
@@ -1904,6 +1912,7 @@ function bakeClips(R) {
 function loadCrowdModels() {
   NPC_MODELS.forEach((name) => gltfLoader.load(`assets/models/npc/${name}.glb`, (gltf) => {
     gltf.scene.traverse((o) => { if (o.isMesh) { o.castShadow = true; [].concat(o.material).forEach((m) => { m.roughness = 0.75; m.metalness = 0; m.userData.outlineParameters = { thickness: 0.0022, color: [0.03, 0.03, 0.05] }; }); } });
+    clipAll(gltf.scene);
     const R = prepRig(gltf.scene, 1.7);
     NPC_TYPES.push({ name, proto: R.holder, clips: bakeClips(R) });
     NPCS.forEach(upgradeNPC);
@@ -1940,7 +1949,7 @@ function loadProps() {
     const m = gltf.scene, bb = new THREE.Box3().setFromObject(m), s = 1 / (bb.max.y - bb.min.y), c = bb.getCenter(new THREE.Vector3());
     m.scale.setScalar(s); m.position.set(-c.x * s, -bb.min.y * s, -c.z * s);
     m.traverse((o) => { if (o.isMesh) { o.castShadow = o.receiveShadow = true; [].concat(o.material).forEach((mt) => { mt.userData.outlineParameters = { thickness: 0.0015, color: [0.04, 0.05, 0.04] }; if (kind === "vending") { mt.emissive?.set("#ffffff"); mt.emissiveMap = mt.map; LANDMARK_MATS.push(mt); mt.emissiveIntensity = mode === "day" ? 0 : 0.6; } }); } });
-    const proto = new THREE.Group(); proto.add(m);
+    const proto = new THREE.Group(); proto.add(m); clipAll(m);
     PROPS[kind] = proto;
     SLOTS.forEach(fillSlot);
   }, undefined, () => {});
@@ -1962,7 +1971,7 @@ const heroLights = Array.from({ length: 4 }, () => { const l = new THREE.PointLi
 scene.add(hemi, sun);
 // Time of day. "day" = Persona 3 Reload after-school golden hour; "rain" = Persona 5 Royal evening rain.
 const MODES = {
-  day: { sky: SKY("#5a7cc8", "#f0b496", "#ffe0b0"), fog: "#e8c0a4", fogK: 0.3, hemi: ["#ffe8d4", "#8a7a90", 1.6], sun: ["#ffcf96", 4.6], glow: 0.06, shop: 0.6, pools: 0, lights: 0.15, wet: 0, ambient: [1.0, 0.93, 0.86], exposure: 1.3, bloom: [0.3, 0.4, 1.1] },
+  day: { sky: SKY("#5a7cc8", "#f0b496", "#ffe0b0"), fog: "#e8c0a4", fogK: 0.75, hemi: ["#ffe8d4", "#8a7a90", 1.6], sun: ["#ffcf96", 4.6], glow: 0.06, shop: 0.6, pools: 0, lights: 0.15, wet: 0, ambient: [1.0, 0.93, 0.86], exposure: 1.3, bloom: [0.3, 0.4, 1.1] },
   rain: { glow: 1, shop: 0.78, pools: 1, lights: 1, wet: 1, ambient: [0.32, 0.36, 0.46], exposure: 1.15, bloom: [0.6, 0.42, 0.95], sun: ["#a9bde0", 0.4] },
 };
 let mode = (() => { try { return localStorage.getItem("world-mode") === "rain" ? "rain" : "day"; } catch { return "day"; } })();
@@ -2020,7 +2029,7 @@ function setArea(i, fromEdge = 0) {
   buildMinimap();
   hero.position.set(fromEdge ? -fromEdge * (L - 1) : -L + 8, 0, area.lane);
   hero.rotation.y = fromEdge < 0 ? -Math.PI / 2 : Math.PI / 2;
-  camYaw = hero.rotation.y + (fromEdge < 0 ? -0.35 : 0.35);
+  lean = fromEdge < 0 ? -1 : 1; yawNudge = 0; camYaw = Math.PI - 0.3 * lean;
   snapCam = true;
   target = null; cine = null; near = null; autoDir = fromEdge < 0 ? -1 : 1;
   tabs.forEach((b, k) => b.setAttribute("aria-pressed", String(k === areaIndex)));
@@ -2067,16 +2076,19 @@ addEventListener("keydown", (e) => {
 });
 addEventListener("keyup", (e) => { const k = KEYMAP[e.key.length === 1 ? e.key.toLowerCase() : e.key]; if (k) keys[k] = false; if (e.key === "Shift") keys.run = false; });
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
-let drag = null, camDist = 6.4, dragT = -9;
+// Locked camera (视角锁定, like Persona): it always faces the landmark side of the street from the near
+// pavement, leaning at most ~26° toward the walking direction; dragging only nudges it ±20° and springs back,
+// so the backs of buildings, the map ends and other unfinished angles never come into view.
+let drag = null, camDist = 6.4, dragT = -9, yawNudge = 0, lean = 1;
 canvas.addEventListener("pointerdown", (e) => { active = true; root.classList.add("is-active"); drag = { x: e.clientX, y: e.clientY, moved: false }; canvas.setPointerCapture(e.pointerId); });
 canvas.addEventListener("pointermove", (e) => {
   if (!drag) return;
   const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
   if (!drag.moved && Math.hypot(dx, dy) < 7) return;
   drag.moved = true; drag.x = e.clientX; drag.y = e.clientY;
-  camYaw -= dx * 0.006; camDist = THREE.MathUtils.clamp(camDist + dy * 0.02, 2.8, 10); dragT = clock.elapsedTime;
+  yawNudge = THREE.MathUtils.clamp(yawNudge - dx * 0.004, -0.35, 0.35); camDist = THREE.MathUtils.clamp(camDist + dy * 0.02, 4.5, 8); dragT = clock.elapsedTime;
 });
-canvas.addEventListener("wheel", (e) => { if (!active) return; e.preventDefault(); camDist = THREE.MathUtils.clamp(camDist * (1 + e.deltaY * 0.0012), 2.8, 10); }, { passive: false });
+canvas.addEventListener("wheel", (e) => { if (!active) return; e.preventDefault(); camDist = THREE.MathUtils.clamp(camDist * (1 + e.deltaY * 0.0012), 4.5, 8); }, { passive: false });
 canvas.addEventListener("pointerup", (e) => {
   const d = drag; drag = null;
   if (!d || d.moved) return;
@@ -2250,10 +2262,9 @@ function step(dt, time) {
     showPrompt(cine ? null : near);
   }
   // low, close chase camera over the right shoulder; swings round behind the hero as it turns
-  if (moving && time - dragT > 2.5) {
-    let dy = hero.rotation.y - camYaw; dy = Math.atan2(Math.sin(dy), Math.cos(dy));
-    if (Math.abs(dy) < 2.3) camYaw += dy * Math.min(1, dt * 1.2);
-  }
+  if (moving && Math.abs(dir.x) > 0.3) lean += (Math.sign(dir.x) - lean) * Math.min(1, dt * 0.8);
+  if (!drag && time - dragT > 1.5) yawNudge *= 1 - Math.min(1, dt * 1.5);
+  camYaw += (Math.PI - 0.3 * lean + yawNudge - camYaw) * Math.min(1, dt * 2.5);
   fwd.set(Math.sin(camYaw), 0, Math.cos(camYaw));
   right.set(-Math.cos(camYaw), 0, Math.sin(camYaw));
   const [cz0, cz1] = area.cz(hero.position.x);
@@ -2268,7 +2279,8 @@ function step(dt, time) {
     want.y = 0.9 + camDist * 0.52;
     lookWant.copy(hero.position).addScaledVector(fwd, 1.4).setY(1.15);
   }
-  want.z = THREE.MathUtils.clamp(want.z, cz0, cz1);
+  want.z = cine ? THREE.MathUtils.clamp(want.z, cz0, cz1) : Math.max(want.z, cz0);
+  cutPlane.constant = cine ? 999 : hero.position.z + 1.8;   // visible: z <= hero + 1.8
   const k = snapCam ? 1 : Math.min(1, dt * (cine ? 2 : 4));
   camera.position.lerp(want, k);
   look.lerp(lookWant, snapCam ? 1 : Math.min(1, dt * (cine ? 2.5 : 5)));

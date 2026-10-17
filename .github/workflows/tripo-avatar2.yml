@@ -1,6 +1,7 @@
 name: tripo-avatar2
 on:
   push:
+    branches-ignore: ["claude/pensive-bardeen-h0se4f"]   # never spend Tripo credits from the production branch
     paths: ["tools/tripo/RUN_AVATAR2"]
 permissions:
   contents: write

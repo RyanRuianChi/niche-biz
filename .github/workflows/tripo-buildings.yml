@@ -1,6 +1,7 @@
 name: tripo-buildings
 on:
   push:
+    branches-ignore: ["claude/pensive-bardeen-h0se4f"]   # never spend Tripo credits from the production branch
     paths: ["tools/tripo/RUN_BUILDINGS"]
 permissions:
   contents: write

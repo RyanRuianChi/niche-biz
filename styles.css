@@ -535,6 +535,7 @@ img { display: block; max-width: 100%; }
 
 /* ---------- 3D walk-around (three.js) ---------- */
 .world { margin: 60px auto 0; max-width: 1200px; }
+.world__title { margin-bottom: 18px; }
 .world__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-bottom: 12px; }
 .world__tabs { display: flex; gap: 6px; }
 .world__tabs button {
@@ -548,7 +549,7 @@ img { display: block; max-width: 100%; }
   border: 4px solid var(--white); box-shadow: 10px 10px 0 var(--red);
   clip-path: polygon(0 0, 100% 1.5%, 99.4% 100%, 0.4% 98.5%);
 }
-.world canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: pointer; }
+.world__stage > canvas:first-of-type { display: block; width: 100%; height: 100%; touch-action: none; cursor: pointer; }
 .world__loc {
   position: absolute; top: 14px; left: 14px; padding: 4px 16px 6px; background: var(--white); color: var(--ink);
   transform: rotate(-3deg) skewX(var(--skew)); box-shadow: 4px 4px 0 var(--red); pointer-events: none;
