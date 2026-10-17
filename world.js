@@ -448,7 +448,7 @@ const GroundShader = {
       for (int i = 0; i < 2; i++) { vec4 c = cuts[i]; if (c.w > 0.5 && vW.x > c.x && vW.x < c.y && vW.y < c.z) discard; }   // water cut-outs
       vec2 muv = vec2((vW.x - mapInfo.x) / mapInfo.y, (vW.y - mapInfo.z) / mapInfo.w);
       vec3 alb = texture2D(map, muv).rgb;
-      alb = mix(alb, pow(alb, vec3(0.5)) * vec3(1.02, 0.97, 0.92), dayLift * (1.0 - mirror));   // night paint -> sunlit pavement
+      alb = mix(alb, mix(min(alb * 2.6, vec3(1.0)), pow(alb, vec3(0.5)), 0.35) * vec3(1.02, 0.97, 0.92), dayLift * (1.0 - mirror));   // night paint -> sunlit pavement
       float wet = texture2D(wetMap, muv).r;
       float n = vn(vW * 0.42) * 0.65 + vn(vW * 1.9 + 3.0) * 0.35;
       float puddle = max(smoothstep(0.5, 0.66, n) * wet * wetK, mirror);
@@ -988,14 +988,14 @@ const lion = (p, x, z, ry) => {
   for (const s of [-1, 1]) ball(g, 0.17, b, s * 0.28, 1.22, 1.15, [1, 0.7, 1.7]);
   return g;
 };
-const tree = (p, R, x, z, s = 1, colors = ["#1c3326", "#223b2b", "#1a2f22"]) => {
+const tree = (p, R, x, z, s = 1, colors = ["#2f5a3a", "#3a6a42", "#2a4f33"]) => {
   cyl(p, 0.2 * s, 3.4 * s, toon("#2a2019"), x, 0, z, 8, 0.14 * s);
   for (let i = 0; i < 4; i++) ball(p, (1.3 + R() * 0.6) * s, toon(pick(R, colors)), x + (R() - 0.5) * 1.6 * s, (3.6 + R() * 1.3) * s, z + (R() - 0.5) * 1.2 * s);
 };
 const palm = (p, R, x, z, h = 6) => {
   const top = V(x + (R() - 0.5) * 0.8, h, z + (R() - 0.5) * 0.8);
   strut(p, V(x, 0, z), top, 0.17, toon("#4a3b2c"));
-  const leaf = toon("#1d3a26");
+  const leaf = toon("#2f5e36");
   for (let i = 0; i < 8; i++) {
     const a = i / 8 * Math.PI * 2 + R() * 0.3;
     const f = add(p, new THREE.ConeGeometry(0.32, 2.8, 4), leaf, top.x + Math.sin(a) * 1.1, top.y - 0.4, top.z + Math.cos(a) * 1.1);
@@ -1216,21 +1216,27 @@ function areaUPenn() {
   // far side: generic halls, LOVE, College Hall (+Franklin), Fisher Fine Arts Library
   for (const [x, w] of [[-50, 18], [-32, 14]]) hall(g, E, { x, z: -14, side: -1, w, h: 12, wall: pick(R, brick), seed: x, gables: 3 });
   hall(g, E, { x: -12, z: -21, side: -1, w: 18, h: 13, wall: "#4a2c24", seed: 5, door: false });
-  // College Hall: green serpentine stone, big central gable, two towers
-  const ch = hall(g, E, { x: 12, z: -15, side: -1, w: 22, h: 13, wall: "#4f5e4a", roof: "#262c30", seed: 11, gables: 2, lit: 0.6 });
-  add(g, gableGeo(2.4, 6, 8), ch.rm, 12, 13, -14.6).rotation.y = Math.PI / 2;
-  box(g, 7.6, 5, 1.6, ch.m, 12, 11, -14.6);
-  for (const dx of [-12.5, 12.5]) towerBlock(g, 12 + dx, -18, 5, 19, 5, ch.m, "pyramid", "#262c30");
+  // College Hall: green serpentine stone, big central gable, two towers (Tripo model from the painting when present)
+  landmark(g, "lm/college-hall", 12, -22, 22, 0, () => {
+    const ch = hall(g, E, { x: 12, z: -15, side: -1, w: 22, h: 13, wall: "#4f5e4a", roof: "#262c30", seed: 11, gables: 2, lit: 0.6 });
+    add(g, gableGeo(2.4, 6, 8), ch.rm, 12, 13, -14.6).rotation.y = Math.PI / 2;
+    box(g, 7.6, 5, 1.6, ch.m, 12, 11, -14.6);
+    for (const dx of [-12.5, 12.5]) towerBlock(g, 12 + dx, -18, 5, 19, 5, ch.m, "pyramid", "#262c30");
+  });
+  floodlight(g, E, 12, -12.5, "#ffd9a0", 4, 6);
   // Ben Franklin, seated, on a plinth
   const bronze = toon("#3c3a34", { roughness: 0.35, metalness: 0.4 });
   box(g, 2.4, 1.0, 2.0, toon("#7d7a72"), 12, 0, -9.5);
   box(g, 1.2, 1.0, 1.0, bronze, 12, 1.0, -9.6); ball(g, 0.42, bronze, 12, 2.4, -9.5, [1, 1.25, 0.9]); ball(g, 0.24, bronze, 12, 3.2, -9.45);
   floodlight(g, E, 12, -8, "#ffd9a0", 2.6, 4);
   // Fisher Fine Arts Library: red sandstone, crenellated tower, great round window
-  const fm = hall(g, E, { x: 46, z: -14, side: -1, w: 20, h: 12, wall: "#7a2e22", roof: "#3a2a22", seed: 21, kind: "round", gables: 1, lit: 0.65 });
-  towerBlock(g, 34, -17, 6.5, 24, 6.5, fm.m, "crenel");
-  const rw = add(g, new THREE.CircleGeometry(2.2, 24), noLine(new THREE.MeshBasicMaterial({ color: new THREE.Color(1.6, 1.25, 0.8) })), 50, 8, -13.95);
-  add(g, new THREE.RingGeometry(2.2, 2.6, 24), toon("#5a2018"), 50, 8, -13.9);
+  landmark(g, "lm/fisher", 44, -21, 24, 0, () => {
+    const fm = hall(g, E, { x: 46, z: -14, side: -1, w: 20, h: 12, wall: "#7a2e22", roof: "#3a2a22", seed: 21, kind: "round", gables: 1, lit: 0.65 });
+    towerBlock(g, 34, -17, 6.5, 24, 6.5, fm.m, "crenel");
+    add(g, new THREE.CircleGeometry(2.2, 24), noLine(new THREE.MeshBasicMaterial({ color: new THREE.Color(1.6, 1.25, 0.8) })), 50, 8, -13.95);
+    add(g, new THREE.RingGeometry(2.2, 2.6, 24), toon("#5a2018"), 50, 8, -13.9);
+  });
+  floodlight(g, E, 44, -12, "#ffd9a0", 4, 6);
   hall(g, E, { x: 58, z: -14, side: -1, w: 6, h: 10, wall: "#6a3a2c", seed: 22, door: false });
   // near side: The Quad (gables + gate tower with cupola), then more halls
   const qm = hall(g, E, { x: -44, z: 14, side: 1, w: 34, h: 12, wall: "#5a3226", roof: "#2a2e36", seed: 41, gables: 7, door: false });
@@ -1241,12 +1247,14 @@ function areaUPenn() {
   hall(g, E, { x: 40, z: 15, side: 1, w: 24, h: 12, wall: "#563026", seed: 44, gables: 4 });
   skyline(g, R, -L - 60, L + 60, -170, -120, 22, 40, 120);   // Center City beyond
   // LOVE (Robert Indiana) under cherry trees
-  box(g, 3, 0.7, 1.8, toon("#1a1a1e"), -14, 0, -6.5);
-  const red = toon("#d4202c", { roughness: 0.3 }), blue = toon("#2d4fa3"), grn = toon("#1f6a3a");
-  fontReady.then(() => {
-    if (!font) return;
-    const mk = (s, x, y, rz, m) => { const geo = new TextGeometry(s, { font, size: 1.0, depth: 0.4, curveSegments: 4 }); const o = add(g, geo, [red, m], x, y, -6.7); o.rotation.z = rz; return o; };
-    mk("L", -15.3, 1.95, 0, blue); mk("O", -14.35, 2.15, 0.38, grn); mk("V", -15.3, 0.75, 0, grn); mk("E", -14.3, 0.75, 0, blue);
+  landmark(g, "lm/love", -14, -6.6, 3.8, 0, () => {
+    box(g, 3, 0.7, 1.8, toon("#1a1a1e"), -14, 0, -6.5);
+    const red = toon("#d4202c", { roughness: 0.3 }), blue = toon("#2d4fa3"), grn = toon("#1f6a3a");
+    fontReady.then(() => {
+      if (!font) return;
+      const mk = (s, x, y, rz, m) => { const geo = new TextGeometry(s, { font, size: 1.0, depth: 0.4, curveSegments: 4 }); const o = add(g, geo, [red, m], x, y, -6.7); o.rotation.z = rz; return o; };
+      mk("L", -15.3, 1.95, 0, blue); mk("O", -14.35, 2.15, 0.38, grn); mk("V", -15.3, 0.75, 0, grn); mk("E", -14.3, 0.75, 0, blue);
+    });
   });
   floodlight(g, E, -14, -5.4, "#ffd9a0", 3, 5);
   for (const [x, z] of [[-17.5, -8], [-11, -9]]) { cyl(g, 0.16, 2.6, toon("#2a2019"), x, 0, z, 8); for (let i = 0; i < 4; i++) ball(g, 1.2 + R() * 0.4, toon("#c97a98"), x + (R() - 0.5) * 1.4, 3 + R(), z + (R() - 0.5)); }
@@ -1326,6 +1334,8 @@ function areaCUHK() {
   box(g, 26.4, 3, 10.4, toon("#e2e2de"), -10, 14, -31);
   // Science Centre: raised octagon on a pillar, CUHK crest, spiral stairs
   const conc = toon("#c8c6c0", { roughness: 0.7 });
+  landmark(g, "lm/science", 16, -21, 16, 0, () => scienceProc());
+  const scienceProc = () => {
   for (const dx of [-12, 12]) { const bm = litMat(windowsTex(10, 4, "#b8b6b0", 40 + dx, 0.55, false)); box(g, 10, 11, 10, [bm, bm, conc, conc, bm, bm], 16 + dx, 0, -24); }
   cyl(g, 2.4, 6, conc, 16, 0, -22, 12);
   const oct = litMat(windowsTex(26, 2, "#c8c6c0", 51, 0.5, false));
@@ -1333,12 +1343,15 @@ function areaCUHK() {
   const crest = canvasTex(128, 128, (c) => { c.fillStyle = "#4b2e83"; c.beginPath(); c.moveTo(14, 10); c.lineTo(114, 10); c.lineTo(114, 70); c.quadraticCurveTo(64, 126, 14, 70); c.closePath(); c.fill(); c.strokeStyle = "#d4a82a"; c.lineWidth = 8; c.stroke(); c.fillStyle = "#d4a82a"; c.font = "900 54px 'Noto Sans TC', sans-serif"; c.textAlign = "center"; c.fillText("中", 64, 72); });
   plane(g, 2.6, 2.6, noLine(new THREE.MeshBasicMaterial({ map: crest, transparent: true, color: new THREE.Color(1.3, 1.3, 1.3) })), 16, 9.2, -12.7);
   for (const dx of [-7, 7]) cyl(g, 1.4, 6, conc, 16 + dx, 0, -15, 12);
+  };
   floodlight(g, E, 16, -11, "#e8f0ff", 4, 5);
   plane(g, 7, 1.0, signMat("大學站 UNIVERSITY", { bg: "#0b1a3a", fg: "#ffffff", w: 512, h: 72, vertical: false }, 1.6), -52, 2.6, 13.3, Math.PI);
   // New Asia Water Tower + amphitheatre
-  box(g, 3.4, 26, 3.4, conc, 38, 0, -24);
-  box(g, 8, 6, 8, conc, 38, 24, -24);
-  for (const s of [-1, 1]) box(g, 0.8, 4, 8.2, toon("#5a5a5e"), 38 + s * 1.6, 25, -24);
+  landmark(g, "lm/water-tower", 38, -24, 30, 0, () => {
+    box(g, 3.4, 26, 3.4, conc, 38, 0, -24);
+    box(g, 8, 6, 8, conc, 38, 24, -24);
+    for (const s of [-1, 1]) box(g, 0.8, 4, 8.2, toon("#5a5a5e"), 38 + s * 1.6, 25, -24);
+  });
   box(g, 0.3, 0.3, 0.3, glow("#ff2a2a", 4), 38, 30.2, -24);
   for (let i = 0; i < 6; i++) {
     const r0 = 3 + i * 1.2, sh = new THREE.Shape();
@@ -1350,7 +1363,7 @@ function areaCUHK() {
   // Pavilion of Harmony: infinity pool over Tolo Harbour, banyan tree, islands
   water(g, SEA, L + 160, -200, -8, -0.3);
   box(g, L + 160 - SEA, 0.3, 0.4, toon("#6a6a70"), (SEA + L + 160) / 2, -0.3, -8.2);
-  const ban = toon("#1a2e21");
+  const ban = toon("#2a4a32");
   cyl(g, 0.9, 5, toon("#3a2e24"), 58, 0, -10, 10, 0.6);
   for (let i = 0; i < 6; i++) ball(g, 3 + R() * 1.5, ban, 58 + (R() - 0.5) * 7, 6 + R() * 1.6, -10 + (R() - 0.5) * 4, [1.4, 0.6, 1.2]);
   for (let i = 0; i < 6; i++) ball(g, 1, toon("#122019"), 50 + i * 22 + R() * 10, -2, -90 - R() * 40, [12 + R() * 14, 6 + R() * 8, 10]);
@@ -1591,17 +1604,18 @@ function areaNewYork() {
   });
 }
 
+const LANDMARK_MATS = [];
 // place a Tripo landmark: scaled to height h, base at (x, z), turned by ry; night-dimmed with thin outlines
 const landmark = (g, name, x, z, h, ry = 0, fallback) => {
   const holder = new THREE.Group(); holder.position.set(x, 0, z); holder.rotation.y = ry; g.add(holder);
-  gltfLoader.load(`assets/models/hk/${name}.glb`, (gltf) => {
+  gltfLoader.load(name.includes("/") ? `assets/models/${name}.glb` : `assets/models/hk/${name}.glb`, (gltf) => {
     const m = gltf.scene;
     const b = new THREE.Box3().setFromObject(m);
     const s = h / (b.max.y - b.min.y);
     m.scale.setScalar(s);
     const c = b.getCenter(new THREE.Vector3());
     m.position.set(-c.x * s, -b.min.y * s, -c.z * s);
-    m.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; if (o.isMesh) [].concat(o.material).forEach((mt) => { mt.color?.multiplyScalar(0.6); mt.emissive?.set("#8a8478"); mt.emissiveMap = mt.map; mt.emissiveIntensity = 0.75; mt.userData.outlineParameters = { thickness: 0.001, color: [0.04, 0.05, 0.09] }; }); });
+    m.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; if (o.isMesh) [].concat(o.material).forEach((mt) => { mt.emissive?.set("#8a8478"); mt.emissiveMap = mt.map; LANDMARK_MATS.push(mt); mt.emissiveIntensity = mode === "day" ? 0 : 0.6; mt.userData.outlineParameters = { thickness: 0.001, color: [0.04, 0.05, 0.09] }; }); });
     holder.add(m);
   }, undefined, () => fallback && fallback(holder));
   return holder;
@@ -1853,6 +1867,7 @@ function applyMode() {
   hemi.color.set(h[0]); hemi.groundColor.set(h[1]); hemi.intensity = h[2];
   sun.color.set(M.sun[0]); sun.intensity = M.sun[1]; sun.castShadow = day;
   FACADES.forEach((m) => (m.emissiveIntensity = M.glow));
+  LANDMARK_MATS.forEach((m) => (m.emissiveIntensity = day ? 0 : 0.6));
   SHOPS.forEach((m) => m.color.setScalar(M.shop));
   poolCache.forEach((m) => { m.color.copy(m.userData.base).multiplyScalar(M.pools); m.visible = M.pools > 0; });
   reflectors.forEach((m) => { const u = m.material.uniforms; u.wetK.value = M.wet; u.dayLift.value = day ? 1 : 0; u.ambient.value.setRGB(...M.ambient); });
