@@ -9,15 +9,16 @@ cost impact:
   · geometry detailed (Ultra): extra HD credit
 [1m──────────────────────────────────[22m
 model: v3.1-20260211 (explicit --model)
-task created 9efc33d0-dbde-482b-8416-e717e253a347 (@rc-v2)
+task created 4ee4533a-e1b3-4d93-88a6-5308b2747a66 (@rc-v2)
 multiview_to_model · queued
-multiview_to_model · running 5% · 9efc33d0
-multiview_to_model · running 13% · 9efc33d0
-multiview_to_model · running 21% · 9efc33d0
-multiview_to_model · running 31% · 9efc33d0
-multiview_to_model · running 47% · 9efc33d0
-multiview_to_model · running 68% · 9efc33d0
-multiview_to_model · success 100% · 9efc33d0
-[32m✓[39m multiview_to_model · 9efc33d0-dbde-482b-8416-e717e253a347 · 60 credits
+multiview_to_model · running 3% · 4ee4533a
+multiview_to_model · running 7% · 4ee4533a
+multiview_to_model · running 11% · 4ee4533a
+multiview_to_model · running 17% · 4ee4533a
+multiview_to_model · running 26% · 4ee4533a
+multiview_to_model · running 38% · 4ee4533a
+multiview_to_model · running 50% · 4ee4533a
+multiview_to_model · success 100% · 4ee4533a
+[32m✓[39m multiview_to_model · 4ee4533a-e1b3-4d93-88a6-5308b2747a66 · 60 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/avatar2/model/tripo-out/rc-v2-9efc33d0
+[32m✓[39m artifacts saved to tools/tripo/logs/avatar2/model/tripo-out/rc-v2-4ee4533a
