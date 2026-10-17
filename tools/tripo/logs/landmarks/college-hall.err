@@ -1,0 +1,25 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/lm/college-hall.png
+model: v3.1-20260211[2m — default high-fidelity → v3.1[22m
+steps:
+  1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
+[2m     model="v3.1-20260211" texture_quality="detailed"[22m
+cost impact:
+  · texture_quality detailed: higher price tier
+[1m──────────────────────────────────[22m
+model: v3.1-20260211 (default high-fidelity → v3.1)
+task created 9501751c-2b44-45da-a103-8923f5d57821 (@lm-college-hall)
+image_to_model · queued
+image_to_model · running 5% · 9501751c
+image_to_model · running 14% · 9501751c
+image_to_model · running 22% · 9501751c
+image_to_model · running 35% · 9501751c
+image_to_model · running 54% · 9501751c
+image_to_model · running 78% · 9501751c
+image_to_model · running 99% · 9501751c
+image_to_model · running 99% · 9501751c
+image_to_model · running 99% · 9501751c
+image_to_model · success 100% · 9501751c
+[32m✓[39m image_to_model · 9501751c-2b44-45da-a103-8923f5d57821 · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/college-hall/tripo-out/lm-college-hall-9501751c

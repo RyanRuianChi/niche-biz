@@ -1,0 +1,19 @@
+{
+  "task_id": "02e0a5bf-fee5-4ee2-b57d-76d7e67632ad",
+  "type": "image_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "Isolate College Hall (the green serpentine-stone gothic university building with two towers, steep slate roofs and the central arched entrance) from this painting as a single clean 3D-asset concept: the whole structure fully visible, three-quarter front view, centred, plain white background, no people, no trees in front, no ground clutter, same colours, materials and architectural details, clean semi-realistic game-art style.",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-17T00:04:17.483129Z",
+  "completed_at": "2026-10-17T00:04:42.718635Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}
