@@ -1415,10 +1415,12 @@ function areaSingapore() {
   // across the bay: Singapore Flyer, Esplanade, ArtScience, Marina Bay Sands, Supertrees
   const fl = wheel(g, E, -62, -95, 24, { hub: 28, gond: 28, led: "#bfe6ff", gondColor: ["#cfe4f4"] }); A.ticks.push(fl.tick);
   const spikes = canvasTex(128, 128, (c) => { c.fillStyle = "#3a3a32"; c.fillRect(0, 0, 128, 128); for (let y = 0; y < 128; y += 16) for (let x = (y / 16) % 2 * 8; x < 128; x += 16) { c.fillStyle = "#b9ae82"; c.beginPath(); c.moveTo(x, y + 14); c.lineTo(x + 8, y); c.lineTo(x + 16, y + 14); c.fill(); } }, [6, 3]);
-  for (const [x, z, r] of [[-34, -66, 11], [-17, -70, 9]]) {
-    const d = add(g, new THREE.SphereGeometry(r, 32, 14, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ map: spikes, roughness: 0.4, metalness: 0.5, emissive: "#3a2c14", emissiveIntensity: 0.6 }), x, 0, z);
-    d.scale.set(1.3, 0.85, 1);
-  }
+  landmark(g, "lm/esplanade", -26, -68, 20, 0, () => {
+    for (const [x, z, r] of [[-34, -66, 11], [-17, -70, 9]]) {
+      const d = add(g, new THREE.SphereGeometry(r, 32, 14, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ map: spikes, roughness: 0.4, metalness: 0.5, emissive: "#3a2c14", emissiveIntensity: 0.6 }), x, 0, z);
+      d.scale.set(1.3, 0.85, 1);
+    }
+  });
   // ArtScience: lotus petals around a glowing base
   const asx = 4, asz = -52;
   landmark(g, "lm/artscience", asx, asz, 18, 0, () => {
@@ -1448,11 +1450,11 @@ function areaSingapore() {
   });
   // Supertrees (light show)
   const canopyM = noLine(new THREE.MeshBasicMaterial({ color: "#ff4fd8", wireframe: true, transparent: true, opacity: 0.9 }));
-  for (const [x, z, h] of [[70, -100, 40], [82, -94, 30], [92, -108, 46], [104, -98, 32], [62, -112, 28], [114, -110, 36]]) {
+  for (const [x, z, h] of [[70, -100, 40], [82, -94, 30], [92, -108, 46], [104, -98, 32], [62, -112, 28], [114, -110, 36]]) landmark(g, "lm/supertree", x, z, h * 1.15, x, () => {
     add(g, new THREE.CylinderGeometry(1.4, 2.2, h, 10), toon("#3a2440"), x, h / 2, z);
     const c = add(g, new THREE.ConeGeometry(h * 0.42, h * 0.3, 18, 3, true), canopyM, x, h + h * 0.12, z); c.rotation.x = Math.PI;
     add(g, new THREE.CylinderGeometry(3, 1.4, 2.4, 12), toon("#d8d4cc"), x, h - 1, z);
-  }
+  });
   A.ticks.push((dt, time) => canopyM.color.setHSL((0.85 + Math.sin(time * 0.4) * 0.12 + 1) % 1, 0.9, 0.55).multiplyScalar(2.2));
   skyline(g, R, -140, 160, -200, -140, 24, 30, 110, ["#151b28", "#1a2030", "#1c2436"]);
   // Helix Bridge from the promenade out across the water
@@ -1548,17 +1550,19 @@ function areaNewYork() {
   for (const dx of [-6, 2]) floodlight(g, E, fx + dx, fz + 2, "#ffe2b0", 3.5, 5);
   // Grand Central: three great arched windows, columns, the clock
   const gx = 14, gz = -FRONT - 1.4, gw = 24, gh = 17;
-  const gm = toon("#cdbf9f", { roughness: 0.6 });
-  box(g, gw, gh, 22, gm, gx, 0, gz - 11);
-  const arch = canvasTex(96, 192, (c, w, h) => { c.fillStyle = "#2a2418"; c.fillRect(0, 0, w, h); c.fillStyle = "#ffcf86"; c.beginPath(); c.moveTo(6, h); c.lineTo(6, 48); c.arc(48, 48, 42, Math.PI, 0); c.lineTo(90, h); c.fill(); c.strokeStyle = "rgba(40,30,20,.75)"; c.lineWidth = 3; for (let x = 12; x < 90; x += 12) { c.beginPath(); c.moveTo(x, 10); c.lineTo(x, h); c.stroke(); } for (let y = 30; y < h; y += 14) { c.beginPath(); c.moveTo(6, y); c.lineTo(90, y); c.stroke(); } });
-  const archM = noLine(new THREE.MeshBasicMaterial({ map: arch, color: new THREE.Color(1.4, 1.3, 1.15) }));
-  for (const dx of [-7, 0, 7]) plane(g, 5, 10, archM, gx + dx, 7.5, gz + 0.05);
-  for (const dx of [-10.5, -9.3, -3.7, 3.7, 9.3, 10.5]) cyl(g, 0.45, 12.5, gm, gx + dx, 1.2, gz + 0.7, 12);
-  box(g, gw + 1, 1.2, 2, gm, gx, 13.8, gz); box(g, 10, 3.6, 1.2, gm, gx, gh, gz - 0.4);
-  const clock = canvasTex(128, 128, (c) => { c.fillStyle = "#f4ead0"; c.beginPath(); c.arc(64, 64, 60, 0, Math.PI * 2); c.fill(); c.strokeStyle = "#7a5a1a"; c.lineWidth = 8; c.stroke(); c.lineWidth = 5; c.strokeStyle = "#222"; c.beginPath(); c.moveTo(64, 64); c.lineTo(64, 22); c.moveTo(64, 64); c.lineTo(94, 72); c.stroke(); });
-  add(g, new THREE.CircleGeometry(1.5, 24), noLine(new THREE.MeshBasicMaterial({ map: clock, color: new THREE.Color(1.6, 1.5, 1.3) })), gx, gh + 1.7, gz + 0.25);
-  for (const dx of [-2.6, 2.6]) { ball(g, 0.55, toon("#3c3a34"), gx + dx, gh + 2.6, gz); box(g, 0.9, 2.2, 0.7, toon("#3c3a34"), gx + dx, gh, gz); }
-  plane(g, 9, 0.8, signMat("GRAND CENTRAL TERMINAL", { bg: "#cdbf9f", fg: "#3a2e1e", w: 512, h: 48, vertical: false }, 1.1), gx, 14.4, gz + 1.05);
+  landmark(g, "lm/gct", gx, gz - 9, 24, 0, () => {
+    const gm = toon("#cdbf9f", { roughness: 0.6 });
+    box(g, gw, gh, 22, gm, gx, 0, gz - 11);
+    const arch = canvasTex(96, 192, (c, w, h) => { c.fillStyle = "#2a2418"; c.fillRect(0, 0, w, h); c.fillStyle = "#ffcf86"; c.beginPath(); c.moveTo(6, h); c.lineTo(6, 48); c.arc(48, 48, 42, Math.PI, 0); c.lineTo(90, h); c.fill(); c.strokeStyle = "rgba(40,30,20,.75)"; c.lineWidth = 3; for (let x = 12; x < 90; x += 12) { c.beginPath(); c.moveTo(x, 10); c.lineTo(x, h); c.stroke(); } for (let y = 30; y < h; y += 14) { c.beginPath(); c.moveTo(6, y); c.lineTo(90, y); c.stroke(); } });
+    const archM = noLine(new THREE.MeshBasicMaterial({ map: arch, color: new THREE.Color(1.4, 1.3, 1.15) }));
+    for (const dx of [-7, 0, 7]) plane(g, 5, 10, archM, gx + dx, 7.5, gz + 0.05);
+    for (const dx of [-10.5, -9.3, -3.7, 3.7, 9.3, 10.5]) cyl(g, 0.45, 12.5, gm, gx + dx, 1.2, gz + 0.7, 12);
+    box(g, gw + 1, 1.2, 2, gm, gx, 13.8, gz); box(g, 10, 3.6, 1.2, gm, gx, gh, gz - 0.4);
+    const clock = canvasTex(128, 128, (c) => { c.fillStyle = "#f4ead0"; c.beginPath(); c.arc(64, 64, 60, 0, Math.PI * 2); c.fill(); c.strokeStyle = "#7a5a1a"; c.lineWidth = 8; c.stroke(); c.lineWidth = 5; c.strokeStyle = "#222"; c.beginPath(); c.moveTo(64, 64); c.lineTo(64, 22); c.moveTo(64, 64); c.lineTo(94, 72); c.stroke(); });
+    add(g, new THREE.CircleGeometry(1.5, 24), noLine(new THREE.MeshBasicMaterial({ map: clock, color: new THREE.Color(1.6, 1.5, 1.3) })), gx, gh + 1.7, gz + 0.25);
+    for (const dx of [-2.6, 2.6]) { ball(g, 0.55, toon("#3c3a34"), gx + dx, gh + 2.6, gz); box(g, 0.9, 2.2, 0.7, toon("#3c3a34"), gx + dx, gh, gz); }
+    plane(g, 9, 0.8, signMat("GRAND CENTRAL TERMINAL", { bg: "#cdbf9f", fg: "#3a2e1e", w: 512, h: 48, vertical: false }, 1.1), gx, 14.4, gz + 1.05);
+  });
   for (const dx of [-8, 0, 8]) floodlight(g, E, gx + dx, gz + 3, "#ffe2b0", 4, 6);
   tower(g, gx, -48, 26, 70, 18, "#1c2230", 703);
   // Central Park: Bethesda Terrace arcade + fountain with the Angel of the Waters
@@ -1567,15 +1571,17 @@ function areaNewYork() {
   box(g, 16, 6, 4, [ark, ark, toon("#6e5c44"), toon("#6e5c44"), ark, ark], bx, 0, -21);
   for (let x = bx - 7.5; x <= bx + 7.5; x += 1.5) cyl(g, 0.12, 1, toon("#8a7556"), x, 6, -19.2, 6);
   for (const s of [-1, 1]) for (let i = 0; i < 6; i++) box(g, 3, 0.5, 1, toon("#7a6a52"), bx + s * 10, i * 0.5, -21 + i);
-  const pwater = toon("#1a3440", { roughness: 0.05, metalness: 0.4 });
-  add(g, new THREE.TorusGeometry(5, 0.35, 6, 40), toon("#8a7a62"), bx, 0.3, -12).rotation.x = Math.PI / 2;
-  add(g, new THREE.CircleGeometry(5, 40), pwater, bx, 0.35, -12).rotation.x = -Math.PI / 2;
-  cyl(g, 1.2, 1.6, toon("#5a5040"), bx, 0, -12, 10); cyl(g, 2.4, 0.3, toon("#5a5040"), bx, 1.6, -12, 16); cyl(g, 0.5, 1.4, toon("#5a5040"), bx, 1.9, -12, 10);
-  const ang = toon("#2e3a2e", { roughness: 0.35, metalness: 0.5 });
-  add(g, new THREE.ConeGeometry(0.5, 2, 10), ang, bx, 4.3, -12); ball(g, 0.22, ang, bx, 5.45, -12);
-  for (const s of [-1, 1]) { const wing = plane(g, 1.4, 1.8, ang, bx + s * 0.7, 5.2, -12.2); wing.rotation.y = s * 0.5; wing.rotation.z = -s * 0.4; wing.material.side = THREE.DoubleSide; }
-  const fall = noLine(new THREE.MeshBasicMaterial({ color: new THREE.Color(1.2, 1.3, 1.5), transparent: true, opacity: 0.45, depthWrite: false, side: THREE.DoubleSide }));
-  add(g, new THREE.CylinderGeometry(2.4, 2.6, 1.6, 20, 1, true), fall, bx, 0.8, -12);
+  landmark(g, "lm/bethesda", bx, -12, 7.5, 0, () => {
+    const pwater = toon("#1a3440", { roughness: 0.05, metalness: 0.4 });
+    add(g, new THREE.TorusGeometry(5, 0.35, 6, 40), toon("#8a7a62"), bx, 0.3, -12).rotation.x = Math.PI / 2;
+    add(g, new THREE.CircleGeometry(5, 40), pwater, bx, 0.35, -12).rotation.x = -Math.PI / 2;
+    cyl(g, 1.2, 1.6, toon("#5a5040"), bx, 0, -12, 10); cyl(g, 2.4, 0.3, toon("#5a5040"), bx, 1.6, -12, 16); cyl(g, 0.5, 1.4, toon("#5a5040"), bx, 1.9, -12, 10);
+    const ang = toon("#2e3a2e", { roughness: 0.35, metalness: 0.5 });
+    add(g, new THREE.ConeGeometry(0.5, 2, 10), ang, bx, 4.3, -12); ball(g, 0.22, ang, bx, 5.45, -12);
+    for (const s of [-1, 1]) { const wing = plane(g, 1.4, 1.8, ang, bx + s * 0.7, 5.2, -12.2); wing.rotation.y = s * 0.5; wing.rotation.z = -s * 0.4; wing.material.side = THREE.DoubleSide; }
+    const fall = noLine(new THREE.MeshBasicMaterial({ color: new THREE.Color(1.2, 1.3, 1.5), transparent: true, opacity: 0.45, depthWrite: false, side: THREE.DoubleSide }));
+    add(g, new THREE.CylinderGeometry(2.4, 2.6, 1.6, 20, 1, true), fall, bx, 0.8, -12);
+  });
   floodlight(g, E, bx, -9, "#ffe2b0", 4, 5);
   for (let x = 22; x <= 46; x += 4) { tree(g, R, x, -9 - R() * 2, 1.2); tree(g, R, x + 2, -24 - R() * 3, 1.3); }
   // Brooklyn Bridge across the East River, Lower Manhattan + One World Trade beyond
@@ -1585,7 +1591,7 @@ function areaNewYork() {
   const btex = canvasTex(64, 128, (c) => { c.fillStyle = "#7a6a58"; c.fillRect(0, 0, 64, 128); c.fillStyle = "#14161c"; for (const x of [8, 36]) { c.beginPath(); c.moveTo(x, 128); c.lineTo(x, 60); c.quadraticCurveTo(x, 34, x + 10, 26); c.quadraticCurveTo(x + 20, 34, x + 20, 60); c.lineTo(x + 20, 128); c.fill(); } });
   const bt = noLine(new THREE.MeshBasicMaterial({ map: btex, color: new THREE.Color(0.8, 0.78, 0.75) }));
   const towersX = [70, 170];
-  for (const tx of towersX) box(g, 6, 42, 14, [stone, stone, stone, stone, bt, bt], tx, -1, bz);
+  for (const tx of towersX) landmark(g, "lm/brooklyn-tower", tx, bz, 44, Math.PI / 2, () => box(g, 6, 42, 14, [stone, stone, stone, stone, bt, bt], tx, -1, bz));
   box(g, 260, 1.2, 10, toon("#3a3632"), 120, bdeck, bz);
   box(g, 260, 0.12, 0.12, glow("#ffd9a0", 3), 120, bdeck + 1.2, bz + 5);
   const cab = [];
