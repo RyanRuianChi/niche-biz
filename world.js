@@ -37,7 +37,7 @@ root.hidden = false;
 // ------------------------------------------------------------------ text (5 languages)
 // s.<spot> = [place name, Mr.RC's line]
 const TXT = {
-  en: { day: "After School", goal: "Places checked", hint: "WASD / arrows to walk · Shift to run · E or tap ! to check a place", eve: "Evening", next: "To", check: "Check",
+  en: { hintTouch: "Tap the ground to walk · tap ! to check a place · drag to look around", day: "After School", goal: "Places checked", hint: "WASD / arrows to walk · Shift to run · E or tap ! to check a place", eve: "Evening", next: "To", check: "Check",
     areas: ["Central · Hong Kong", "UPenn · Philadelphia", "CUHK · Hong Kong", "Marina Bay · Singapore", "Manhattan · New York"],
     s: {
       neon: ["Des Voeux Road", "Central at night. Where I started cofounding crypto projects at 19."],
@@ -75,7 +75,7 @@ const TXT = {
       bethesda: ["Bethesda Fountain", "The Angel of the Waters, in the middle of Central Park."],
       brooklyn: ["Brooklyn Bridge", "Walk it at night with Manhattan lit up behind you."],
     } },
-  "zh-Hant": { day: "放學後", goal: "已查看地點", hint: "WASD / 方向鍵 行走 · Shift 跑步 · 按 E 或點擊 ! 查看地點", eve: "傍晚", next: "前往", check: "查看",
+  "zh-Hant": { hintTouch: "點擊地面行走 · 點擊 ! 查看地點 · 拖動環顧", day: "放學後", goal: "已查看地點", hint: "WASD / 方向鍵 行走 · Shift 跑步 · 按 E 或點擊 ! 查看地點", eve: "傍晚", next: "前往", check: "查看",
     areas: ["中環 · 香港", "賓州大學 · 費城", "香港中文大學 · 香港", "濱海灣 · 新加坡", "曼哈頓 · 紐約"],
     s: {
       neon: ["德輔道中", "夜晚的中環。我 19 歲開始聯合創辦加密項目的地方。"],
@@ -113,7 +113,7 @@ const TXT = {
       bethesda: ["畢士達噴泉", "中央公園正中的水之天使。"],
       brooklyn: ["布魯克林大橋", "晚上走一趟，身後是亮起的曼哈頓。"],
     } },
-  ja: { day: "放課後", goal: "調べた場所", hint: "WASD / 矢印キーで歩く · Shift で走る · E か ! をタップで調べる", eve: "夕方", next: "行き先", check: "調べる",
+  ja: { hintTouch: "地面をタップで移動 · ! をタップで調べる · ドラッグで見回す", day: "放課後", goal: "調べた場所", hint: "WASD / 矢印キーで歩く · Shift で走る · E か ! をタップで調べる", eve: "夕方", next: "行き先", check: "調べる",
     areas: ["中環 · 香港", "ペンシルベニア大学 · フィラデルフィア", "香港中文大学 · 香港", "マリーナベイ · シンガポール", "マンハッタン · ニューヨーク"],
     s: {
       neon: ["デ・ヴー・ロード", "夜の中環。19歳でクリプト事業を共同創業し始めた場所。"],
@@ -151,7 +151,7 @@ const TXT = {
       bethesda: ["ベセスダの噴水", "セントラルパークの真ん中に立つ水の天使。"],
       brooklyn: ["ブルックリン橋", "夜に渡ろう。背後に輝くマンハッタン。"],
     } },
-  ko: { day: "방과 후", goal: "살펴본 장소", hint: "WASD / 방향키로 걷기 · Shift 달리기 · E 또는 ! 를 탭해 살펴보기", eve: "저녁", next: "이동", check: "살펴보기",
+  ko: { hintTouch: "바닥을 탭해 이동 · ! 를 탭해 살펴보기 · 드래그로 둘러보기", day: "방과 후", goal: "살펴본 장소", hint: "WASD / 방향키로 걷기 · Shift 달리기 · E 또는 ! 를 탭해 살펴보기", eve: "저녁", next: "이동", check: "살펴보기",
     areas: ["센트럴 · 홍콩", "펜실베이니아대 · 필라델피아", "홍콩중문대 · 홍콩", "마리나 베이 · 싱가포르", "맨해튼 · 뉴욕"],
     s: {
       neon: ["데보로드", "밤의 센트럴. 19살에 크립토 프로젝트를 공동 창업하기 시작한 곳."],
@@ -189,7 +189,7 @@ const TXT = {
       bethesda: ["베데스다 분수", "센트럴 파크 한가운데의 물의 천사."],
       brooklyn: ["브루클린 브리지", "밤에 걸어 봐. 뒤로 빛나는 맨해튼."],
     } },
-  fr: { day: "Après les cours", goal: "Lieux visités", hint: "ZQSD / flèches pour marcher · Maj pour courir · E ou touche ! pour examiner", eve: "Soir", next: "Vers", check: "Examiner",
+  fr: { hintTouch: "Touche le sol pour marcher · touche ! pour examiner · fais glisser pour regarder", day: "Après les cours", goal: "Lieux visités", hint: "ZQSD / flèches pour marcher · Maj pour courir · E ou touche ! pour examiner", eve: "Soir", next: "Vers", check: "Examiner",
     areas: ["Central · Hong Kong", "UPenn · Philadelphie", "CUHK · Hong Kong", "Marina Bay · Singapour", "Manhattan · New York"],
     s: {
       neon: ["Des Voeux Road", "Central la nuit. Là où j’ai commencé à cofonder des projets crypto à 19 ans."],
@@ -1711,13 +1711,64 @@ const loadVRM = () => new Promise((res) => {
 
 // ---- Tripo avatar (rigged GLB)
 let rig = null;
+// Crowd rigs from Tripo name their bones inconsistently (the same name can be a spine bone in one
+// model and an elbow in another), so find the limbs from the skeleton's shape instead: feet are the
+// lowest leaves, hands the leaves reaching furthest sideways, joints are picked by height along each chain.
+// Tripo models face +X with Z as the lateral axis. Returns a layout in the same form as rigLayout().
+function autoLayout(model) {
+  model.updateMatrixWorld(true);
+  const bones = []; model.traverse((o) => o.isBone && bones.push(o));
+  const key = (b) => b.name.replace(/^tripo:*/, "");
+  const P = new Map(bones.map((b) => [b, b.getWorldPosition(new THREE.Vector3())]));
+  const ys = [...P.values()].map((p) => p.y), minY = Math.min(...ys), H = Math.max(...ys) - minY;
+  const y = (b) => (P.get(b).y - minY) / H, z = (b) => P.get(b).z / H, x = (b) => P.get(b).x / H;
+  const leaves = bones.filter((b) => !b.children.some((c) => c.isBone));
+  const chainTo = (leaf) => { const c = []; for (let b = leaf; b && b.isBone; b = b.parent) c.unshift(b); return c; };
+  const nearestY = (list, t) => list.reduce((a, b) => (Math.abs(y(b) - t) < Math.abs(y(a) - t) ? b : a));
+  const legs = [], arms = [];
+  for (const s of [1, -1]) {
+    // leg: lowest, most forward leaf on this side = toe
+    const feet = leaves.filter((b) => y(b) < 0.08 && Math.sign(z(b)) === s);
+    if (!feet.length) return null;
+    const toe = feet.reduce((a, b) => (x(b) > x(a) ? b : a));
+    const ch = chainTo(toe), hi = ch.findIndex((b) => y(b) > 0.38 && y(b) < 0.64 && Math.abs(z(b)) > 0.012);
+    if (hi < 0) return null;
+    const leg = ch.slice(hi), hip = leg[0];
+    const knee = nearestY(leg.slice(1), 0.29);
+    const below = leg.slice(leg.indexOf(knee) + 1).filter((b) => y(b) > 0.025);
+    const ankle = below.length ? below[below.length - 1] : null;
+    if (!ankle || knee === hip) return null;
+    legs.push({ hip: key(hip), knee: key(knee), ankle: key(ankle), toe: toe !== ankle ? key(toe) : undefined });
+    // arm: leaf reaching furthest out on this side at hand height = fingertip
+    const tips = leaves.filter((b) => s * z(b) > 0.12 && y(b) > 0.35 && y(b) < 0.75);
+    if (!tips.length) continue;
+    const tip = tips.reduce((a, b) => (s * z(b) > s * z(a) ? b : a)), ac = chainTo(tip), maxZ = Math.abs(z(tip));
+    const si = ac.findIndex((b) => Math.abs(z(b)) >= 0.055 && y(b) > 0.66);
+    if (si < 0) continue;
+    const wi = ac.findIndex((b, i) => i > si && Math.abs(z(b)) >= 0.72 * maxZ);
+    if (wi < 0 || wi - si < 2) continue;
+    const mid = (y(ac[si]) + y(ac[wi])) / 2, elbow = nearestY(ac.slice(si + 1, wi), mid);
+    arms.push([key(ac[si]), key(elbow), key(ac[wi]), ac[wi + 1] ? key(ac[wi + 1]) : undefined]);
+  }
+  // spine: from the pelvis up to the bone both arms hang from, then on to the top of the head
+  const sh = arms.map((a) => bones.find((b) => key(b) === a[0]));
+  let chest = sh[0]?.parent;
+  while (chest && sh[1] && !chest.getObjectById(sh[1].id)) chest = chest.parent;
+  if (!chest || !chest.isBone) chest = bones.filter((b) => Math.abs(z(b)) < 0.02 && y(b) < 0.8).reduce((a, b) => (y(b) > y(a) ? b : a));
+  const sc = chainTo(chest), base = sc.find((b) => y(b) > 0.42) || sc[1];
+  const top = bones.filter((b) => Math.abs(z(b)) < 0.03 && chest.getObjectById(b.id) && b !== chest).reduce((a, b) => (y(b) > y(a) ? b : a), chest);
+  const spine = [];
+  if (base && base !== chest) spine.push([key(base), key(chest), "Spine", "Spine2"]);
+  if (top !== chest) spine.push([key(chest), key(top), "Spine2", "HeadTop_End"]);
+  return { spine, arms, legs };
+}
 // scale a rigged Tripo character to height h, feet on the ground, facing +Z; returns its rig description
-const prepRig = (model, h) => {
+const prepRig = (model, h, auto = false) => {
   const bones = {};
   model.traverse((o) => { if (o.isBone) bones[o.name.replace(/^tripo:*/, "")] = o; });
   model.updateMatrixWorld(true);
-  const lay = rigLayout(bones);
-  const leg = lay.legs[0], fwd = bones[leg.toe].getWorldPosition(new THREE.Vector3()).sub(bones[leg.ankle].getWorldPosition(new THREE.Vector3()));
+  const lay = (auto && autoLayout(model)) || rigLayout(bones);
+  const leg = lay.legs[0], fwd = leg.toe && bones[leg.toe] ? bones[leg.toe].getWorldPosition(new THREE.Vector3()).sub(bones[leg.ankle].getWorldPosition(new THREE.Vector3())) : new THREE.Vector3(1, 0, 0);
   const bb = new THREE.Box3().setFromObject(model);
   const s = h / (bb.max.y - bb.min.y);
   const holder = new THREE.Group();
@@ -1913,7 +1964,7 @@ function loadCrowdModels() {
   NPC_MODELS.forEach((name) => gltfLoader.load(`assets/models/npc/${name}.glb`, (gltf) => {
     gltf.scene.traverse((o) => { if (o.isMesh) { o.castShadow = true; [].concat(o.material).forEach((m) => { m.roughness = 0.75; m.metalness = 0; m.userData.outlineParameters = { thickness: 0.0022, color: [0.03, 0.03, 0.05] }; }); } });
     clipAll(gltf.scene);
-    const R = prepRig(gltf.scene, 1.7);
+    const R = prepRig(gltf.scene, 1.7, true);
     NPC_TYPES.push({ name, proto: R.holder, clips: bakeClips(R) });
     NPCS.forEach(upgradeNPC);
   }, undefined, () => {}));
@@ -2042,7 +2093,7 @@ const edgeL = root.querySelector(".world__edge--l"), edgeR = root.querySelector(
 const updateEdges = () => {
   edgeL.textContent = "◀ " + t("next") + " " + t("areas")[(areaIndex + N - 1) % N].split(" · ")[0];
   edgeR.textContent = t("next") + " " + t("areas")[(areaIndex + 1) % N].split(" · ")[0] + " ▶";
-  root.querySelector(".world__hint").textContent = t("hint");
+  root.querySelector(".world__hint").textContent = t(matchMedia("(pointer: coarse)").matches ? "hintTouch" : "hint");
   // P5-style calendar badge: date, weekday, rain, time of day
   const d = new Date();
   const wd = new Intl.DateTimeFormat(lang(), { weekday: "short" }).format(d);
@@ -2315,4 +2366,4 @@ else {
 }
 if (mo) { motion = motion || mo; loadCrowdModels(); }
 root.classList.add("is-ready");
-if (DEBUG) window.__world = { hero, camera, scene, setArea, step, keys, interact, get area() { return area; }, render: () => { composer.render(0.016); return canvas.toDataURL("image/jpeg", 0.85); }, set active(v) { active = v; } };
+if (DEBUG) window.__world = { hero, camera, scene, setArea, step, keys, interact, npcTypes: NPC_TYPES, cloneRig: SkeletonUtils.clone, THREE, get area() { return area; }, render: () => { composer.render(0.016); return canvas.toDataURL("image/jpeg", 0.85); }, set active(v) { active = v; } };
