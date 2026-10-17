@@ -17,6 +17,7 @@ import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js"
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 import { Reflector } from "three/addons/objects/Reflector.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 
 const root = document.getElementById("world");
 const params = new URLSearchParams(location.search);
@@ -679,8 +680,9 @@ const NPC = (() => {
     if (phone) { parts[1].rotation.x = -1.1; parts[3].rotation.x = -1.1; }
     g.rotation.y = dir > 0 ? Math.PI / 2 : dir < 0 ? -Math.PI / 2 : R() * Math.PI * 2;
     p.add(g);
-    const n = { g, parts, dir, speed, umbrella, phone, phase: R() * 6, z0: z, push: 0, umb, swaps, sil };
+    const n = { g, parts, dir, speed, umbrella, phone, phase: R() * 6, z0: z, push: 0, umb, swaps, sil, type: Math.floor(R() * 1000), prim: [...g.children.filter((c) => !umb.includes(c))] };
     NPCS.push(n);
+    upgradeNPC(n);
     return n;
   };
 })();
@@ -692,6 +694,7 @@ const dressCrowd = (rain) => NPCS.forEach((n) => {
 });
 const tickCrowd = (crowd, dt, time) => {
   for (const n of crowd) {
+    if (n.mixer && n.g.visible) n.mixer.update(dt * (n.speed ? n.speed / 1.25 : 1));
     if (n.speed) {
       n.g.position.x += n.dir * n.speed * dt;
       const xa = n.xa ?? -L - 12, xb = n.xb ?? L + 12;
@@ -742,13 +745,15 @@ const vlampTex = (R) => canvasTex(128, 192, (g, w, h) => {
   g.fillStyle = "#1c2230"; g.fillRect(6, 150, w - 12, 30);
 });
 const vending = (p, E, R, x, z, ry) => {
-  const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = ry; p.add(g);
+  slot(p, "vending", x, z, 1.9, ry, (g) => vendingProc(g, R));
+  pool(p, x + Math.sin(ry) * 0.9, z + Math.cos(ry) * 0.9, 1.7, "#cfe4ff", 0.4);
+  E.push({ p: new THREE.Vector3(x + Math.sin(ry) * 0.6, 1.3, z + Math.cos(ry) * 0.6), c: "#d8e8ff", k: 4 });
+};
+const vendingProc = (g, R) => {
   const body = toon(pick(R, ["#e8e8ea", "#c8222e", "#1f4fa8", "#e8e8ea"]), { roughness: 0.35 });
   box(g, 1.0, 1.85, 0.75, body, 0, 0, 0);
   plane(g, 0.82, 1.15, noLine(new THREE.MeshBasicMaterial({ map: vlampTex(R), color: new THREE.Color(1.6, 1.6, 1.7) })), 0, 1.2, 0.38);
   box(g, 0.6, 0.18, 0.06, toon("#111"), 0, 0.25, 0.38);
-  pool(p, x + Math.sin(ry) * 0.9, z + Math.cos(ry) * 0.9, 1.7, "#cfe4ff", 0.4);
-  E.push({ p: new THREE.Vector3(x + Math.sin(ry) * 0.6, 1.3, z + Math.cos(ry) * 0.6), c: "#d8e8ff", k: 4 });
 };
 const bike = (p, x, z, ry) => {
   const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = ry; p.add(g);
@@ -989,10 +994,14 @@ const lion = (p, x, z, ry) => {
   return g;
 };
 const tree = (p, R, x, z, s = 1, colors = ["#2f5a3a", "#3a6a42", "#2a4f33"]) => {
-  cyl(p, 0.2 * s, 3.4 * s, toon("#2a2019"), x, 0, z, 8, 0.14 * s);
-  for (let i = 0; i < 4; i++) ball(p, (1.3 + R() * 0.6) * s, toon(pick(R, colors)), x + (R() - 0.5) * 1.6 * s, (3.6 + R() * 1.3) * s, z + (R() - 0.5) * 1.2 * s);
+  const r = [0, 1, 2, 3].map(() => [R(), R(), R(), R()]);
+  slot(p, "tree", x, z, 6.4 * s, r[0][3] * 6.28, (g) => {
+    cyl(g, 0.2 * s, 3.4 * s, toon("#2a2019"), 0, 0, 0, 8, 0.14 * s);
+    for (const [a, b, c, d] of r) ball(g, (1.3 + a * 0.6) * s, toon(colors[Math.floor(d * colors.length) % colors.length]), (b - 0.5) * 1.6 * s, (3.6 + c * 1.3) * s, (a - 0.5) * 1.2 * s);
+  });
 };
-const palm = (p, R, x, z, h = 6) => {
+const palm = (p, R, x, z, h = 6) => slot(p, "palm", x, z, h * 1.15, R() * 6.28, (g) => palmProc(g, R, 0, 0, h));
+const palmProc = (p, R, x, z, h = 6) => {
   const top = V(x + (R() - 0.5) * 0.8, h, z + (R() - 0.5) * 0.8);
   strut(p, V(x, 0, z), top, 0.17, toon("#4a3b2c"));
   const leaf = toon("#2f5e36");
@@ -1257,7 +1266,7 @@ function areaUPenn() {
     });
   });
   floodlight(g, E, -14, -5.4, "#ffd9a0", 3, 5);
-  for (const [x, z] of [[-17.5, -8], [-11, -9]]) { cyl(g, 0.16, 2.6, toon("#2a2019"), x, 0, z, 8); for (let i = 0; i < 4; i++) ball(g, 1.2 + R() * 0.4, toon("#c97a98"), x + (R() - 0.5) * 1.4, 3 + R(), z + (R() - 0.5)); }
+  for (const [x, z] of [[-17.5, -8], [-11, -9]]) slot(g, "sakura", x, z, 5.2, R() * 6.28, (q) => { cyl(q, 0.16, 2.6, toon("#2a2019"), 0, 0, 0, 8); for (let i = 0; i < 4; i++) ball(q, 1.2 + R() * 0.4, toon("#e89ab8"), (R() - 0.5) * 1.4, 3 + R(), R() - 0.5); });
   // The Split Button
   const bm = toon("#e8e6e0", { roughness: 0.3 });
   const b1 = add(g, new THREE.CylinderGeometry(2.0, 2.0, 0.35, 32, 1, false, 0.1, Math.PI - 0.2), bm, -4, 0.18, 6.6); b1.rotation.x = Math.PI / 2 - 0.25; b1.rotation.z = 0.1;
@@ -1690,6 +1699,23 @@ const loadVRM = () => new Promise((res) => {
 
 // ---- Tripo avatar (rigged GLB)
 let rig = null;
+// scale a rigged Tripo character to height h, feet on the ground, facing +Z; returns its rig description
+const prepRig = (model, h) => {
+  const bones = {};
+  model.traverse((o) => { if (o.isBone) bones[o.name.replace(/^tripo:*/, "")] = o; });
+  model.updateMatrixWorld(true);
+  const lay = rigLayout(bones);
+  const leg = lay.legs[0], fwd = bones[leg.toe].getWorldPosition(new THREE.Vector3()).sub(bones[leg.ankle].getWorldPosition(new THREE.Vector3()));
+  const bb = new THREE.Box3().setFromObject(model);
+  const s = h / (bb.max.y - bb.min.y);
+  const holder = new THREE.Group();
+  model.scale.setScalar(s);
+  model.position.y = -bb.min.y * s;
+  model.rotation.y = -Math.atan2(fwd.x, fwd.z);   // the model's forward -> group +Z
+  holder.add(model);
+  holder.updateMatrixWorld(true);
+  return { holder, model, baseY: model.position.y, bones, lay, rest: new Map(Object.values(bones).map((o) => [o, o.quaternion.clone()])) };
+};
 const loadAvatar = () => new Promise((res) => {
   if (!hasAvatar) return res(null);
   const loader = new GLTFLoader();
@@ -1701,22 +1727,8 @@ const loadAvatar = () => new Promise((res) => {
       o.frustumCulled = false; o.castShadow = true;
       [].concat(o.material).forEach((m) => { m.roughness = 0.7; m.metalness = 0; rimify(m); m.userData.outlineParameters = { thickness: 0.0032, color: [0.02, 0.02, 0.04] }; });
     });
-    const bones = {};
-    model.traverse((o) => { if (o.isBone) bones[o.name.replace(/^tripo:*/, "")] = o; });
-    model.updateMatrixWorld(true);
-    const lay = rigLayout(bones);
-    const leg = lay.legs[0], fwd = bones[leg.toe].getWorldPosition(new THREE.Vector3()).sub(bones[leg.ankle].getWorldPosition(new THREE.Vector3()));
-    const bb = new THREE.Box3().setFromObject(model);
-    const s = 1.78 / (bb.max.y - bb.min.y);
-    const holder = new THREE.Group();
-    model.scale.setScalar(s);
-    model.position.y = -bb.min.y * s;
-    const baseY = model.position.y;
-    model.rotation.y = -Math.atan2(fwd.x, fwd.z);   // the model's forward -> group +Z
-    holder.add(model);
-    holder.updateMatrixWorld(true);
-    rig = { holder, model, baseY, bones, lay, rest: new Map(Object.values(bones).map((o) => [o, o.quaternion.clone()])) };
-    res(holder);
+    rig = prepRig(model, 1.78);
+    res(rig.holder);
   }, undefined, (e) => { console.warn("avatar load failed", e); res(null); });
 });
 // ---- motion capture: Mixamo walk / idle / run clips (three.js Xbot) copied onto the Tripo rig by
@@ -1749,7 +1761,7 @@ const rigLayout = (B) => B["1_Right_Limb_3"] ? {
     { hip: "1_Left_Limb_2", knee: "1_Left_Limb_3", ankle: "bone_23", toe: "bone_24", heel: "1_Left_Limb_4" },
   ],
 };
-function buildMap() {
+function buildMap(rig, owner) {
   const B = rig.bones, S = motion.S;
   const wp = (o) => o.getWorldPosition(new THREE.Vector3());
   // Reference pose = the mocap's own idle stance (arms hanging), not its T-pose bind pose. Every bone then
@@ -1762,7 +1774,7 @@ function buildMap() {
   rig.holder.updateMatrixWorld(true);
   const inv = new THREE.Matrix4().copy(rig.holder.matrixWorld).invert();
   const sideOf = (o) => Math.sign(wp(o).applyMatrix4(inv).x);   // +X = character's left (faces +Z)
-  const heroInv = hero.getWorldQuaternion(new THREE.Quaternion()).invert();
+  const heroInv = owner.getWorldQuaternion(new THREE.Quaternion()).invert();
   const dirOf = (a, b) => wp(b).sub(wp(a)).normalize();
   const lay = rig.lay, map = [], follow = [];
   // relaxed arm: the A-pose arm pulled in to hang by the side, slightly forward, elbow a touch bent
@@ -1793,11 +1805,11 @@ function buildMap() {
   rig.heroRestInv = heroInv.clone();
 }
 const _a = new THREE.Vector3(), _b = new THREE.Vector3(), _c = new THREE.Vector3(), _e = new THREE.Vector3(), _q = new THREE.Quaternion(), _p = new THREE.Quaternion(), _w = new THREE.Quaternion(), _h = new THREE.Quaternion(), _d = new THREE.Quaternion();
-function retarget() {
+function retarget(rig, owner) {
   motion.src.updateMatrixWorld(true);
   rig.rest.forEach((q, o) => o.quaternion.copy(q));
   rig.holder.updateMatrixWorld(true);
-  hero.getWorldQuaternion(_h);
+  owner.getWorldQuaternion(_h);
   // pelvis: apply the source hips' rotation (twist / tilt / sway) to the whole rig root, in hero space
   if (rig.root) {
     _d.copy(motion.S.Hips.getWorldQuaternion(_q)).multiply(rig.hipsRestQ);              // source delta (world)
@@ -1834,7 +1846,7 @@ const pose = (phase, amount, time) => {
     acts.walk.setEffectiveWeight(amount * (1 - runAmt));
     acts.run.setEffectiveWeight(amount * runAmt);
     motion.mixer.update(clockDt);
-    retarget();
+    retarget(rig, hero);
   } else if (vrm) {
     const b = (n) => vrm.humanoid.getNormalizedBoneNode(n);
     const s = Math.sin(phase);
@@ -1858,6 +1870,77 @@ const pose = (phase, amount, time) => {
     placeholder.position.y = Math.abs(Math.cos(phase)) * 0.03 * amount;
   }
 };
+
+// ---- crowd characters (Tripo, rigged): the mocap walk / idle is retargeted once per character type and
+// baked into AnimationClips, so each passer-by is just a skinned clone with its own mixer
+const NPC_MODELS = ["student-m", "student-f", "salaryman", "office-lady", "casual-m", "casual-f"];
+const NPC_TYPES = [];
+function bakeClips(R) {
+  const owner = new THREE.Group(); owner.add(R.holder); owner.updateMatrixWorld(true);
+  buildMap(R, owner);
+  const { acts, mixer } = motion, clips = {};
+  R.model.name = "npcModel";
+  const bones = [...new Set([R.root, ...R.map.map((m) => m[0]), ...R.follow.map((f) => f[0])].filter(Boolean))];
+  for (const name of ["walk", "idle"]) {
+    const act = acts[name], dur = act.getClip().duration, fps = 24, n = Math.ceil(dur * fps) + 1;
+    Object.values(acts).forEach((a) => a.setEffectiveWeight(0)); act.setEffectiveWeight(1);
+    const times = new Float32Array(n), q = bones.map(() => new Float32Array(n * 4)), pos = new Float32Array(n * 3);
+    for (let i = 0; i < n; i++) {
+      const t = Math.min(dur, i / fps); act.time = t; mixer.update(0); retarget(R, owner);
+      times[i] = t; bones.forEach((b, k) => b.quaternion.toArray(q[k], i * 4)); R.model.position.toArray(pos, i * 3);
+    }
+    const tracks = bones.map((b, k) => new THREE.QuaternionKeyframeTrack(b.name + ".quaternion", times, q[k]));
+    tracks.push(new THREE.VectorKeyframeTrack("npcModel.position", times, pos));
+    clips[name] = new THREE.AnimationClip(name, dur, tracks);
+  }
+  R.rest.forEach((qq, o) => o.quaternion.copy(qq));
+  owner.remove(R.holder);
+  return clips;
+}
+function loadCrowdModels() {
+  NPC_MODELS.forEach((name) => gltfLoader.load(`assets/models/npc/${name}.glb`, (gltf) => {
+    gltf.scene.traverse((o) => { if (o.isMesh) { o.castShadow = true; [].concat(o.material).forEach((m) => { m.roughness = 0.75; m.metalness = 0; m.userData.outlineParameters = { thickness: 0.0022, color: [0.03, 0.03, 0.05] }; }); } });
+    const R = prepRig(gltf.scene, 1.7);
+    NPC_TYPES.push({ name, proto: R.holder, clips: bakeClips(R) });
+    NPCS.forEach(upgradeNPC);
+  }, undefined, () => {}));
+}
+function upgradeNPC(n) {
+  if (!NPC_TYPES.length || n.model) return;
+  const T = NPC_TYPES[n.type % NPC_TYPES.length];
+  if (NPC_TYPES.length < NPC_MODELS.length && n.type % NPC_MODELS.length >= NPC_TYPES.length) return;   // wait for its own type
+  const m = SkeletonUtils.clone(T.proto);
+  m.traverse((o) => { if (o.isMesh) { o.castShadow = !rainMode; o.frustumCulled = false; n.swaps.push([o, o.material]); if (rainMode) o.material = n.sil; } });
+  n.prim.forEach((o) => (o.visible = false));
+  n.g.add(m); n.model = m;
+  n.mixer = new THREE.AnimationMixer(m);
+  const clip = n.speed ? T.clips.walk : T.clips.idle;
+  n.act = n.mixer.clipAction(clip); n.act.time = (n.phase / 6) * clip.duration; n.act.play();
+}
+
+// ---- street props (Tripo): trees, palms, sakura, vending machines replace their primitive stand-ins
+const PROPS = {}, SLOTS = [];
+const fillSlot = (sl) => {
+  const P = PROPS[sl.kind]; if (!P || sl.filled) return;
+  sl.g.children.slice().forEach((c) => sl.g.remove(c));
+  const c = P.clone(); c.scale.setScalar(sl.h); sl.g.add(c); sl.filled = true;
+};
+const slot = (p, kind, x, z, h, ry, proc) => {
+  const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = ry; p.add(g);
+  const sl = { g, kind, h }; SLOTS.push(sl);
+  if (PROPS[kind]) fillSlot(sl); else proc(g);
+  return g;
+};
+function loadProps() {
+  for (const kind of ["tree", "palm", "sakura", "vending"]) gltfLoader.load(`assets/models/props/${kind}.glb`, (gltf) => {
+    const m = gltf.scene, bb = new THREE.Box3().setFromObject(m), s = 1 / (bb.max.y - bb.min.y), c = bb.getCenter(new THREE.Vector3());
+    m.scale.setScalar(s); m.position.set(-c.x * s, -bb.min.y * s, -c.z * s);
+    m.traverse((o) => { if (o.isMesh) { o.castShadow = o.receiveShadow = true; [].concat(o.material).forEach((mt) => { mt.userData.outlineParameters = { thickness: 0.0015, color: [0.04, 0.05, 0.04] }; if (kind === "vending") { mt.emissive?.set("#ffffff"); mt.emissiveMap = mt.map; LANDMARK_MATS.push(mt); mt.emissiveIntensity = mode === "day" ? 0 : 0.6; } }); } });
+    const proto = new THREE.Group(); proto.add(m);
+    PROPS[kind] = proto;
+    SLOTS.forEach(fillSlot);
+  }, undefined, () => {});
+}
 
 // ------------------------------------------------------------------ lighting
 // dim overcast fill + a few point lights that follow the hero, each borrowing the colour of the
@@ -2204,14 +2287,16 @@ function frame() {
   composer.render(dt);
 }
 
+loadProps();
 setArea(0);
 resize();
 frame();
 const [avatar, mo] = await Promise.all([loadAvatar(), loadMotion()]);
-if (avatar) { hero.remove(placeholder); hero.add(avatar); motion = mo; if (motion) buildMap(); }
+if (avatar) { hero.remove(placeholder); hero.add(avatar); motion = mo; if (motion) buildMap(rig, hero); }
 else {
   vrm = await loadVRM();
   if (vrm) { hero.remove(placeholder); hero.add(vrm.scene); }
 }
+if (mo) { motion = motion || mo; loadCrowdModels(); }
 root.classList.add("is-ready");
 if (DEBUG) window.__world = { hero, camera, scene, setArea, step, keys, interact, get area() { return area; }, render: () => { composer.render(0.016); return canvas.toDataURL("image/jpeg", 0.85); }, set active(v) { active = v; } };
