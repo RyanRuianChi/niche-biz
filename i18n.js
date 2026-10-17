@@ -20,6 +20,7 @@ window.SITE = {
     sigmaboy:   { name: "Sigmaboy.ai",     href: "https://sigmaboy.ai",            x: "Sigmaboy_ai",    domain: "sigmaboy.ai",                               mono: "SB" },
     oxu:        { name: "0xU Club",        href: "https://x.com/0xUClub",          x: "0xUClub",        domain: "0xu.club",              mono: "0xU" },
     xcreator:   { name: "@MrRyanChi",      href: "https://x.com/MrRyanChi",        x: "MrRyanChi",                                      mono: "RC" },
+    hku:        { name: "HKU",             href: "https://www.hku.hk",             domain: "www.hku.hk",                                mono: "HKU" },
     cuhk:       { name: "CUHK",            href: "https://www.cuhk.edu.hk",        domain: "www.cuhk.edu.hk",                           mono: "CU" },
     upenn:      { name: "UPenn",           href: "https://www.upenn.edu",          x: "Penn",           domain: "www.upenn.edu",         mono: "UP" },
     wharton:    { name: "Wharton",         href: "https://www.wharton.upenn.edu",  x: "Penn",           domain: "www.upenn.edu",         mono: "UP" },
@@ -70,7 +71,7 @@ window.SITE = {
 
 window.I18N = {
   en: {
-    "v.hutech.t": "Speaker", "v.hutech.d": "Lecturer at Polygon Blockchain 101", "v.aiesec.t": "Speaker", "v.tec.t": "Professional Speaker", "v.cuhk.t": "Guest Lecturer",
+    "v.hutech.t": "Speaker", "v.hutech.d": "Lecturer at Polygon Blockchain 101", "v.aiesec.t": "Speaker", "v.tec.t": "Professional Speaker", "v.cuhk.t": "Guest Lecturer", "v.hku.t": "EMBA Guest Lecturer",
     "yr.now": "Present",
     "nav.vol": "Volunteering", "v.bag.t": "Event Staff", 
     "v.yu.t": "Head of Marketing", 
@@ -118,7 +119,7 @@ window.I18N = {
   },
 
   "zh-Hant": {
-    "v.hutech.t": "講者", "v.hutech.d": "Polygon Blockchain 101 講師", "v.aiesec.t": "講者", "v.tec.t": "專業講者", "v.cuhk.t": "客席講師",
+    "v.hutech.t": "講者", "v.hutech.d": "Polygon Blockchain 101 講師", "v.aiesec.t": "講者", "v.tec.t": "專業講者", "v.cuhk.t": "客席講師", "v.hku.t": "EMBA 客席講師",
     "yr.now": "至今",
     "nav.vol": "義工經歷", "v.bag.t": "活動工作人員", 
     "v.yu.t": "市場推廣主管", 
@@ -166,7 +167,7 @@ window.I18N = {
   },
 
   ja: {
-    "v.hutech.t": "スピーカー", "v.hutech.d": "Polygon Blockchain 101 講師", "v.aiesec.t": "スピーカー", "v.tec.t": "プロフェッショナル・スピーカー", "v.cuhk.t": "ゲスト講師",
+    "v.hutech.t": "スピーカー", "v.hutech.d": "Polygon Blockchain 101 講師", "v.aiesec.t": "スピーカー", "v.tec.t": "プロフェッショナル・スピーカー", "v.cuhk.t": "ゲスト講師", "v.hku.t": "EMBA ゲスト講師",
     "yr.now": "現在",
     "nav.vol": "ボランティア", "v.bag.t": "イベントスタッフ", 
     "v.yu.t": "マーケティング責任者", 
@@ -214,7 +215,7 @@ window.I18N = {
   },
 
   ko: {
-    "v.hutech.t": "연사", "v.hutech.d": "Polygon Blockchain 101 강사", "v.aiesec.t": "연사", "v.tec.t": "전문 연사", "v.cuhk.t": "객원 강사",
+    "v.hutech.t": "연사", "v.hutech.d": "Polygon Blockchain 101 강사", "v.aiesec.t": "연사", "v.tec.t": "전문 연사", "v.cuhk.t": "객원 강사", "v.hku.t": "EMBA 객원 강사",
     "yr.now": "현재",
     "nav.vol": "봉사 활동", "v.bag.t": "이벤트 스태프", 
     "v.yu.t": "마케팅 총괄", 
@@ -266,7 +267,7 @@ window.I18N = {
     "v.hutech.d": "Chargé de cours, Polygon Blockchain 101",
     "v.aiesec.t": "Intervenant",
     "v.tec.t": "Conférencier professionnel",
-    "v.cuhk.t": "Conférencier invité",
+    "v.cuhk.t": "Conférencier invité", "v.hku.t": "Conférencier invité, EMBA",
     "yr.now": "Aujourd’hui",
     "nav.vol": "Bénévolat",
     "v.bag.t": "Staff événementiel",

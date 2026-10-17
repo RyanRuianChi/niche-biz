@@ -1768,7 +1768,12 @@ const prepRig = (model, h, auto = false) => {
   model.traverse((o) => { if (o.isBone) bones[o.name.replace(/^tripo:*/, "")] = o; });
   model.updateMatrixWorld(true);
   const lay = (auto && autoLayout(model)) || rigLayout(bones);
-  const leg = lay.legs[0], fwd = leg.toe && bones[leg.toe] ? bones[leg.toe].getWorldPosition(new THREE.Vector3()).sub(bones[leg.ankle].getWorldPosition(new THREE.Vector3())) : new THREE.Vector3(1, 0, 0);
+  // forward = perpendicular to the line between the hips (toes can splay outwards), signed by the toe
+  const wpos = (n) => bones[n].getWorldPosition(new THREE.Vector3());
+  const [l0, l1] = lay.legs, lat = wpos(l1.hip).sub(wpos(l0.hip)).setY(0);
+  const fwd = new THREE.Vector3(lat.z, 0, -lat.x);
+  const toeDir = l0.toe && bones[l0.toe] ? wpos(l0.toe).sub(wpos(l0.ankle)) : new THREE.Vector3(1, 0, 0);
+  if (fwd.lengthSq() < 1e-8) fwd.copy(toeDir); else if (fwd.dot(toeDir) < 0) fwd.negate();
   const bb = new THREE.Box3().setFromObject(model);
   const s = h / (bb.max.y - bb.min.y);
   const holder = new THREE.Group();
@@ -1812,7 +1817,12 @@ const loadMotion = () => new Promise((res) => {
 });
 // Tripo rig layouts. v1 (avatar.glb): each leg is hip -> knee -> ankle with two foot children (toe + heel);
 // the heel bone just follows the ankle. v2+ (avatar-v2/v3.glb): clean chains, 4 bones per limb.
-const rigLayout = (B) => B["1_Right_Limb_3"] ? {
+const rigLayout = (B) => B.Head_0 && B.Head_0.parent === B.Spine_1 ? {
+  // v3 (avatar-v3.glb): Spine_2 is the left collarbone, the neck grows straight out of Spine_1
+  spine: [["Spine_0", "Spine_1", "Spine", "Spine2"], ["Spine_1", "Head_0", "Spine2", "Neck"], ["Head_0", "Head_1", "Neck", "HeadTop_End"]],
+  arms: ["Right", "Left"].map((s) => [`0_${s}_Limb_0`, `0_${s}_Limb_1`, `0_${s}_Limb_2`, `0_${s}_Limb_3`]),
+  legs: ["Right", "Left"].map((s) => ({ hip: `1_${s}_Limb_0`, knee: `1_${s}_Limb_1`, ankle: `1_${s}_Limb_2`, toe: B[`1_${s}_Limb_3`] ? `1_${s}_Limb_3` : undefined })),
+} : B["1_Right_Limb_3"] ? {
   spine: [["Spine_0", "Spine_1", "Spine", "Spine1"], ["Spine_1", "Spine_2", "Spine1", "Spine2"], ["Spine_2", "Head_0", "Spine2", "Neck"], ["Head_0", "Head_1", "Neck", "HeadTop_End"]],
   arms: ["Right", "Left"].map((s) => [`0_${s}_Limb_0`, `0_${s}_Limb_1`, `0_${s}_Limb_2`, `0_${s}_Limb_3`]),
   legs: ["Right", "Left"].map((s) => ({ hip: `1_${s}_Limb_0`, knee: `1_${s}_Limb_1`, ankle: `1_${s}_Limb_2`, toe: `1_${s}_Limb_3` })),
@@ -1842,7 +1852,7 @@ function buildMap(rig, owner) {
   const lay = rig.lay, map = [], follow = [];
   // relaxed arm: the A-pose arm pulled in to hang by the side, slightly forward, elbow a touch bent
   const relax = (d, k, side) => d.clone().lerp(new THREE.Vector3(side * 0.06, -1, 0.04), k).normalize();
-  const entry = (a, b, sa, sb, avDir) => { if (a && b && sa && sb) map.push([a, b, sa, sb, { src: dirOf(sa, sb), av: (avDir || dirOf(a, b).applyQuaternion(heroInv)) }]); };
+  const entry = (a, b, sa, sb, avDir, side = 0) => { if (a && b && sa && sb) map.push([a, b, sa, sb, { src: dirOf(sa, sb), av: (avDir || dirOf(a, b).applyQuaternion(heroInv)), side }]); };
   for (const [a, b, c, d] of lay.spine) entry(B[a], B[b], S[c], S[d]);
   for (const arm of lay.arms) {
     const [c, u, f, hd] = arm.map((n) => B[n]); if (!c || !u || !f) continue;
@@ -1854,14 +1864,16 @@ function buildMap(rig, owner) {
   }
   for (const l of lay.legs) {
     const [h, k, a, t, e] = [l.hip, l.knee, l.ankle, l.toe, l.heel].map((n) => B[n]); if (!h || !k || !a) continue;
-    const P = sideOf(k) > 0 ? "Left" : "Right";
-    entry(h, k, S[P + "UpLeg"], S[P + "Leg"]); entry(k, a, S[P + "Leg"], S[P + "Foot"]);
+    const side = sideOf(k), P = side > 0 ? "Left" : "Right";
+    entry(h, k, S[P + "UpLeg"], S[P + "Leg"], null, side); entry(k, a, S[P + "Leg"], S[P + "Foot"], null, side);
     if (t) entry(a, t, S[P + "Foot"], S[P + "ToeBase"]);
     if (e) follow.push([e, a]);   // heel bone copies the ankle bone's rotation
   }
   rig.map = map;
   rig.follow = follow.map(([e, a]) => [e, a, rig.rest.get(a).clone().invert().multiply(rig.rest.get(e))]);
   rig.root = B.Root;
+  rig.rootRestP = B.Root.position.clone();
+  rig.pivot = B.Spine_0 || null;   // pelvis: the hips sway turns around here, not around the root at floor level
   rig.hipsRestY = S.Hips.getWorldPosition(new THREE.Vector3()).y;
   rig.hipsRestQ = S.Hips.getWorldQuaternion(new THREE.Quaternion()).invert();
   rig.rootRestW = B.Root.getWorldQuaternion(new THREE.Quaternion());
@@ -1875,6 +1887,9 @@ function retarget(rig, owner) {
   owner.getWorldQuaternion(_h);
   // pelvis: apply the source hips' rotation (twist / tilt / sway) to the whole rig root, in hero space
   if (rig.root) {
+    rig.root.position.copy(rig.rootRestP);
+    rig.root.updateMatrixWorld(true);
+    const piv = rig.pivot && rig.pivot.getWorldPosition(new THREE.Vector3());
     _d.copy(motion.S.Hips.getWorldQuaternion(_q)).multiply(rig.hipsRestQ);              // source delta (world)
     _d.premultiply(_h).multiply(_p.copy(_h).invert());                                 // into hero space
     const curHero = _h.clone().multiply(rig.heroRestInv);
@@ -1883,10 +1898,17 @@ function retarget(rig, owner) {
     rig.root.parent.getWorldQuaternion(_p).invert();
     rig.root.quaternion.copy(_p.multiply(_w));
     rig.root.updateMatrixWorld(true);
+    if (piv) {
+      const now = rig.pivot.getWorldPosition(new THREE.Vector3()), par = rig.root.parent;
+      rig.root.position.add(par.worldToLocal(piv).sub(par.worldToLocal(now)));
+      rig.root.updateMatrixWorld(true);
+    }
   }
   for (const [bone, child, sb, sc, rel] of rig.map) {
     let want = sc.getWorldPosition(_a).sub(sb.getWorldPosition(_b)).normalize();
     want = _e.copy(rel.av).applyQuaternion(_p.setFromUnitVectors(rel.src, want));
+    // legs: the mocap walks a catwalk line; never let a leg swing in past the character's own stance
+    if (rel.side && want.x * rel.side < rel.av.x * rel.side) { want.x = rel.av.x; want.normalize(); }
     want.applyQuaternion(_h);
     const have = child.getWorldPosition(_b).sub(bone.getWorldPosition(_c)).normalize();
     _q.setFromUnitVectors(have, want);
@@ -1947,16 +1969,18 @@ function bakeClips(R) {
   for (const name of ["walk", "idle"]) {
     const act = acts[name], dur = act.getClip().duration, fps = 24, n = Math.ceil(dur * fps) + 1;
     Object.values(acts).forEach((a) => a.setEffectiveWeight(0)); act.setEffectiveWeight(1);
-    const times = new Float32Array(n), q = bones.map(() => new Float32Array(n * 4)), pos = new Float32Array(n * 3);
+    const times = new Float32Array(n), q = bones.map(() => new Float32Array(n * 4)), pos = new Float32Array(n * 3), rootP = new Float32Array(n * 3);
     for (let i = 0; i < n; i++) {
       const t = Math.min(dur, i / fps); act.time = t; mixer.update(0); retarget(R, owner);
-      times[i] = t; bones.forEach((b, k) => b.quaternion.toArray(q[k], i * 4)); R.model.position.toArray(pos, i * 3);
+      times[i] = t; bones.forEach((b, k) => b.quaternion.toArray(q[k], i * 4)); R.root?.position.toArray(rootP, i * 3); R.model.position.toArray(pos, i * 3);
     }
     const tracks = bones.map((b, k) => new THREE.QuaternionKeyframeTrack(b.name + ".quaternion", times, q[k]));
+    if (R.root) tracks.push(new THREE.VectorKeyframeTrack(R.root.name + ".position", times, rootP));
     tracks.push(new THREE.VectorKeyframeTrack("npcModel.position", times, pos));
     clips[name] = new THREE.AnimationClip(name, dur, tracks);
   }
   R.rest.forEach((qq, o) => o.quaternion.copy(qq));
+  if (R.root) R.root.position.copy(R.rootRestP);
   owner.remove(R.holder);
   return clips;
 }

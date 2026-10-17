@@ -75,3 +75,8 @@ Branch: `claude/pensive-bardeen-h0se4f` (auto-deploys to https://niche-biz.verce
 
 Commit attribution lines used so far:
 `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`
+
+### Update (Oct 2026)
+- Hero walk: avatar-v3 has its own `rigLayout` branch (Spine_2 is the left collarbone there, not a spine bone). `prepRig` now takes "forward" as perpendicular to the hip line (v3's right toe splays ~40° out, which had yawed the whole body). Hip sway pivots at Spine_0 instead of the floor-level Root (root position is baked into crowd clips too). Leg retarget clamps adduction so the mocap's catwalk gait doesn't cross the feet.
+- City Protocol marked as left, 2025 – 2025.11. Volunteering: HKU EMBA Guest Lecturer (2026.04), logo `assets/logos/hku.png`.
+- `fetch-logos` workflow: list `<key> <url>` lines in `tools/logos/RUN_LOGOS` and push to a non-production branch; candidates land in `tools/logos/out/` (the sandbox can't reach most logo hosts).
