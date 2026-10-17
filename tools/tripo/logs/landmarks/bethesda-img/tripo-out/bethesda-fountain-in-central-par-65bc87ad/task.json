@@ -1,0 +1,19 @@
+{
+  "task_id": "65bc87ad-6691-4e7c-8d78-2635b5af6124",
+  "type": "text_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "Bethesda Fountain in Central Park New York (bronze Angel of the Waters statue with spread wings on top of a two-tier fountain with four cherub figures, in a round stone basin), a single isolated 3D game asset, three-quarter front view, whole structure fully visible, centred, plain white background, no people, accurate real-world proportions and architectural details, clean semi-realistic anime game-art style like Persona 3 Reload",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-17T00:52:57.265859Z",
+  "completed_at": "2026-10-17T00:53:29.522857Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}

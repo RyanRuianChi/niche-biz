@@ -1,0 +1,23 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/lm/bethesda.png
+model: v3.1-20260211[2m — default high-fidelity → v3.1[22m
+steps:
+  1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
+[2m     model="v3.1-20260211" texture_quality="detailed"[22m
+cost impact:
+  · texture_quality detailed: higher price tier
+[1m──────────────────────────────────[22m
+model: v3.1-20260211 (default high-fidelity → v3.1)
+task created b126a3f3-7917-45fd-b7d7-9c55b447e79f (@lm-bethesda)
+image_to_model · queued
+image_to_model · running 6% · b126a3f3
+image_to_model · running 16% · b126a3f3
+image_to_model · running 26% · b126a3f3
+image_to_model · running 40% · b126a3f3
+image_to_model · running 62% · b126a3f3
+image_to_model · running 90% · b126a3f3
+image_to_model · running 99% · b126a3f3
+image_to_model · success 100% · b126a3f3
+[32m✓[39m image_to_model · b126a3f3-7917-45fd-b7d7-9c55b447e79f · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/bethesda/tripo-out/lm-bethesda-b126a3f3

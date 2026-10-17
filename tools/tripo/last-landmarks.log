@@ -1,42 +1,56 @@
-{"balance":180,"frozen":0}
-merlion img exit=0
-[32m✓[39m text_to_image · f775dbc6-fadc-4809-a153-80abe827b655 · 15 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/merlion-img/tripo-out/the-merlion-statue-in-singapore-f775dbc6
-merlion model exit=0
-{"task_id":"10eee293-fb41-454a-9325-0a6f4bfb15ec","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/merlion/tripo-out/lm-merlion-10eee293","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/merlion/tripo-out/lm-merlion-10eee293/model.glb","preview":"tools/tripo/logs/landmarks/merlion/tripo-out/lm-merlion-10eee293/preview.png"}
-[32m✓[39m image_to_model · 10eee293-fb41-454a-9325-0a6f4bfb15ec · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/merlion/tripo-out/lm-merlion-10eee293
--rw-r--r-- 1 runner runner 2059632 Oct 17 00:26 assets/models/lm/merlion.glb
-mbs img exit=0
-[32m✓[39m text_to_image · 58192b2d-5167-4abf-a3cd-4664e91669b2 · 15 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/mbs-img/tripo-out/marina-bay-sands-hotel-in-singap-58192b2d
-mbs model exit=0
-{"task_id":"26d2240c-a106-4a63-b898-20744f145229","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/mbs/tripo-out/lm-mbs-26d2240c","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/mbs/tripo-out/lm-mbs-26d2240c/model.glb","preview":"tools/tripo/logs/landmarks/mbs/tripo-out/lm-mbs-26d2240c/preview.png"}
-[32m✓[39m image_to_model · 26d2240c-a106-4a63-b898-20744f145229 · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/mbs/tripo-out/lm-mbs-26d2240c
--rw-r--r-- 1 runner runner 2032632 Oct 17 00:29 assets/models/lm/mbs.glb
-flatiron img exit=0
-[32m✓[39m text_to_image · 75eca95f-76fd-4a83-bd91-b6a0017a1363 · 15 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/flatiron-img/tripo-out/the-flatiron-building-in-new-yor-75eca95f
-flatiron model exit=0
-{"task_id":"76778e31-a247-43cf-a7c3-a17e502a0c88","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/flatiron/tripo-out/lm-flatiron-76778e31","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/flatiron/tripo-out/lm-flatiron-76778e31/model.glb","preview":"tools/tripo/logs/landmarks/flatiron/tripo-out/lm-flatiron-76778e31/preview.png"}
-[32m✓[39m image_to_model · 76778e31-a247-43cf-a7c3-a17e502a0c88 · 40 credits
-downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/flatiron/tripo-out/lm-flatiron-76778e31
--rw-r--r-- 1 runner runner 4259380 Oct 17 00:33 assets/models/lm/flatiron.glb
+{"balance":1985,"frozen":15}
 artscience img exit=0
-[32m✓[39m text_to_image · 08993cdf-42d1-4c69-bf94-8eefe94eb6e2 · 15 credits
+[32m✓[39m text_to_image · d112bbfb-de8b-4c89-ac56-9c4308cdecad · 5 credits
 downloading artifacts…
-[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience-img/tripo-out/the-artscience-museum-in-singapo-08993cdf
-artscience model exit=4
-{"error":"Insufficient credits","exit_code":4,"api_code":2010,"suggestion":"run \"tripo topup\" to add credits"}
-[31m✗ Insufficient credits[39m
-[2m  → run "tripo topup" to add credits
-[22mfind: ‘tools/tripo/logs/landmarks/artscience’: No such file or directory
-find: ‘tools/tripo/logs/landmarks/artscience’: No such file or directory
-{"balance":0,"frozen":0}
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience-img/tripo-out/the-artscience-museum-in-singapo-d112bbfb
+artscience model exit=0
+{"task_id":"e563eda1-fb5a-4b69-ac95-f1648e05c1c9","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-e563eda1","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-e563eda1/model.glb","preview":"tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-e563eda1/preview.png"}
+[32m✓[39m image_to_model · e563eda1-fb5a-4b69-ac95-f1648e05c1c9 · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/artscience/tripo-out/lm-artscience-e563eda1
+-rw-r--r-- 1 runner runner 2799024 Oct 17 00:45 assets/models/lm/artscience.glb
+supertree img exit=0
+[32m✓[39m text_to_image · d7e26e1f-e7b9-475c-af46-cb111ac9dd1a · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/supertree-img/tripo-out/a-supertree-from-gardens-by-the-d7e26e1f
+supertree model exit=0
+{"task_id":"fe5749b9-7eee-4a9b-a955-26af848c884d","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-fe5749b9","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-fe5749b9/model.glb","preview":"tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-fe5749b9/preview.png"}
+[32m✓[39m image_to_model · fe5749b9-7eee-4a9b-a955-26af848c884d · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/supertree/tripo-out/lm-supertree-fe5749b9
+-rw-r--r-- 1 runner runner 4529680 Oct 17 00:49 assets/models/lm/supertree.glb
+esplanade img exit=9
+[2m  → Try again later. You can also check `Retry-After` header.
+[22m[2m  request_id: 7ac24721-d696-4455-bd85-33b383f5e972
+[22mfind: ‘tools/tripo/logs/landmarks/esplanade-img’: No such file or directory
+gct img exit=0
+[32m✓[39m text_to_image · 1b214e08-a2fb-4352-82e3-9998c8ca224b · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/gct-img/tripo-out/the-front-facade-of-grand-centra-1b214e08
+gct model exit=0
+{"task_id":"2af31be4-d3fd-4cd5-b4e9-9c552a2cf312","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-2af31be4","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-2af31be4/model.glb","preview":"tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-2af31be4/preview.png"}
+[32m✓[39m image_to_model · 2af31be4-d3fd-4cd5-b4e9-9c552a2cf312 · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/gct/tripo-out/lm-gct-2af31be4
+-rw-r--r-- 1 runner runner 2814772 Oct 17 00:52 assets/models/lm/gct.glb
+bethesda img exit=0
+[32m✓[39m text_to_image · 65bc87ad-6691-4e7c-8d78-2635b5af6124 · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/bethesda-img/tripo-out/bethesda-fountain-in-central-par-65bc87ad
+bethesda model exit=0
+{"task_id":"b126a3f3-7917-45fd-b7d7-9c55b447e79f","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/bethesda/tripo-out/lm-bethesda-b126a3f3","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/bethesda/tripo-out/lm-bethesda-b126a3f3/model.glb","preview":"tools/tripo/logs/landmarks/bethesda/tripo-out/lm-bethesda-b126a3f3/preview.png"}
+[32m✓[39m image_to_model · b126a3f3-7917-45fd-b7d7-9c55b447e79f · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/bethesda/tripo-out/lm-bethesda-b126a3f3
+-rw-r--r-- 1 runner runner 2710040 Oct 17 00:56 assets/models/lm/bethesda.glb
+brooklyn-tower img exit=0
+[32m✓[39m text_to_image · efa87098-eb87-4896-90c8-046940b6628b · 15 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/brooklyn-tower-img/tripo-out/one-stone-tower-of-the-brooklyn-efa87098
+brooklyn-tower model exit=0
+{"task_id":"cc6234cd-b81b-4311-868f-157213c914ec","type":"image_to_model","status":"success","credits_consumed":40,"output_dir":"tools/tripo/logs/landmarks/brooklyn-tower/tripo-out/lm-brooklyn-tower-cc6234cd","files":["model.glb","rendered_image.webp","preview.png"],"model_file":"tools/tripo/logs/landmarks/brooklyn-tower/tripo-out/lm-brooklyn-tower-cc6234cd/model.glb","preview":"tools/tripo/logs/landmarks/brooklyn-tower/tripo-out/lm-brooklyn-tower-cc6234cd/preview.png"}
+[32m✓[39m image_to_model · cc6234cd-b81b-4311-868f-157213c914ec · 40 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/landmarks/brooklyn-tower/tripo-out/lm-brooklyn-tower-cc6234cd
+-rw-r--r-- 1 runner runner 3007444 Oct 17 01:00 assets/models/lm/brooklyn-tower.glb
+{"balance":1000,"frozen":50}

@@ -1,0 +1,19 @@
+{
+  "task_id": "d112bbfb-de8b-4c89-ac56-9c4308cdecad",
+  "type": "text_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "The ArtScience Museum in Singapore (white lotus-shaped building with ten curved petal fingers rising from a round glass base), a single isolated 3D game asset, three-quarter front view, whole structure fully visible, centred, plain white background, no people, accurate real-world proportions and architectural details, clean semi-realistic anime game-art style like Persona 3 Reload",
+    "model_version": "seedream_v4"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 5,
+  "created_at": "2026-10-17T00:42:30.510343Z",
+  "completed_at": "2026-10-17T00:42:40.459205Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}

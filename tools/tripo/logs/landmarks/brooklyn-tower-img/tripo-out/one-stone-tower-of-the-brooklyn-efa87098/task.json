@@ -1,0 +1,19 @@
+{
+  "task_id": "efa87098-eb87-4896-90c8-046940b6628b",
+  "type": "text_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "One stone tower of the Brooklyn Bridge in New York (tall granite and limestone tower with two pointed gothic arches, steel suspension cables attached, a short section of the bridge deck), a single isolated 3D game asset, three-quarter front view, whole structure fully visible, centred, plain white background, no people, accurate real-world proportions and architectural details, clean semi-realistic anime game-art style like Persona 3 Reload",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-17T00:56:24.379161Z",
+  "completed_at": "2026-10-17T00:56:48.223591Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}
