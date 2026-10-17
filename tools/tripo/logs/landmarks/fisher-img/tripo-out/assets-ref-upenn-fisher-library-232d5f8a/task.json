@@ -1,0 +1,19 @@
+{
+  "task_id": "232d5f8a-ffb3-45a5-a270-f6ba1f8bb787",
+  "type": "image_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "Isolate the Fisher Fine Arts Library (red sandstone and brick Victorian gothic library with the tall square tower and great arched windows) from this painting as a single clean 3D-asset concept: the whole structure fully visible, three-quarter front view, centred, plain white background, no people, no trees in front, no ground clutter, same colours, materials and architectural details, clean semi-realistic game-art style.",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-17T00:08:38.255235Z",
+  "completed_at": "2026-10-17T00:09:07.115428Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}

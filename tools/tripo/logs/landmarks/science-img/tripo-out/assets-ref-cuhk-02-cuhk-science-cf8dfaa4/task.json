@@ -1,0 +1,19 @@
+{
+  "task_id": "cf8dfaa4-2926-43f7-8a32-3ff01f9affee",
+  "type": "image_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "Isolate the Science Centre (white brutalist building with the raised octagonal block on a central pillar, the purple CUHK crest, spiral staircases) from this painting as a single clean 3D-asset concept: the whole structure fully visible, three-quarter front view, centred, plain white background, no people, no trees in front, no ground clutter, same colours, materials and architectural details, clean semi-realistic game-art style.",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-17T00:16:34.925589Z",
+  "completed_at": "2026-10-17T00:17:01.451490Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}

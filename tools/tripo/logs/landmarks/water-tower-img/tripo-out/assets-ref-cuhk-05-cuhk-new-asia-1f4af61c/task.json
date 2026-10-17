@@ -1,0 +1,19 @@
+{
+  "task_id": "1f4af61c-4e08-4cf1-9f48-894e652756bb",
+  "type": "image_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "Isolate the New Asia water tower (tall grey brutalist concrete tower with the hollow cross-shaped top) from this painting as a single clean 3D-asset concept: the whole structure fully visible, three-quarter front view, centred, plain white background, no people, no trees in front, no ground clutter, same colours, materials and architectural details, clean semi-realistic game-art style.",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-17T00:19:47.606410Z",
+  "completed_at": "2026-10-17T00:20:11.759330Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}

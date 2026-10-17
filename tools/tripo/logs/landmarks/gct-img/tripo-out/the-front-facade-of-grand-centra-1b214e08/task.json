@@ -1,0 +1,19 @@
+{
+  "task_id": "1b214e08-a2fb-4352-82e3-9998c8ca224b",
+  "type": "text_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "The front facade of Grand Central Terminal in New York (Beaux-Arts limestone facade with three huge arched windows between pairs of columns, the Tiffany clock and sculpture group of Mercury on top), a single isolated 3D game asset, three-quarter front view, whole structure fully visible, centred, plain white background, no people, accurate real-world proportions and architectural details, clean semi-realistic anime game-art style like Persona 3 Reload",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-17T00:49:43.531897Z",
+  "completed_at": "2026-10-17T00:50:08.119432Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}

@@ -1,0 +1,25 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/white-hq/front-ai-1.png assets/ref/white-hq/right.png assets/ref/white-hq/back.png
+model: v3.1-20260211[2m — explicit --model[22m
+steps:
+  1. multiview-to-model  [2mPOST /v3/generation/multiview-to-model[22m — generate a 3D model from multiple views
+[2m     model="v3.1-20260211" texture_quality="extreme" geometry_quality="detailed" texture_alignment="original_image" model_seed=22[22m
+cost impact:
+  · texture_quality extreme: higher price tier
+  · geometry detailed (Ultra): extra HD credit
+[1m──────────────────────────────────[22m
+model: v3.1-20260211 (explicit --model)
+task created 9e69ed01-174e-4700-9cc5-1aa80f7cbb06 (@rc-v3-22)
+multiview_to_model · queued
+multiview_to_model · running 4% · 9e69ed01
+multiview_to_model · running 11% · 9e69ed01
+multiview_to_model · running 17% · 9e69ed01
+multiview_to_model · running 27% · 9e69ed01
+multiview_to_model · running 41% · 9e69ed01
+multiview_to_model · running 59% · 9e69ed01
+multiview_to_model · running 77% · 9e69ed01
+multiview_to_model · running 96% · 9e69ed01
+multiview_to_model · success 100% · 9e69ed01
+[32m✓[39m multiview_to_model · 9e69ed01-174e-4700-9cc5-1aa80f7cbb06 · 70 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/avatar3/cand-22/tripo-out/rc-v3-22-9e69ed01

@@ -1,0 +1,19 @@
+{
+  "task_id": "52c2345e-2273-4d79-b3f2-bc55cd089179",
+  "type": "text_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "a Japanese drink vending machine, white and red, glowing front panel with rows of drink bottles, a single isolated 3D game prop, three-quarter view, clean semi-realistic anime game-art style like Persona 3 Reload, plain white background, single subject, centred, whole body visible",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-17T01:01:32.015776Z",
+  "completed_at": "2026-10-17T01:02:10.651152Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}

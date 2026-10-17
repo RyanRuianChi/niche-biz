@@ -1,0 +1,18 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/gen/vending.png
+model: P1-20260311[2m — face budget 6000 ≤ 20000 → P1[22m
+steps:
+  1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
+[2m     model="P1-20260311" face_limit=6000[22m
+[1m──────────────────────────────────[22m
+model: P1-20260311 (face budget 6000 ≤ 20000 → P1)
+task created d9108b6f-1b9a-42e3-a236-ebe6b847a0e1 (@prop-vending)
+image_to_model · queued
+image_to_model · running 8% · d9108b6f
+image_to_model · running 24% · d9108b6f
+image_to_model · running 38% · d9108b6f
+image_to_model · running 60% · d9108b6f
+image_to_model · success 100% · d9108b6f
+[32m✓[39m image_to_model · d9108b6f-1b9a-42e3-a236-ebe6b847a0e1 · 50 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/vending/tripo-out/prop-vending-d9108b6f

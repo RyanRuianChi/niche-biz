@@ -1,0 +1,19 @@
+{
+  "task_id": "29a833d6-5039-403d-9a74-cfd109091320",
+  "type": "image_to_image",
+  "status": "success",
+  "input": {
+    "prompt": "Isolate the LOVE sculpture by Robert Indiana (red letters L O V E stacked two by two, with the tilted O, blue and green inner faces) on its black stone plinth from this painting as a single clean 3D-asset concept: the whole structure fully visible, three-quarter front view, centred, plain white background, no people, no trees in front, no ground clutter, same colours, materials and architectural details, clean semi-realistic game-art style.",
+    "model_version": "banana_pro"
+  },
+  "output_fields": [
+    "generated_image_url"
+  ],
+  "credits_consumed": 15,
+  "created_at": "2026-10-17T00:12:37.459815Z",
+  "completed_at": "2026-10-17T00:13:05.175365Z",
+  "files": [
+    "generated_image.png",
+    "preview.png"
+  ]
+}

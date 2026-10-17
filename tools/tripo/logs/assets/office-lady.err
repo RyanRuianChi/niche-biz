@@ -1,0 +1,25 @@
+[1m── Plan ──────────────────────────[22m
+input: assets/ref/gen/office-lady.png
+model: P1-20260311[2m — face budget 16000 ≤ 20000 → P1[22m
+steps:
+  1. image-to-model  [2mPOST /v3/generation/image-to-model[22m — generate a 3D model from one image
+[2m     model="P1-20260311" face_limit=16000[22m
+  2. rig  [2mPOST /v3/animations/rig[22m — auto-rig a skeleton
+[1m──────────────────────────────────[22m
+model: P1-20260311 (face budget 16000 ≤ 20000 → P1)
+task created 2d38aff8-609e-4bf7-9598-e5e5e4c5675c (@npc-office-lady)
+image_to_model · queued
+image_to_model · running 10% · 2d38aff8
+image_to_model · running 31% · 2d38aff8
+image_to_model · running 48% · 2d38aff8
+image_to_model · running 76% · 2d38aff8
+image_to_model · success 100% · 2d38aff8
+[32m✓[39m image_to_model · 2d38aff8-609e-4bf7-9598-e5e5e4c5675c · 50 credits
+task created 4029bbd5-0437-4a57-8b8a-dc863a4dc191 (@npc-office-lady-rig)
+animate_rig · queued
+animate_rig · running 26% · 4029bbd5
+animate_rig · running 82% · 4029bbd5
+animate_rig · success 100% · 4029bbd5
+[32m✓[39m animate_rig · 4029bbd5-0437-4a57-8b8a-dc863a4dc191 · 25 credits
+downloading artifacts…
+[32m✓[39m artifacts saved to tools/tripo/logs/assets/office-lady/tripo-out/npc-office-lady-rig-4029bbd5
