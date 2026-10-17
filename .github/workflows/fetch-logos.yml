@@ -1,0 +1,27 @@
+name: fetch-logos
+on:
+  push:
+    branches-ignore: ["claude/pensive-bardeen-h0se4f"]
+    paths: ["tools/logos/RUN_LOGOS"]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch logo candidates   # each line of RUN_LOGOS: <key> <url>
+        run: |
+          mkdir -p tools/logos/out
+          i=0
+          while read -r key url; do
+            [ -z "$key" ] && continue; i=$((i+1))
+            curl -sSL -A "Mozilla/5.0" -m 30 -o "tools/logos/out/${key}-${i}" "$url" || true
+          done < tools/logos/RUN_LOGOS
+          file tools/logos/out/* || true
+      - name: Commit results
+        run: |
+          git config user.name "logo-bot"; git config user.email "logo-bot@users.noreply.github.com"
+          git add tools/logos
+          git commit -m "Fetched logo candidates (CI)" || echo "nothing to commit"
+          git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push
