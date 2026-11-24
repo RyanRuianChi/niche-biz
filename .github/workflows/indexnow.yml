@@ -26,4 +26,4 @@ jobs:
           KEY=$(cat tools/seo/INDEXNOW_KEY)
           curl -s -o /dev/null -w 'indexnow %{http_code}\n' -X POST https://api.indexnow.org/indexnow \
             -H 'Content-Type: application/json; charset=utf-8' \
-            -d "{\"host\":\"ryanchi.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://ryanchi.com/$KEY.txt\",\"urlList\":[\"https://ryanchi.com/\",\"https://ryanchi.com/zh-hant\",\"https://ryanchi.com/ja\",\"https://ryanchi.com/ko\",\"https://ryanchi.com/fr\"]}"
+            -d "{\"host\":\"www.ryanchi.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://www.ryanchi.com/$KEY.txt\",\"urlList\":[\"https://www.ryanchi.com/\",\"https://www.ryanchi.com/zh-hant\",\"https://www.ryanchi.com/ja\",\"https://www.ryanchi.com/ko\",\"https://www.ryanchi.com/fr\"]}"

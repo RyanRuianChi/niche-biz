@@ -9,7 +9,7 @@ import vm from "vm";
 const ctx = { window: {} };
 vm.runInNewContext(fs.readFileSync("i18n.js", "utf8"), ctx);
 const { SITE, I18N } = ctx.window;
-const BASE = "https://ryanchi.com/";
+const BASE = "https://www.ryanchi.com/";
 const PAGES = { en: "", "zh-Hant": "zh-hant", ja: "ja", ko: "ko", fr: "fr" };
 const HREFLANG = { en: "en", "zh-Hant": "zh-Hant", ja: "ja", ko: "ko", fr: "fr" };
 const META = {
