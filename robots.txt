@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /tools/
+Disallow: /assets/ref/
+
+Sitemap: https://ryanchi.com/sitemap.xml
