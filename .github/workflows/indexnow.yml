@@ -1,0 +1,27 @@
+name: indexnow
+# After a deploy that changes the sitemap, check the live site and tell Bing/Yandex/Seznam (IndexNow) to recrawl.
+on:
+  push:
+    paths: ["sitemap.xml", "tools/seo/INDEXNOW_KEY"]
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for the deploy, check pages
+        run: |
+          KEY=$(cat tools/seo/INDEXNOW_KEY)
+          for i in $(seq 1 30); do
+            [ "$(curl -s https://ryanchi.com/$KEY.txt)" = "$KEY" ] && break; sleep 20
+          done
+          for p in "" zh-hant ja ko fr sitemap.xml robots.txt llms.txt; do
+            echo "$(curl -s -o /dev/null -w '%{http_code}' https://ryanchi.com/$p) /$p"
+          done
+          curl -s https://ryanchi.com/ | grep -o '<title>[^<]*'
+      - name: IndexNow
+        run: |
+          KEY=$(cat tools/seo/INDEXNOW_KEY)
+          curl -s -o /dev/null -w 'indexnow %{http_code}\n' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"ryanchi.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://ryanchi.com/$KEY.txt\",\"urlList\":[\"https://ryanchi.com/\",\"https://ryanchi.com/zh-hant\",\"https://ryanchi.com/ja\",\"https://ryanchi.com/ko\",\"https://ryanchi.com/fr\"]}"
