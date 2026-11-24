@@ -625,6 +625,13 @@ img { display: block; max-width: 100%; }
 @keyframes world-wipe { 0% { transform: translateX(-130%) skewX(-18deg); } 45%, 55% { transform: translateX(0) skewX(-18deg); } 100% { transform: translateX(130%) skewX(-18deg); } }
 @media (max-width: 700px) { .world__stage { aspect-ratio: 4 / 5; } .world__dialog { bottom: 44px; } .world__dialog p { font-size: 13px; } }
 
+.footer__langs { flex-basis: 100%; font: 13px var(--heavy); letter-spacing: 1px; }
+.footer__langs a { color: var(--gray); text-decoration: none; } .footer__langs a:hover, .footer__langs a[aria-current] { color: var(--white); }
+
+/* ---------- About ---------- */
+.about__text { max-width: 860px; background: var(--ink); border-left: 8px solid var(--red); padding: 22px 26px; font-size: 16.5px; }
+.about__text p { margin: 0 0 12px; } .about__text p:last-child { margin: 0; }
+
 /* ---------- Loading screen ---------- */
 body.is-loading { overflow: hidden; }
 .loader {

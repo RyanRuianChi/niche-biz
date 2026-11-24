@@ -1,9 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://ryanchi.com/</loc>
     <lastmod>2026-11-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ryanchi.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://ryanchi.com/zh-hant"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ryanchi.com/ja"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ryanchi.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ryanchi.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ryanchi.com/"/>
     <image:image><image:loc>https://ryanchi.com/assets/ryan-chi.jpg</image:loc></image:image>
-    <image:image><image:loc>https://ryanchi.com/assets/og-ryan-chi.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://ryanchi.com/zh-hant</loc>
+    <lastmod>2026-11-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ryanchi.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://ryanchi.com/zh-hant"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ryanchi.com/ja"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ryanchi.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ryanchi.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ryanchi.com/"/>
+  </url>
+  <url>
+    <loc>https://ryanchi.com/ja</loc>
+    <lastmod>2026-11-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ryanchi.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://ryanchi.com/zh-hant"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ryanchi.com/ja"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ryanchi.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ryanchi.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ryanchi.com/"/>
+  </url>
+  <url>
+    <loc>https://ryanchi.com/ko</loc>
+    <lastmod>2026-11-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ryanchi.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://ryanchi.com/zh-hant"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ryanchi.com/ja"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ryanchi.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ryanchi.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ryanchi.com/"/>
+  </url>
+  <url>
+    <loc>https://ryanchi.com/fr</loc>
+    <lastmod>2026-11-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ryanchi.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://ryanchi.com/zh-hant"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ryanchi.com/ja"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ryanchi.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ryanchi.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ryanchi.com/"/>
   </url>
 </urlset>

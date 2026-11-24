@@ -175,6 +175,8 @@
   const pickInitial = () => {
     const q = new URLSearchParams(location.search).get("lang");
     if (q && I18N[q]) return q;
+    const page = document.documentElement.dataset.pageLang;   // /zh-hant, /ja, ... pages
+    if (page && page !== "en" && I18N[page]) return page;
     try {
       const saved = localStorage.getItem("lang");
       if (saved && I18N[saved]) return saved;
