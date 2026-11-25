@@ -72,6 +72,8 @@ window.SITE = {
 
 window.I18N = {
   en: {
+    "nav.talks": "Talks", "talk.solana.t": "Ryan Chi at Solana Consumer Day: “I am 21, pls be my consumer”",
+    "talk.solana.d": "Ryan pitches insiders.bot: 1,000 registered users and $1M trading volume in its first month on a $0 marketing budget, “we simp in public”, and why the metric that matters is the % of users winning on prediction markets.",
     "q.nox.role": "Researcher & Growth · Part-time", "q.nox.desc": "Full-lifecycle crypto incubation fund acting as strategic co-founder for crypto teams. Research and growth, part-time; portfolio includes Sign, Talus, Cetus and Metis.", "q.nox.aum": "AUM",
     "ph.portrait": "Ryan Chi (Mr.RC), portrait",
     "ph.hku": "Ryan Chi presenting insiders.bot's AI agent workflows at HKU CAMO",
@@ -146,6 +148,8 @@ window.I18N = {
   },
 
   "zh-Hant": {
+    "nav.talks": "演講", "talk.solana.t": "Ryan Chi 於 Solana Consumer Day：「我 21 歲，請成為我的用戶」",
+    "talk.solana.d": "Ryan 介紹 insiders.bot：零行銷預算下首月 1,000 名註冊用戶及 100 萬美元交易量、「公開討好用戶」，以及為何最重要的指標是預測市場中獲利用戶的比例。",
     "q.nox.role": "研究員及增長 · 兼職", "q.nox.desc": "全週期加密孵化基金，以策略聯合創辦人身份支持加密團隊。兼職負責研究與增長；投資組合包括 Sign、Talus、Cetus 及 Metis。", "q.nox.aum": "資產管理規模",
     "ph.more": "顯示全部照片",
     "ph.portrait": "Ryan Chi（Mr.RC）個人照",
@@ -221,6 +225,8 @@ window.I18N = {
   },
 
   ja: {
+    "nav.talks": "講演", "talk.solana.t": "Solana Consumer Day での Ryan Chi：「21歳です、ユーザーになってください」",
+    "talk.solana.d": "Ryan が insiders.bot をピッチ。マーケティング予算ゼロで初月 1,000 人の登録と 100 万ドルの取引高、「公開でユーザーに尽くす」姿勢、そして予測市場で勝っているユーザーの割合こそが重要な指標である理由。",
     "q.nox.role": "リサーチャー＆グロース · パートタイム", "q.nox.desc": "クリプトチームの戦略的共同創業者として伴走するフルライフサイクル型インキュベーションファンド。パートタイムでリサーチとグロースを担当。ポートフォリオに Sign、Talus、Cetus、Metis など。", "q.nox.aum": "運用資産",
     "ph.more": "すべての写真を見る",
     "ph.portrait": "Ryan Chi（Mr.RC）のポートレート",
@@ -296,6 +302,8 @@ window.I18N = {
   },
 
   ko: {
+    "nav.talks": "강연", "talk.solana.t": "Solana Consumer Day의 Ryan Chi: “21살입니다, 제 유저가 되어 주세요”",
+    "talk.solana.d": "Ryan이 insiders.bot을 소개합니다. 마케팅 예산 0원으로 첫 달 등록 사용자 1,000명과 거래량 100만 달러, ‘공개적으로 유저에게 헌신하기’, 그리고 예측 시장에서 수익을 내는 사용자 비율이 핵심 지표인 이유.",
     "q.nox.role": "리서처 & 그로스 · 파트타임", "q.nox.desc": "크립토 팀의 전략적 공동 창업자 역할을 하는 풀 라이프사이클 인큐베이션 펀드. 파트타임으로 리서치와 그로스 담당. 포트폴리오: Sign, Talus, Cetus, Metis 등.", "q.nox.aum": "운용 자산",
     "ph.more": "사진 모두 보기",
     "ph.portrait": "Ryan Chi(Mr.RC) 프로필 사진",
@@ -371,6 +379,8 @@ window.I18N = {
   },
 
   fr: {
+    "nav.talks": "Conférences", "talk.solana.t": "Ryan Chi au Solana Consumer Day : « J’ai 21 ans, soyez mes utilisateurs »",
+    "talk.solana.d": "Ryan présente insiders.bot : 1 000 inscrits et 1 M$ de volume le premier mois sans budget marketing, « on simp en public », et pourquoi la métrique qui compte est le pourcentage d’utilisateurs gagnants sur les marchés prédictifs.",
     "q.nox.role": "Recherche & croissance · Temps partiel", "q.nox.desc": "Fonds d’incubation crypto full-lifecycle, cofondateur stratégique d’équipes crypto. Recherche et croissance à temps partiel ; portefeuille : Sign, Talus, Cetus, Metis.", "q.nox.aum": "Sous gestion",
     "ph.more": "Voir toutes les photos",
     "ph.portrait": "Portrait de Ryan Chi (Mr.RC)",

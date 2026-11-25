@@ -628,6 +628,13 @@ img { display: block; max-width: 100%; }
 .footer__langs { flex-basis: 100%; font: 13px var(--heavy); letter-spacing: 1px; }
 .footer__langs a { color: var(--gray); text-decoration: none; } .footer__langs a:hover, .footer__langs a[aria-current] { color: var(--white); }
 
+/* ---------- Talks ---------- */
+.talk { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: center; background: var(--ink); border: 3px solid var(--white); box-shadow: 10px 10px 0 var(--red); padding: 14px; }
+.talk video { width: 100%; height: auto; display: block; background: #000; }
+.talk h3 { margin: 0 0 10px; font: 24px/1.15 var(--display); letter-spacing: .5px; text-transform: uppercase; }
+.talk p { margin: 0; font-size: 15px; opacity: .9; }
+@media (max-width: 800px) { .talk { grid-template-columns: 1fr; } }
+
 /* ---------- Photos ---------- */
 .photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-flow: dense; gap: 16px; }
 .photo { margin: 0; background: var(--white); padding: 8px 8px 0; transform: rotate(var(--rot, -1deg)); box-shadow: 8px 8px 0 var(--red); transition: transform .15s; }
