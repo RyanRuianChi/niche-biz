@@ -640,6 +640,10 @@ img { display: block; max-width: 100%; }
 .photo figcaption { color: var(--ink); font: 13px/1.35 var(--body); font-weight: 600; padding: 8px 4px 10px; min-height: 52px; }
 @media (max-width: 600px) { .photo--wide { grid-column: auto; } .photo--tall { grid-row: auto; } .photo a { height: auto; } }
 
+.photos.is-collapsed .photo:nth-child(n+10) { display: none; }
+.photos__more { display: block; margin: 26px auto 0; font: 16px var(--display); letter-spacing: 1px; text-transform: uppercase; color: var(--white); background: var(--red); border: 3px solid var(--white); padding: 8px 22px; transform: skewX(var(--skew)); cursor: pointer; }
+.photos:not(.is-collapsed) + .photos__more { display: none; }
+
 /* ---------- About ---------- */
 .about__text { max-width: 860px; background: var(--ink); border-left: 8px solid var(--red); padding: 22px 26px; font-size: 16.5px; }
 .about__text p { margin: 0 0 12px; } .about__text p:last-child { margin: 0; }

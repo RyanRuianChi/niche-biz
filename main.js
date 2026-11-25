@@ -240,5 +240,8 @@
     window.addEventListener("keydown", finish, { once: true });
   }
 
+  const grid = document.getElementById("photo-grid");
+  document.querySelector(".photos__more")?.addEventListener("click", () => grid.classList.remove("is-collapsed"));
+
   document.getElementById("yr").textContent = new Date().getFullYear();
 })();

@@ -13,16 +13,16 @@ const BASE = "https://www.ryanchi.com/";
 const PAGES = { en: "", "zh-Hant": "zh-hant", ja: "ja", ko: "ko", fr: "fr" };
 const HREFLANG = { en: "en", "zh-Hant": "zh-Hant", ja: "ja", ko: "ko", fr: "fr" };
 const META = {
-  en: ["Ryan Chi (Mr.RC) — Founder, Artist & Builder · Hong Kong",
-       "Ryan Chi (Mr.RC) is a Hong Kong founder and creator in crypto and AI: cofounder of insiders.bot (exited 2026), Academic Labs, Showtime Watch and Sigmaboy.ai. CUHK, Wharton and EDHEC."],
-  "zh-Hant": ["Ryan Chi（Mr.RC）— 香港創業者・藝術家・建造者",
-       "Ryan Chi（Mr.RC）是香港的加密與 AI 創業者及內容創作者：insiders.bot 聯合創辦人（2026 年退出）、Academic Labs、Showtime Watch 與 Sigmaboy.ai 聯合創辦人。香港中文大學、華頓、EDHEC。"],
-  ja: ["Ryan Chi（Mr.RC）— 香港の起業家・アーティスト・ビルダー",
-       "Ryan Chi（Mr.RC）は香港のクリプト・AI 領域の起業家・クリエイター。insiders.bot 共同創業者（2026年イグジット）、Academic Labs、Showtime Watch、Sigmaboy.ai 共同創業者。CUHK、ウォートン、EDHEC。"],
-  ko: ["Ryan Chi(Mr.RC) — 홍콩 창업가 · 아티스트 · 빌더",
-       "Ryan Chi(Mr.RC)는 크립토와 AI 분야의 홍콩 창업가이자 크리에이터입니다. insiders.bot 공동 창업자(2026년 엑싯), Academic Labs, Showtime Watch, Sigmaboy.ai 공동 창업자. CUHK, 와튼, EDHEC."],
-  fr: ["Ryan Chi (Mr.RC) — Fondateur, artiste et bâtisseur · Hong Kong",
-       "Ryan Chi (Mr.RC) est un fondateur et créateur hongkongais dans la crypto et l’IA : cofondateur d’insiders.bot (sortie en 2026), d’Academic Labs, de Showtime Watch et de Sigmaboy.ai. CUHK, Wharton, EDHEC."],
+  en: ["Ryan Chi (Mr.RC) | Hong Kong Founder · insiders.bot Cofounder",
+       "Ryan Chi (Mr.RC) is a Hong Kong founder, artist and creator in crypto and AI. Cofounder of insiders.bot (exited 2026) and Academic Labs. CUHK, Wharton, EDHEC. Bio, projects and photos."],
+  "zh-Hant": ["Ryan Chi（Mr.RC）| 香港創業者 · insiders.bot 聯合創辦人",
+       "Ryan Chi（Mr.RC）是香港的加密與 AI 創業者、藝術家及內容創作者，insiders.bot（2026 年退出）與 Academic Labs 聯合創辦人。香港中文大學、華頓、EDHEC。個人簡介、項目與照片。"],
+  ja: ["Ryan Chi（Mr.RC）| 香港の起業家 · insiders.bot 共同創業者",
+       "Ryan Chi（Mr.RC）は香港のクリプト・AI 領域の起業家、アーティスト、クリエイター。insiders.bot（2026年イグジット）と Academic Labs の共同創業者。CUHK、ウォートン、EDHEC。プロフィール、プロジェクト、写真。"],
+  ko: ["Ryan Chi(Mr.RC) | 홍콩 창업가 · insiders.bot 공동 창업자",
+       "Ryan Chi(Mr.RC)는 크립토와 AI 분야의 홍콩 창업가, 아티스트, 크리에이터입니다. insiders.bot(2026년 엑싯)과 Academic Labs 공동 창업자. CUHK, 와튼, EDHEC. 소개, 프로젝트, 사진."],
+  fr: ["Ryan Chi (Mr.RC) | Fondateur à Hong Kong · cofondateur d’insiders.bot",
+       "Ryan Chi (Mr.RC) est un fondateur, artiste et créateur hongkongais dans la crypto et l’IA. Cofondateur d’insiders.bot (sortie en 2026) et d’Academic Labs. CUHK, Wharton, EDHEC. Bio, projets et photos."],
 };
 const url = (l) => BASE + PAGES[l];
 const attr = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
@@ -59,6 +59,8 @@ function head(html, lang) {
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${attr(title)}</title>`);
   html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${attr(desc)}">`);
   html = html.replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${url(lang)}">`);
+  html = html.replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${attr(title)}">`);
+  html = html.replace(/<meta name="twitter:title" content="[^"]*">/, `<meta name="twitter:title" content="${attr(title)}">`);
   html = html.replace(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${url(lang)}">`);
   html = html.replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${attr(desc)}">`);
   html = html.replace(/<meta name="twitter:description" content="[^"]*">/, `<meta name="twitter:description" content="${attr(desc)}">`);
