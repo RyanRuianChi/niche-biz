@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>NOX Ventures</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #008080;
+      height: 100vh;
+      overflow: hidden;
+      cursor: default;
+      user-select: none;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* ── Bevels ── */
+    .bevel-out {
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-right: 2px solid #808080;
+      border-bottom: 2px solid #808080;
+    }
+
+    .bevel-in {
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-right: 2px solid #ffffff;
+      border-bottom: 2px solid #ffffff;
+    }
+
+    .bevel-btn {
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-right: 2px solid #5d5e5f;
+      border-bottom: 2px solid #5d5e5f;
+      background: #c0c0c0;
+      cursor: pointer;
+    }
+
+    .bevel-btn:active {
+      border-top: 2px solid #5d5e5f;
+      border-left: 2px solid #5d5e5f;
+      border-right: 2px solid #ffffff;
+      border-bottom: 2px solid #ffffff;
+    }
+
+    /* ── Title Bar ── */
+    .title-bar {
+      background: linear-gradient(90deg, #00003c 0%, #000080 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3px 4px;
+      cursor: move;
+      flex-shrink: 0;
+    }
+
+    .title-bar-text {
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+
+    .win-controls {
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .win-btn {
+      width: 16px;
+      height: 14px;
+      font-size: 10px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    /* ── Windows ── */
+    .win {
+      position: absolute;
+      background: #c0c0c0;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 12px 32px rgba(26, 28, 28, 0.22);
+      min-height: 0;
+      /* 确保 flex 子元素可以收缩 */
+    }
+
+    .win.hidden {
+      display: none;
+    }
+
+    .win-body {
+      background: #eeeeee;
+      flex: 1;
+      overflow: auto;
+      min-height: 0;
+      /* 确保内容可以滚动 */
+    }
+
+    /* ── Menu bar / Status bar ── */
+    .win-menubar {
+      background: #c0c0c0;
+      border-bottom: 2px solid #808080;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .win-menubar span {
+      padding: 1px 4px;
+      cursor: pointer;
+    }
+
+    .win-menubar span:hover {
+      background: #000080;
+      color: #fff;
+    }
+
+    .win-statusbar {
+      background: #c0c0c0;
+      border-top: 2px solid #808080;
+      padding: 2px 8px;
+      font-size: 9px;
+      font-weight: 700;
+      color: #5d5e5f;
+      display: flex;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    /* ── Taskbar ── */
+    #taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 32px;
+      background: #c0c0c0;
+      border-top: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      padding: 2px 4px;
+      gap: 4px;
+      z-index: 9999;
+    }
+
+    .tb-sep {
+      width: 2px;
+      height: 22px;
+      border-left: 1px solid #808080;
+      border-right: 1px solid #fff;
+      flex-shrink: 0;
+    }
+
+    .ticker-label {
+      color: #00003c;
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+    .ticker-val {
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .ticker-up {
+      color: #006400;
+    }
+
+    .ticker-dn {
+      color: #8b0000;
+    }
+
+    /* ── Start Menu ── */
+    #start-menu {
+      position: fixed;
+      bottom: 32px;
+      left: 0;
+      width: 230px;
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #808080;
+      border-bottom: 2px solid #808080;
+      z-index: 10000;
+      display: none;
+      flex-direction: column;
+    }
+
+    #start-menu.open {
+      display: flex;
+    }
+
+    .sm-strip {
+      background: linear-gradient(180deg, #00003c 0%, #000080 100%);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sm-body {
+      margin-left: 26px;
+    }
+
+    .sm-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #000;
+    }
+
+    .sm-item:hover {
+      background: #000080;
+      color: #fff;
+    }
+
+    .sm-icon {
+      font-size: 18px;
+      color: #00003c;
+      flex-shrink: 0;
+    }
+
+    .sm-item:hover .sm-icon {
+      color: #fff;
+    }
+
+    .sm-divider {
+      height: 2px;
+      background: #808080;
+      border-bottom: 1px solid #fff;
+      margin: 2px 0;
+    }
+
+    /* ── Typing cursor ── */
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: #00003c;
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+
+      from,
+      to {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0
+      }
+    }
+
+    /* ── Desktop icons ── */
+    .desk-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      width: 68px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .desk-icon:hover .icon-label {
+      background: #000080;
+      color: #fff;
+    }
+
+    .icon-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+      padding: 1px 3px;
+      text-shadow: 1px 1px 0 #000, -1px 0 0 #000;
+      line-height: 1.3;
+    }
+
+    /* ── Portfolio icons ── */
+    .port-icon-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 8px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #000;
+    }
+
+    .port-icon-wrap:hover .port-icon-bg {
+      background: #000080;
+    }
+
+    .port-icon-wrap:hover .port-name {
+      background: #000080;
+      color: #fff;
+      outline: 1px dotted #fff;
+    }
+
+    .port-icon-bg {
+      width: 48px;
+      height: 48px;
+      background: #eeeeee;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #808080;
+      border-bottom: 2px solid #808080;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .port-icon-img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+    }
+
+    .port-name {
+      font-size: 9px;
+      font-weight: 700;
+      text-align: center;
+      max-width: 64px;
+      word-break: break-word;
+      padding: 1px 2px;
+      line-height: 1.2;
+    }
+
+    /* ── Services ── */
+    .svc-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+    }
+
+    .svc-row:nth-child(odd) {
+      background: #faf9f9;
+    }
+
+    .svc-row:nth-child(even) {
+      background: #eeeeee;
+    }
+
+    .svc-icon {
+      font-size: 20px;
+      color: #00003c;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .svc-title {
+      font-size: 11px;
+      font-weight: 900;
+      color: #00003c;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 3px;
+    }
+
+    .svc-desc {
+      font-size: 10px;
+      color: #464653;
+      line-height: 1.6;
+    }
+
+    /* ── Contact ── */
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      text-decoration: none;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .contact-btn:nth-child(odd) {
+      background: #faf9f9;
+    }
+
+    .contact-btn:nth-child(even) {
+      background: #eeeeee;
+    }
+
+    .contact-btn:hover {
+      background: #000080;
+      color: #fff;
+    }
+
+    .contact-label {
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .contact-sub {
+      font-size: 10px;
+      opacity: .7;
+      margin-top: 3px;
+    }
+
+    /* ── NOX ASCII art (from PDF cover) ── */
+    #nox-ascii-bg {
+      position: fixed;
+      inset: 0;
+      bottom: 32px;
+      background: url('images/nox-bg.jpeg') center center / cover no-repeat;
+      opacity: 0.07;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Scrollbar Win98 ── */
+    ::-webkit-scrollbar {
+      width: 16px;
+      height: 16px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #c0c0c0;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #808080;
+      border-bottom: 2px solid #808080;
+    }
+
+    /* ── 最大化窗口优化 ── */
+    .win[data-mx="1"] {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    .win[data-mx="1"] .win-body {
+      flex: 1 1 auto !important;
+      overflow-y: auto !important;
+      min-height: 0 !important;
+    }
+
+    /* ── Mobile Responsive ── */
+    @media (max-width: 768px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      /* 调整窗口大小和位置 */
+      .win {
+        width: 95% !important;
+        max-width: none !important;
+        left: 2.5% !important;
+        right: 2.5% !important;
+        height: auto !important;
+      }
+
+      /* Terminal 窗口 */
+      #terminal-win {
+        bottom: 44px !important;
+        width: 95% !important;
+        left: 2.5% !important;
+        max-height: 40vh !important;
+      }
+
+      /* Portfolio 窗口 */
+      #portfolio-win {
+        top: 50px !important;
+        width: 95% !important;
+        left: 2.5% !important;
+        max-height: calc(100vh - 100px) !important;
+      }
+
+      /* Contact 窗口 */
+      #contact-win {
+        top: 50px !important;
+        width: 95% !important;
+        left: 2.5% !important;
+        max-height: calc(100vh - 100px) !important;
+      }
+
+      /* About 窗口 - 移动端优化 */
+      #about-win {
+        top: 50px !important;
+        width: 95% !important;
+        left: 2.5% !important;
+        max-height: calc(100vh - 100px) !important;
+      }
+
+      /* About 窗口内容优化 */
+      #about-win .win-body>div:first-child {
+        padding: 16px 16px 12px !important;
+      }
+
+      #about-win .win-body>div:first-child>div:last-child>div:nth-child(2) {
+        font-size: 18px !important;
+        line-height: 1.15 !important;
+      }
+
+      #about-win .win-body>div:nth-child(2) {
+        padding: 16px 16px 12px !important;
+      }
+
+      #about-win .win-body p {
+        font-size: 11px !important;
+        line-height: 1.65 !important;
+      }
+
+      /* Portfolio 网格调整为单列 */
+      .port-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+
+      /* Contact 项目调整 */
+      .contact-item {
+        padding: 8px !important;
+      }
+
+      /* 字体大小微调 */
+      .title-bar-text {
+        font-size: 10px !important;
+      }
+
+      .win-menubar {
+        font-size: 9px !important;
+      }
+
+      /* Terminal 文字 */
+      #terminal-win .win-body {
+        font-size: 9px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+
+      /* 更小屏幕优化 */
+      .port-card {
+        padding: 10px !important;
+      }
+
+      .port-name {
+        font-size: 12px !important;
+      }
+
+      .port-desc {
+        font-size: 9px !important;
+      }
+
+      .win-controls {
+        gap: 1px !important;
+      }
+
+      .win-btn {
+        width: 14px !important;
+        height: 12px !important;
+        font-size: 9px !important;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+  <!-- NOX ASCII background (from PDF) -->
+  <div id="nox-ascii-bg"></div>
+
+  <!-- ═══ DESKTOP ICONS ═══ -->
+  <div
+    style="position:fixed;inset:0;bottom:32px;padding:14px 0 0 10px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;z-index:10;pointer-events:none;">
+
+    <div class="desk-icon" style="pointer-events:all;" ondblclick="openWin('about-win')" onclick="selIcon(this)">
+      <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg"
+        style="filter:drop-shadow(1px 1px 0 #000)">
+        <!-- Monitor body -->
+        <rect x="4" y="3" width="30" height="22" rx="2" fill="#c0c0c0" stroke="#fff" stroke-width="1" />
+        <rect x="4" y="3" width="30" height="22" rx="2" fill="none" stroke="#808080" stroke-width="1"
+          stroke-dasharray="0" style="stroke-dashoffset:0" />
+        <!-- Screen bezel -->
+        <rect x="6" y="5" width="26" height="17" rx="1" fill="#808080" />
+        <!-- Screen (blue desktop) -->
+        <rect x="7" y="6" width="24" height="15" fill="#000080" />
+        <!-- Screen shine -->
+        <rect x="7" y="6" width="24" height="4" fill="#0000aa" opacity="0.5" />
+        <!-- Monitor base neck -->
+        <rect x="16" y="25" width="6" height="4" fill="#808080" />
+        <!-- Monitor stand/base -->
+        <rect x="11" y="29" width="16" height="3" rx="1" fill="#c0c0c0" stroke="#808080" stroke-width="1" />
+        <!-- System unit (tower) below - small box -->
+        <rect x="13" y="33" width="12" height="4" rx="1" fill="#c0c0c0" stroke="#808080" stroke-width="1" />
+        <!-- Floppy slot -->
+        <rect x="15" y="34" width="5" height="1" fill="#808080" />
+        <!-- Power LED -->
+        <circle cx="23" cy="35" r="0.7" fill="#00cc00" />
+      </svg>
+      <div class="icon-label">About us</div>
+    </div>
+
+    <div class="desk-icon" style="pointer-events:all;" ondblclick="openWin('services-win')" onclick="selIcon(this)">
+      <svg width="38" height="38"
+        style="display:inline-block;vertical-align:middle;color:#fff;filter:drop-shadow(1px 1px 0 #000)"
+        fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+        <path
+          d="m741-600-44-96-96-44 96-44 44-96 44 96 96 44-96 44-44 96Zm80 280-32-68-68-32 68-32 32-68 32 68 68 32-68 32-32 68ZM301-80l-12-94q-7-3-15-8t-13-10l-88 38-99-174 75-56v-32l-75-56 99-174 88 38q5-5 13-10t15-8l12-94h200l12 94q7 3 15 8t13 10l88-38 99 174-75 56v32l75 56-99 174-88-38q-5 5-13 10t-15 8l-12 94H301Zm185-235q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35ZM371-160h60l8-72q29-8 49.5-20.5T529-286l66 30 28-50-58-44q8-23 8-50t-8-50l58-44-28-50-66 30q-20-21-40.5-33.5T439-568l-8-72h-60l-8 72q-29 8-49.5 20.5T273-514l-66-30-28 50 58 44q-8 23-8.5 50t8.5 50l-58 44 28 50 66-30q20 21 40.5 33.5T363-232l8 72Zm30-240Z" />
+      </svg>
+      <div class="icon-label">Services</div>
+    </div>
+
+    <div class="desk-icon" style="pointer-events:all;" ondblclick="openWin('portfolio-win')" onclick="selIcon(this)">
+      <svg width="38" height="38"
+        style="display:inline-block;vertical-align:middle;color:#fff;filter:drop-shadow(1px 1px 0 #000);font-variation-settings:'FILL' 1;"
+        fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+        <path
+          d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z" />
+      </svg>
+      <div class="icon-label">Portfolio</div>
+    </div>
+
+    <div class="desk-icon" style="pointer-events:all;" ondblclick="openWin('insights-win')" onclick="selIcon(this)">
+      <svg width="38" height="38"
+        style="display:inline-block;vertical-align:middle;color:#fff;filter:drop-shadow(1px 1px 0 #000);font-variation-settings:'FILL' 1;"
+        fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+        <path
+          d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+      </svg>
+      <div class="icon-label">Insights</div>
+    </div>
+
+    <div class="desk-icon" style="pointer-events:all;" ondblclick="openWin('contact-win')" onclick="selIcon(this)">
+      <svg width="38" height="38"
+        style="display:inline-block;vertical-align:middle;color:#fff;filter:drop-shadow(1px 1px 0 #000)"
+        fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+        <path
+          d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z" />
+      </svg>
+      <div class="icon-label">Contact</div>
+    </div>
+
+  </div>
+
+  <!-- ═══ WINDOW: ABOUT Us ═══ -->
+  <div class="win bevel-out" id="about-win"
+    style="left:100px;top:28px;width:610px;z-index:200;max-height:calc(100vh - 60px);">
+    <div class="title-bar" id="about-win-tb">
+      <div class="title-bar-text">
+        <svg width="13" height="13" style="display:inline-block;vertical-align:middle;" fill="currentColor" height="24"
+          viewBox="0 -960 960 960" width="24">
+          <path
+            d="M440-280h80v-240h-80v240Zm68.5-331.5Q520-623 520-640t-11.5-28.5Q497-680 480-680t-28.5 11.5Q440-657 440-640t11.5 28.5Q463-600 480-600t28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+        </svg>
+        About us — NOX.Ventures
+      </div>
+      <div class="win-controls">
+        <button class="bevel-btn win-btn" onclick="minimizeWin('about-win')">_</button>
+        <button class="bevel-btn win-btn" onclick="maximizeWin('about-win')">□</button>
+        <button class="bevel-btn win-btn" onclick="closeWin('about-win')">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+    <div class="win-body" style="padding:0;">
+
+      <!-- Dark NOX header with ASCII texture -->
+      <div style="background:#00003c;padding:20px 24px 16px;position:relative;overflow:hidden;">
+        <div
+          style="position:absolute;inset:0;background:url('images/nox-bg.jpeg') center/cover;opacity:.12;pointer-events:none;">
+        </div>
+        <div style="position:relative;z-index:1;">
+          <div
+            style="font-size:9px;font-weight:700;color:#6666bb;text-transform:uppercase;letter-spacing:.2em;margin-bottom:8px;">
+            NOX.VENTURES // EST. 2025</div>
+          <div
+            style="font-size:22px;font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1.08;text-transform:uppercase;">
+            FULL-LIFECYCLE<br />CRYPTO INCUBATION FUND</div>
+          <div
+            style="font-size:9px;font-weight:700;color:#6666bb;letter-spacing:.12em;text-transform:uppercase;margin-top:10px;">
+            ACTING AS STRATEGIC CO-FOUNDER FOR HIGH-POTENTIAL CRYPTO TEAMS</div>
+        </div>
+      </div>
+
+      <!-- Body copy — three paragraphs typed -->
+      <div style="background:#faf9f9;padding:20px 24px 16px;border-top:2px solid #5555aa;">
+        <div id="typing-container" style="min-height:110px;">
+          <p id="para1" style="font-size:12px;line-height:1.75;color:#1a1c1c;"></p>
+          <p id="para2" style="font-size:12px;line-height:1.75;color:#1a1c1c;margin-top:14px;display:none;"></p>
+          <p id="para3" style="font-size:12px;line-height:1.75;color:#1a1c1c;margin-top:14px;display:none;"></p>
+          <span class="cursor" id="terminal-cursor"></span>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:18px;">
+          <button class="bevel-btn"
+            style="padding:5px 16px;font-size:10px;font-weight:900;text-transform:uppercase;color:#00003c;letter-spacing:.04em;"
+            onclick="openWin('contact-win')">CONTACT US</button>
+          <button class="bevel-btn"
+            style="padding:5px 16px;font-size:10px;font-weight:900;text-transform:uppercase;color:#00003c;letter-spacing:.04em;"
+            onclick="openWin('portfolio-win')">VIEW PORTFOLIO</button>
+        </div>
+      </div>
+
+      <!-- Stats row — updated values -->
+      <div style="display:flex;background:#eeeeee;border-top:2px solid #808080;">
+        <div style="flex:1;padding:10px 12px;border-right:2px solid #808080;">
+          <div
+            style="font-size:8px;color:#5d5e5f;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;">
+            AUM</div>
+          <div style="font-size:16px;font-weight:900;color:#00003c;">$120M+</div>
+        </div>
+        <div style="flex:1;padding:10px 12px;border-right:2px solid #808080;">
+          <div
+            style="font-size:8px;color:#5d5e5f;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;">
+            MEDIA / KOLs</div>
+          <div style="font-size:16px;font-weight:900;color:#00003c;">500+</div>
+        </div>
+        <div style="flex:1;padding:10px 12px;border-right:2px solid #808080;">
+          <div
+            style="font-size:8px;color:#5d5e5f;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;">
+            COMMUNITY</div>
+          <div style="font-size:16px;font-weight:900;color:#00003c;">500+</div>
+        </div>
+        <div style="flex:1;padding:10px 12px;">
+          <div
+            style="font-size:8px;color:#5d5e5f;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;">
+            CEX PARTNERS</div>
+          <div style="font-size:16px;font-weight:900;color:#00003c;">20+</div>
+        </div>
+      </div>
+    </div>
+    <div class="win-statusbar">
+      <span>NOX.Ventures // Full-Lifecycle Crypto Incubation</span>
+      <span>EST. 2025</span>
+    </div>
+  </div>
+
+  <!-- ═══ WINDOW: PORTFOLIO ═══ -->
+  <div class="win bevel-out hidden" id="portfolio-win" style="right:20px;top:28px;width:520px;z-index:210;">
+    <div class="title-bar" id="portfolio-win-tb">
+      <div class="title-bar-text">
+        <svg width="13" height="13" style="display:inline-block;vertical-align:middle;font-variation-settings:'FILL' 1;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z" />
+        </svg>
+        Portfolio — NOX.Ventures
+      </div>
+      <div class="win-controls">
+        <button class="bevel-btn win-btn" onclick="minimizeWin('portfolio-win')">_</button>
+        <button class="bevel-btn win-btn" onclick="maximizeWin('portfolio-win')">□</button>
+        <button class="bevel-btn win-btn" onclick="closeWin('portfolio-win')">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>View</span><span>Sort by Name</span></div>
+    <div class="win-body bevel-in" style="background:#fff;padding:8px 4px;">
+      <div class="win-body bevel-in" style="background:#fff;padding:8px 4px;">
+        <div style="display:flex;flex-wrap:wrap;">
+          <a class="port-icon-wrap" href="https://sign.global/" target="_blank" rel="noopener">
+            <div class="port-icon-bg"><img class="port-icon-img" src="./images/sign-logo.png" alt="Sign" /></div>
+            <div class="port-name">Sign</div>
+          </a>
+
+          <!-- <a class="port-icon-wrap" href="https://talus.network/" target="_blank" rel="noopener">
+            <div class="port-icon-bg"><img class="port-icon-img" src="./images/talus-logo.png" alt="Talus" /></div>
+            <div class="port-name">Talus</div>
+          </a> -->
+
+          <a class="port-icon-wrap" href="https://www.cetus.zone/" target="_blank" rel="noopener">
+            <div class="port-icon-bg"><img class="port-icon-img" src="./images/cetus-logo.png" alt="Cetus" /></div>
+            <div class="port-name">Cetus</div>
+          </a>
+
+          <a class="port-icon-wrap" href="https://surgeai.io/en" target="_blank" rel="noopener">
+            <div class="port-icon-bg"><img class="port-icon-img" src="./images/surge-logo.png" alt="Surge" /></div>
+            <div class="port-name">Surge</div>
+          </a>
+
+          <a class="port-icon-wrap" href="https://www.metis.io/" target="_blank" rel="noopener">
+            <div class="port-icon-bg" style="background:#00003c;"><img class="port-icon-img"
+                src="./images/metis-logo.png" style="width:32px;height:32px;object-fit:contain;" alt="Metis" /></div>
+            <div class="port-name">Metis</div>
+          </a>
+
+          <a class="port-icon-wrap" href="https://gaiai.io/" target="_blank" rel="noopener">
+            <div class="port-icon-bg" style="background:#0a0a1a;">
+              <img class="port-icon-img" src="./images/gaiai-logo.png"
+                style="width:32px;height:32px;object-fit:contain;" alt="Gaiai" />
+            </div>
+            <div class="port-name">GaiAI</div>
+          </a>
+
+          <a class="port-icon-wrap" href="https://nfkings.com/" target="_blank" rel="noopener">
+            <div class="port-icon-bg"><img class="port-icon-img" src="./images/nfkings-logo.webp"
+                style="width:38px;height:38px;object-fit:contain;" alt="NFKings" /></div>
+            <div class="port-name">NFKings</div>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="win-statusbar"><span>7 objects</span><span>Disk free: 4.2 GB</span></div>
+  </div>
+
+  <!-- ═══ WINDOW: SERVICES ═══ -->
+  <div class="win bevel-out hidden" id="services-win" style="right:30px;top:60px;width:360px;z-index:220;">
+    <div class="title-bar" id="services-win-tb">
+      <div class="title-bar-text">
+        <svg width="13" height="13" style="display:inline-block;vertical-align:middle;" fill="currentColor" height="24"
+          viewBox="0 -960 960 960" width="24">
+          <path
+            d="m741-600-44-96-96-44 96-44 44-96 44 96 96 44-96 44-44 96Zm80 280-32-68-68-32 68-32 32-68 32 68 68 32-68 32-32 68ZM301-80l-12-94q-7-3-15-8t-13-10l-88 38-99-174 75-56v-32l-75-56 99-174 88 38q5-5 13-10t15-8l12-94h200l12 94q7 3 15 8t13 10l88-38 99 174-75 56v32l75 56-99 174-88-38q-5 5-13 10t-15 8l-12 94H301Zm185-235q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35ZM371-160h60l8-72q29-8 49.5-20.5T529-286l66 30 28-50-58-44q8-23 8-50t-8-50l58-44-28-50-66 30q-20-21-40.5-33.5T439-568l-8-72h-60l-8 72q-29 8-49.5 20.5T273-514l-66-30-28 50 58 44q-8 23-8.5 50t8.5 50l-58 44 28 50 66-30q20 21 40.5 33.5T363-232l8 72Zm30-240Z" />
+        </svg>
+        Services — NOX.Ventures
+      </div>
+      <div class="win-controls">
+        <button class="bevel-btn win-btn" onclick="minimizeWin('services-win')">_</button>
+        <button class="bevel-btn win-btn" onclick="maximizeWin('services-win')">□</button>
+        <button class="bevel-btn win-btn" onclick="closeWin('services-win')">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>View</span><span>Help</span></div>
+    <div class="win-body" style="padding:0;">
+      <div style="background:#00003c;padding:12px 16px;position:relative;overflow:hidden;">
+        <div
+          style="position:absolute;inset:0;background:url('images/nox-bg.jpeg') center/cover;opacity:.12;pointer-events:none;">
+        </div>
+        <div style="position:relative;z-index:1;">
+          <div style="font-size:9px;color:#6666bb;letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px;">
+            NOX.VENTURES // CAPABILITIES</div>
+          <div style="font-size:14px;font-weight:900;color:#fff;letter-spacing:-.01em;">WHAT WE DO</div>
+        </div>
+      </div>
+
+      <div class="svc-row">
+        <svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path d="m136-240-56-56 296-298 160 160 208-206H640v-80h240v240h-80v-104L536-320 376-480 136-240Z" />
+        </svg>
+        <div>
+          <div class="svc-title">Venture Capital</div>
+        </div>
+      </div>
+
+      <div class="svc-row">
+        <svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M423.5-103.5Q400-127 400-160h160q0 33-23.5 56.5T480-80q-33 0-56.5-23.5ZM320-200v-80h320v80H320Zm10-120q-69-41-109.5-110T180-580q0-125 87.5-212.5T480-880q125 0 212.5 87.5T780-580q0 81-40.5 150T630-320H330Zm24-80h252q45-32 69.5-79T700-580q0-92-64-156t-156-64q-92 0-156 64t-64 156q0 54 24.5 101t69.5 79Zm126 0Z" />
+        </svg>
+        <div>
+          <div class="svc-title">Advisory &amp; Incubation</div>
+        </div>
+      </div>
+
+      <div class="svc-row">
+        <svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M720-440v-80h160v80H720Zm48 280-128-96 48-64 128 96-48 64Zm-80-480-48-64 128-96 48 64-128 96ZM200-200v-160h-40q-33 0-56.5-23.5T80-440v-80q0-33 23.5-56.5T160-600h160l200-120v480L320-360h-40v160h-80Zm240-182v-196l-98 58H160v80h182l98 58Zm120 36v-268q27 24 43.5 58.5T620-480q0 41-16.5 75.5T560-346ZM300-480Z" />
+        </svg>
+        <div>
+          <div class="svc-title">Marketing &amp; Community</div>
+        </div>
+      </div>
+
+      <div class="svc-row">
+        <svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M280-160v-80h-80v-480h80v-80h80v80h80v480h-80v80h-80Zm0-160h80v-320h-80v320Zm320 160v-200h-80v-280h80v-160h80v160h80v280h-80v200h-80Zm0-280h80v-120h-80v120Zm-280-40Zm320-20Z" />
+        </svg>
+        <div>
+          <div class="svc-title">Capital Markets &amp; Trading</div>
+        </div>
+      </div>
+
+      <div class="svc-row">
+        <svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M155-75q-35-35-35-85t35-85q35-35 85-35 14 0 26 3t23 8l57-71q-28-31-39-70t-5-78l-81-27q-17 25-43 40t-58 15q-50 0-85-35T0-580q0-50 35-85t85-35q50 0 85 35t35 85v8l81 28q20-36 53.5-61t75.5-32v-87q-39-11-64.5-42.5T360-840q0-50 35-85t85-35q50 0 85 35t35 85q0 42-26 73.5T510-724v87q42 7 75.5 32t53.5 61l81-28v-8q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-32 0-58.5-15T739-515l-81 27q6 39-5 77.5T614-340l57 70q11-5 23-7.5t26-2.5q50 0 85 35t35 85q0 50-35 85t-85 35q-50 0-85-35t-35-85q0-20 6.5-38.5T624-232l-57-71q-41 23-87.5 23T392-303l-56 71q11 15 17.5 33.5T360-160q0 50-35 85t-85 35q-50 0-85-35Zm-35-465q17 0 28.5-11.5T160-580q0-17-11.5-28.5T120-620q-17 0-28.5 11.5T80-580q0 17 11.5 28.5T120-540Zm148.5 408.5Q280-143 280-160t-11.5-28.5Q257-200 240-200t-28.5 11.5Q200-177 200-160t11.5 28.5Q223-120 240-120t28.5-11.5Zm240-680Q520-823 520-840t-11.5-28.5Q497-880 480-880t-28.5 11.5Q440-857 440-840t11.5 28.5Q463-800 480-800t28.5-11.5ZM480-360q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29Zm268.5 228.5Q760-143 760-160t-11.5-28.5Q737-200 720-200t-28.5 11.5Q680-177 680-160t11.5 28.5Q703-120 720-120t28.5-11.5Zm120-420Q880-563 880-580t-11.5-28.5Q857-620 840-620t-28.5 11.5Q800-597 800-580t11.5 28.5Q823-540 840-540t28.5-11.5ZM480-840ZM120-580Zm360 120Zm360-120ZM240-160Zm480 0Z" />
+        </svg>
+        <div>
+          <div class="svc-title">Ecosystem Development</div>
+        </div>
+      </div>
+    </div>
+    <div class="win-statusbar"><span>5 service modules</span><span>NOX v2.1</span></div>
+  </div>
+
+  <!-- ═══ WINDOW: INSIGHTS ═══ -->
+  <div class="win bevel-out hidden" id="insights-win"
+    style="left:calc(50vw - 240px);top:calc(50vh - 200px);width:480px;height:400px;z-index:215;">
+    <div class="title-bar" id="insights-win-tb">
+      <div class="title-bar-text">
+        <svg width="13" height="13" style="display:inline-block;vertical-align:middle;font-variation-settings:'FILL' 1;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+        </svg>
+        Insights — NOX.Ventures
+      </div>
+      <div class="win-controls">
+        <button class="bevel-btn win-btn" onclick="minimizeWin('insights-win')">_</button>
+        <button class="bevel-btn win-btn" onclick="maximizeWin('insights-win')">□</button>
+        <button class="bevel-btn win-btn" onclick="closeWin('insights-win')">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>View</span><span>Sort</span></div>
+    <div class="win-body" style="padding:0;">
+      <div style="background:#00003c;padding:12px 16px;position:relative;overflow:hidden;">
+        <div
+          style="position:absolute;inset:0;background:url('images/nox-bg.jpeg') center/cover;opacity:.12;pointer-events:none;">
+        </div>
+        <div style="position:relative;z-index:1;">
+          <div style="font-size:9px;color:#6666bb;letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px;">
+            NOX.VENTURES // RESEARCH</div>
+          <div style="font-size:14px;font-weight:900;color:#fff;">LATEST PUBLICATIONS</div>
+        </div>
+      </div>
+      <div class="bevel-in" style="background:#fff;margin:6px;">
+        <a href="https://medium.com/@NOX_Ventures/a16z-and-the-architecture-of-ai-capital-a-2026-edition-9d7e0dac22c9?postPublishedType=initial"
+          target="_blank" rel="noopener"
+          style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:10px;padding:9px 10px;cursor:pointer;background:#faf9f9;"
+          onmouseenter="this.style.background='#000080';this.style.color='#fff'"
+          onmouseleave="this.style.background='#faf9f9';this.style.color=''">
+          <svg width="22" height="22" style="display:inline-block;vertical-align:middle;flex-shrink:0;color:inherit;"
+            fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+            <path
+              d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+          </svg>
+          <div>
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;line-height:1.2;">A16z and the
+              Architecture of AI Capital — 2026 Edition</div>
+          </div>
+        </a>
+        <a href="https://medium.com/@NOX_Ventures/2025-perpdex-battle-of-the-titans-evolution-current-landscape-and-future-potential-a8656509874b"
+          target="_blank" rel="noopener"
+          style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:10px;padding:9px 10px;cursor:pointer;background:#eeeeee;"
+          onmouseenter="this.style.background='#000080';this.style.color='#fff'"
+          onmouseleave="this.style.background='#eeeeee';this.style.color=''">
+          <svg width="22" height="22" style="display:inline-block;vertical-align:middle;flex-shrink:0;color:inherit;"
+            fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+            <path
+              d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+          </svg>
+          <div>
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;line-height:1.2;">2025 PerpDEX — Battle
+              of the Titans</div>
+          </div>
+        </a>
+        <a href="https://medium.com/@NOX_Ventures/reassessing-the-2025-prediction-market-landscape-from-a-speculative-tool-to-a-new-financial-c5244c2598f0"
+          target="_blank" rel="noopener"
+          style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:10px;padding:9px 10px;cursor:pointer;background:#faf9f9;"
+          onmouseenter="this.style.background='#000080';this.style.color='#fff'"
+          onmouseleave="this.style.background='#faf9f9';this.style.color=''">
+          <svg width="22" height="22" style="display:inline-block;vertical-align:middle;flex-shrink:0;color:inherit;"
+            fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+            <path
+              d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+          </svg>
+          <div>
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;line-height:1.2;">Reassessing the 2025
+              Prediction Market Landscape</div>
+          </div>
+        </a>
+        <a href="https://medium.com/@NOX_Ventures/ai-landscape-on-sui-2025-edition-1a5a57f681ef" target="_blank"
+          rel="noopener"
+          style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:10px;padding:9px 10px;cursor:pointer;background:#eeeeee;"
+          onmouseenter="this.style.background='#000080';this.style.color='#fff'"
+          onmouseleave="this.style.background='#eeeeee';this.style.color=''">
+          <svg width="22" height="22" style="display:inline-block;vertical-align:middle;flex-shrink:0;color:inherit;"
+            fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+            <path
+              d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+          </svg>
+          <div>
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;line-height:1.2;">AI Landscape on Sui —
+              2025 Edition</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="win-statusbar"><span>4 items</span><span>Disk free: 4.2 GB</span></div>
+  </div>
+
+  <!-- ═══ WINDOW: CONTACT ═══ -->
+  <div class="win bevel-out hidden" id="contact-win" style="left:150px;top:90px;width:320px;z-index:230;">
+    <div class="title-bar" id="contact-win-tb">
+      <div class="title-bar-text">
+        <svg width="13" height="13" style="display:inline-block;vertical-align:middle;" fill="currentColor" height="24"
+          viewBox="0 -960 960 960" width="24">
+          <path
+            d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z" />
+        </svg>
+        Contact — NOX.Ventures
+      </div>
+      <div class="win-controls">
+        <button class="bevel-btn win-btn" onclick="minimizeWin('contact-win')">_</button>
+        <button class="bevel-btn win-btn" onclick="maximizeWin('contact-win')">□</button>
+        <button class="bevel-btn win-btn" onclick="closeWin('contact-win')">✕</button>
+      </div>
+    </div>
+    <div class="win-menubar"><span>File</span><span>View</span></div>
+    <div class="win-body" style="padding:0;">
+      <div style="background:#00003c;padding:12px 16px;position:relative;overflow:hidden;">
+        <div
+          style="position:absolute;inset:0;background:url('images/nox-bg.jpeg') center/cover;opacity:.12;pointer-events:none;">
+        </div>
+        <div style="position:relative;z-index:1;">
+          <div style="font-size:9px;color:#6666bb;letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px;">
+            NOX.VENTURES // GET IN TOUCH</div>
+          <div style="font-size:14px;font-weight:900;color:#fff;">REACH US</div>
+        </div>
+      </div>
+      <!-- Email -->
+      <a class="contact-btn" href="mailto:info@nox.ventures">
+        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+          <rect width="40" height="40" fill="#00003c" />
+          <rect x="7" y="12" width="26" height="18" fill="#000080" />
+          <path d="M7 12 L20 22 L33 12" stroke="#ffffff" stroke-width="2" fill="none" />
+          <line x1="7" y1="30" x2="33" y2="30" stroke="#4444aa" stroke-width="1" />
+        </svg>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-sub">info@nox.ventures</div>
+        </div>
+      </a>
+      <!-- X -->
+      <a class="contact-btn" href="https://x.com/NOX_Ventures" target="_blank" rel="noopener">
+        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+          <rect width="40" height="40" fill="#00003c" />
+          <path
+            d="M22.6 18.4L30.8 9h-2l-7.1 8.2L15.8 9H9l8.6 12.4L9 31h2l7.5-8.7L24.2 31H31L22.6 18.4zm-2.7 3.1l-.9-1.3-7-10h3l5.6 8 .9 1.3 7.2 10.3h-3l-5.8-8.3z"
+            fill="#ffffff" />
+        </svg>
+        <div>
+          <div class="contact-label">X</div>
+          <div class="contact-sub">@NOX_Ventures</div>
+        </div>
+      </a>
+    </div>
+    <div class="win-statusbar"><span>2 channels available</span><span>info@nox.ventures</span></div>
+  </div>
+
+  <!-- ═══ TERMINAL (decorative) ═══ -->
+  <div class="win bevel-out" id="terminal-win" style="left:100px;bottom:44px;width:310px;z-index:190;">
+    <div class="title-bar" id="terminal-win-tb">
+      <div class="title-bar-text">
+        <svg width="13" height="13" style="display:inline-block;vertical-align:middle;" fill="currentColor" height="24"
+          viewBox="0 -960 960 960" width="24">
+          <path
+            d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H160v400Zm140-40-56-56 103-104-104-104 57-56 160 160-160 160Zm180 0v-80h240v80H480Z" />
+        </svg>
+        NOX Terminal v1.0
+      </div>
+      <div class="win-controls">
+        <button class="bevel-btn win-btn" onclick="minimizeWin('terminal-win')">_</button>
+        <button class="bevel-btn win-btn" onclick="maximizeWin('terminal-win')">□</button>
+        <button class="bevel-btn win-btn" onclick="closeWin('terminal-win')">✕</button>
+      </div>
+    </div>
+    <div class="win-body bevel-in"
+      style="background:#000820;padding:10px;font-size:10px;color:#00ff41;font-family:monospace;line-height:1.85;">
+      <div>NOX VENTURES SYSTEM v1.0.0</div>
+      <div>Copyright (C) 2025 NOX Ventures. All rights reserved.</div>
+      <div style="margin-top:6px;color:#aaaaff;">&gt; Loading portfolio data...............<span
+          style="color:#00ff41;">OK</span></div>
+      <div style="color:#aaaaff;">&gt; Scanning deal flow...................<span style="color:#00ff41;">97
+          signals</span></div>
+      <div style="color:#aaaaff;">&gt; CEX partners online...................<span style="color:#00ff41;">20+</span>
+      </div>
+      <div style="color:#aaaaff;">&gt; Capital deployed YTD.................<span style="color:#ffff00;">$120M+</span>
+      </div>
+      <div style="margin-top:4px;">C:\NOX&gt;<span
+          style="display:inline-block;width:7px;height:12px;background:#00ff41;animation:blink 1s step-end infinite;vertical-align:middle;margin-left:2px;"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ START MENU ═══ -->
+  <div id="start-menu">
+    <div class="sm-strip">NOX.Ventures</div>
+    <div class="sm-body">
+      <div class="sm-item" onclick="openWin('about-win');closeStart()">
+        <svg width="18" height="18" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+          <rect x="4" y="3" width="30" height="22" rx="2" fill="#c0c0c0" stroke="#808080" stroke-width="1" />
+          <rect x="6" y="5" width="26" height="17" rx="1" fill="#808080" />
+          <rect x="7" y="6" width="24" height="15" fill="#000080" />
+          <rect x="16" y="25" width="6" height="4" fill="#808080" />
+          <rect x="11" y="29" width="16" height="3" rx="1" fill="#c0c0c0" stroke="#808080" stroke-width="1" />
+          <rect x="13" y="33" width="12" height="4" rx="1" fill="#c0c0c0" stroke="#808080" stroke-width="1" />
+          <circle cx="23" cy="35" r="0.7" fill="#00cc00" />
+        </svg>
+        About us
+      </div>
+      <div class="sm-item" onclick="openWin('portfolio-win');closeStart()"><svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z" />
+        </svg>Portfolio</div>
+      <div class="sm-item" onclick="openWin('services-win');closeStart()"><svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="m741-600-44-96-96-44 96-44 44-96 44 96 96 44-96 44-44 96Zm80 280-32-68-68-32 68-32 32-68 32 68 68 32-68 32-32 68ZM301-80l-12-94q-7-3-15-8t-13-10l-88 38-99-174 75-56v-32l-75-56 99-174 88 38q5-5 13-10t15-8l12-94h200l12 94q7 3 15 8t13 10l88-38 99 174-75 56v32l75 56-99 174-88-38q-5 5-13 10t-15 8l-12 94H301Zm185-235q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35ZM371-160h60l8-72q29-8 49.5-20.5T529-286l66 30 28-50-58-44q8-23 8-50t-8-50l58-44-28-50-66 30q-20-21-40.5-33.5T439-568l-8-72h-60l-8 72q-29 8-49.5 20.5T273-514l-66-30-28 50 58 44q-8 23-8.5 50t8.5 50l-58 44 28 50 66-30q20 21 40.5 33.5T363-232l8 72Zm30-240Z" />
+        </svg>Services</div>
+      <div class="sm-item" onclick="openWin('insights-win');closeStart()"><svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+        </svg>Insights</div>
+      <div class="sm-item" onclick="openWin('contact-win');closeStart()"><svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z" />
+        </svg>Contact</div>
+      <div class="sm-item" onclick="openWin('terminal-win');closeStart()"><svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H160v400Zm140-40-56-56 103-104-104-104 57-56 160 160-160 160Zm180 0v-80h240v80H480Z" />
+        </svg>Terminal</div>
+      <div class="sm-divider"></div>
+      <div class="sm-item" onclick="closeStart()"><svg width="20" height="20"
+          style="display:inline-block;vertical-align:middle;flex-shrink:0;color:currentColor;fill:currentColor;"
+          fill="currentColor" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-84 31.5-156.5T197-763l56 56q-44 44-68.5 102T160-480q0 134 93 227t227 93q134 0 227-93t93-227q0-67-24.5-125T707-707l56-56q54 54 85.5 126.5T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm-40-360v-440h80v440h-80Z" />
+        </svg>Shut Down</div>
+    </div>
+  </div>
+
+  <!-- ═══ TASKBAR ═══ -->
+  <div id="taskbar">
+    <button class="bevel-btn" id="start-btn" onclick="toggleStart()"
+      style="height:24px;padding:0 10px;font-weight:900;font-size:11px;font-style:italic;display:flex;align-items:center;gap:5px;flex-shrink:0;color:#000;">
+      <span style="font-size:15px;">⊞</span> Start
+    </button>
+    <div class="tb-sep"></div>
+    <div id="tb-items" style="display:flex;gap:2px;flex:1;overflow:hidden;align-items:center;height:100%;"></div>
+    <div class="tb-sep"></div>
+    <!-- BTC + ETH prices + clock -->
+    <div class="bevel-in"
+      style="background:#c0c0c0;height:24px;padding:0 10px;display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:3px;">
+        <span class="ticker-label">BTC</span>
+        <span class="ticker-val" id="tick-btc">—</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:3px;">
+        <span class="ticker-label">ETH</span>
+        <span class="ticker-val" id="tick-eth">—</span>
+      </div>
+      <div class="tb-sep" style="height:18px;"></div>
+      <span id="clock" style="font-size:10px;font-weight:700;">--:--</span>
+    </div>
+  </div>
+
+  <!-- BG watermark -->
+  <div
+    style="position:fixed;bottom:44px;right:8px;opacity:.28;pointer-events:none;text-align:right;font-size:9px;font-family:monospace;color:#fff;text-transform:uppercase;line-height:1.9;letter-spacing:.07em;">
+    SYSTEM READY — NOX.VENTURES (C) 2025<br />
+    ALL SYSTEMS NOMINAL // INCUBATION IN PROGRESS<br />
+    BUILD: 2025.04.06 // KERNEL: SOVEREIGN-1.0
+  </div>
+
+  <!-- ═══ JAVASCRIPT ═══ -->
+  <script>
+    /* ── Registry ── */
+    const WINS = {
+      'about-win': { title: 'About us', icon: 'info' },
+      'portfolio-win': { title: 'Portfolio', icon: 'folder' },
+      'services-win': { title: 'Services', icon: 'settings_suggest' },
+      'insights-win': { title: 'Insights', icon: 'article' },
+      'contact-win': { title: 'Contact', icon: 'mail' },
+      'terminal-win': { title: 'Terminal', icon: 'terminal' },
+    };
+    const _min = {};
+    let zTop = 300;
+
+    function bringToFront(id) { zTop++; document.getElementById(id).style.zIndex = zTop; renderTB(); }
+
+    function openWin(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('hidden');
+      if (_min[id]) {
+        Object.assign(el.style, { left: _min[id].l, top: _min[id].t, width: _min[id].w, height: _min[id].h || '' });
+        delete _min[id];
+      }
+      bringToFront(id);
+    }
+    function closeWin(id) { document.getElementById(id).classList.add('hidden'); renderTB(); }
+    function minimizeWin(id) {
+      const el = document.getElementById(id);
+      _min[id] = { l: el.style.left, t: el.style.top, w: el.style.width, h: el.style.height };
+      el.classList.add('hidden'); renderTB();
+    }
+    function maximizeWin(id) {
+      const el = document.getElementById(id);
+      if (el.dataset.mx === '1') {
+        Object.assign(el.style, { left: el.dataset.pl, top: el.dataset.pt, width: el.dataset.pw, height: el.dataset.ph || '', maxHeight: el.dataset.pmh || '', transform: el.dataset.ptr || '' });
+        el.dataset.mx = '0';
+      } else {
+        Object.assign(el.dataset, { pl: el.style.left, pt: el.style.top, pw: el.style.width, ph: el.style.height, pmh: el.style.maxHeight || '', ptr: el.style.transform || '' });
+        Object.assign(el.style, { left: '0px', top: '0px', width: '100vw', height: 'auto', maxHeight: 'calc(100vh - 32px)', transform: 'none' });
+        el.dataset.mx = '1';
+      }
+      bringToFront(id);
+    }
+
+    /* ── Taskbar ── */
+    function renderTB() {
+      const c = document.getElementById('tb-items');
+      c.innerHTML = '';
+      for (const [id, meta] of Object.entries(WINS)) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const hidden = el.classList.contains('hidden');
+        const btn = document.createElement('div');
+        btn.style.cssText = `height:24px;padding:0 8px;font-size:10px;font-weight:700;display:flex;align-items:center;gap:4px;cursor:pointer;min-width:80px;max-width:130px;overflow:hidden;white-space:nowrap;background:#c0c0c0;${hidden ? 'border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #5d5e5f;border-bottom:2px solid #5d5e5f;' : 'border-top:2px solid #5d5e5f;border-left:2px solid #5d5e5f;border-right:2px solid #fff;border-bottom:2px solid #fff;'}`;
+        btn.innerHTML = `<img src="icons/${meta.icon}.svg" width="12" height="12" style="display:inline-block;vertical-align:middle;margin-right:2px;" />${meta.title}`;
+        btn.onclick = () => hidden ? openWin(id) : minimizeWin(id);
+        c.appendChild(btn);
+      }
+    }
+
+    /* ── Drag ── */
+    function makeDraggable(id) {
+      const win = document.getElementById(id);
+      const tb = document.getElementById(id + '-tb');
+      if (!win || !tb) return;
+      tb.addEventListener('mousedown', e => {
+        if (e.target.classList.contains('win-btn') || e.target.classList.contains('bevel-btn')) return;
+        bringToFront(id);
+        const r = win.getBoundingClientRect(), ox = e.clientX - r.left, oy = e.clientY - r.top;
+        const mv = ev => { win.style.left = Math.max(0, ev.clientX - ox) + 'px'; win.style.top = Math.max(0, ev.clientY - oy) + 'px'; };
+        const up = () => { document.removeEventListener('mousemove', mv); document.removeEventListener('mouseup', up); };
+        document.addEventListener('mousemove', mv); document.addEventListener('mouseup', up); e.preventDefault();
+      });
+      win.addEventListener('mousedown', () => bringToFront(id));
+    }
+    for (const id of Object.keys(WINS)) makeDraggable(id);
+
+    /* ── Icon select ── */
+    function selIcon(el) { document.querySelectorAll('.desk-icon').forEach(i => i.classList.remove('selected')); el.classList.add('selected'); }
+
+    /* ── Start menu ── */
+    let _so = false;
+    function toggleStart() { _so = !_so; document.getElementById('start-menu').classList.toggle('open', _so); }
+    function closeStart() { _so = false; document.getElementById('start-menu').classList.remove('open'); }
+    document.addEventListener('click', e => { if (_so && !e.target.closest('#start-menu') && !e.target.closest('#start-btn')) closeStart(); });
+
+    /* ── Clock ── */
+    function tick() {
+      const n = new Date();
+      document.getElementById('clock').textContent = String(n.getHours()).padStart(2, '0') + ':' + String(n.getMinutes()).padStart(2, '0');
+    }
+    tick(); setInterval(tick, 15000);
+
+    /* ── Live BTC & ETH — Binance WebSocket (real-time, no CORS) ── */
+    (function startTicker() {
+      const prevPrices = { btcusdt: null, ethusdt: null };
+
+      function updateEl(sym, price) {
+        const id = sym === 'btcusdt' ? 'tick-btc' : 'tick-eth';
+        const el = document.getElementById(id);
+        const prev = prevPrices[sym];
+        prevPrices[sym] = price;
+        el.textContent = '$' + price.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        el.className = 'ticker-val ' + (prev === null || price >= prev ? 'ticker-up' : 'ticker-dn');
+      }
+
+      function connect() {
+        const ws = new WebSocket(
+          'wss://stream.binance.com:9443/stream?streams=btcusdt@miniTicker/ethusdt@miniTicker'
+        );
+        ws.onmessage = e => {
+          try {
+            const { data } = JSON.parse(e.data);
+            if (!data) return;
+            const sym = data.s.toLowerCase();
+            const price = parseFloat(data.c);
+            if (sym === 'btcusdt' || sym === 'ethusdt') updateEl(sym, price);
+          } catch (_) { }
+        };
+        ws.onerror = ws.onclose = () => {
+          // reconnect after 5s if disconnected
+          setTimeout(connect, 5000);
+        };
+      }
+
+      connect();
+    })();
+
+    /* ── Typing effect — 3 separate paragraphs ── */
+    const PARAS = [
+      "We live on the frontier of Web3 and believe in progress through innovation.",
+      "We partner with ambitious teams from the earliest stages, acting as strategic co-founders to guide projects from idea to exchange listing.",
+      "If you're building something ambitious at the frontier of Web3, come build with us."
+    ];
+
+    function typeParas() {
+      const cursor = document.getElementById('terminal-cursor');
+      const els = ['para1', 'para2', 'para3'].map(id => document.getElementById(id));
+      let pi = 0, ci = 0;
+
+      els.forEach(e => { e.textContent = ''; e.style.display = 'none'; });
+      els[0].style.display = '';
+      cursor.style.display = 'inline-block';
+      // place cursor after para[0]
+      els[0].after(cursor);
+
+      const iv = setInterval(() => {
+        const txt = PARAS[pi];
+        if (ci < txt.length) {
+          els[pi].textContent += txt[ci++];
+        } else {
+          pi++;
+          if (pi < PARAS.length) {
+            ci = 0;
+            els[pi].style.display = '';
+            els[pi].after(cursor); // move cursor after the new paragraph
+          } else {
+            clearInterval(iv);
+            cursor.style.display = 'none';
+          }
+        }
+      }, 22);
+    }
+
+    window.addEventListener('load', () => {
+      renderTB();
+      setTimeout(typeParas, 600);
+    });
+  </script>
+</body>
+
+</html>
