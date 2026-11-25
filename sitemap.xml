@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.ryanchi.com/</loc>
-    <lastmod>2026-11-24</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.ryanchi.com/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://www.ryanchi.com/zh-hant"/>
     <xhtml:link rel="alternate" hreflang="ja" href="https://www.ryanchi.com/ja"/>
@@ -10,10 +10,15 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.ryanchi.com/fr"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ryanchi.com/"/>
     <image:image><image:loc>https://www.ryanchi.com/assets/ryan-chi.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.ryanchi.com/assets/photos/ryan-chi-portrait.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.ryanchi.com/assets/photos/ryan-chi-speaking-conference.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.ryanchi.com/assets/photos/ryan-chi-mr-rc-onchain-show.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.ryanchi.com/assets/photos/ryan-chi-caseit-2026.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.ryanchi.com/assets/photos/ryan-chi-mr-rc-event.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.ryanchi.com/zh-hant</loc>
-    <lastmod>2026-11-24</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.ryanchi.com/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://www.ryanchi.com/zh-hant"/>
     <xhtml:link rel="alternate" hreflang="ja" href="https://www.ryanchi.com/ja"/>
@@ -23,7 +28,7 @@
   </url>
   <url>
     <loc>https://www.ryanchi.com/ja</loc>
-    <lastmod>2026-11-24</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.ryanchi.com/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://www.ryanchi.com/zh-hant"/>
     <xhtml:link rel="alternate" hreflang="ja" href="https://www.ryanchi.com/ja"/>
@@ -33,7 +38,7 @@
   </url>
   <url>
     <loc>https://www.ryanchi.com/ko</loc>
-    <lastmod>2026-11-24</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.ryanchi.com/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://www.ryanchi.com/zh-hant"/>
     <xhtml:link rel="alternate" hreflang="ja" href="https://www.ryanchi.com/ja"/>
@@ -43,7 +48,7 @@
   </url>
   <url>
     <loc>https://www.ryanchi.com/fr</loc>
-    <lastmod>2026-11-24</lastmod>
+    <lastmod>2026-11-25</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.ryanchi.com/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://www.ryanchi.com/zh-hant"/>
     <xhtml:link rel="alternate" hreflang="ja" href="https://www.ryanchi.com/ja"/>

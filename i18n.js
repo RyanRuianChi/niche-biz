@@ -71,6 +71,12 @@ window.SITE = {
 
 window.I18N = {
   en: {
+    "nav.photos": "Photos",
+    "ph.portrait": "Ryan Chi (Mr.RC), portrait",
+    "ph.speaking": "Ryan Chi speaking on stage at a conference",
+    "ph.show": "Ryan Chi (Mr.RC), left, on the web3 show 鏈上大玩家 by Jinse Finance × Twinkle, presented by HTX DAO",
+    "ph.caseit": "Ryan Chi (centre) with his team at CaseIT 2026, 2nd place",
+    "ph.event": "Ryan Chi (Mr.RC) at a crypto community event",
     "nav.about": "About Ryan Chi",
     "about.p1": "Ryan Chi, also known as Mr.RC, is a founder, artist and content creator from Hong Kong who builds at the intersection of crypto, AI and culture. He cofounded insiders.bot, a prediction-markets aggregator for trading and copy-trading on Polymarket, as co-CEO, and exited in October 2026. Before that he was CMO and cofounder of Academic Labs, which raised $3.2M and launched the $AAX token on Gate, a founding member of City Protocol, and cofounder of Showtime Watch and Sigmaboy.ai.",
     "about.p2": "Ryan studies Global Business and Computer Science at The Chinese University of Hong Kong (CUHK) and went on exchange to the Wharton School at the University of Pennsylvania and to EDHEC Business School. He took MIT's AI course at 14, was Head Boy at Malvern College Hong Kong, and led 0xU, one of Hong Kong's largest university blockchain clubs. On X (@MrRyanChi) he writes about prediction markets, quantitative trading and Web3 strategy.",
@@ -122,6 +128,12 @@ window.I18N = {
   },
 
   "zh-Hant": {
+    "nav.photos": "照片",
+    "ph.portrait": "Ryan Chi（Mr.RC）個人照",
+    "ph.speaking": "Ryan Chi 於會議台上演講",
+    "ph.show": "Ryan Chi（Mr.RC，左一）參與金色財經 × Twinkle 節目《鏈上大玩家》，HTX DAO 總出品",
+    "ph.caseit": "Ryan Chi（中）與團隊於 CaseIT 2026 獲得亞軍",
+    "ph.event": "Ryan Chi（Mr.RC）於加密社群活動",
     "nav.about": "關於 Ryan Chi",
     "about.p1": "Ryan Chi（Mr.RC）是來自香港的創業者、藝術家與內容創作者，專注於加密貨幣、AI 與文化的交界。他以聯席 CEO 身份聯合創辦預測市場聚合平台 insiders.bot（支援 Polymarket 交易與跟單），並於 2026 年 10 月退出。此前他是 Academic Labs 的 CMO 兼聯合創辦人（融資 320 萬美元，$AAX 代幣於 Gate 上線），City Protocol 創始成員，以及 Showtime Watch 與 Sigmaboy.ai 的聯合創辦人。",
     "about.p2": "Ryan 就讀香港中文大學（CUHK）環球商業及電腦科學，曾於賓夕法尼亞大學華頓商學院及 EDHEC 商學院交換。他 14 歲完成 MIT 的 AI 課程，曾任香港墨爾文國際學校男學生會長，並帶領香港最大的大學區塊鏈學會之一 0xU。他在 X（@MrRyanChi）分享預測市場、量化交易與 Web3 策略。",
@@ -173,6 +185,12 @@ window.I18N = {
   },
 
   ja: {
+    "nav.photos": "写真",
+    "ph.portrait": "Ryan Chi（Mr.RC）のポートレート",
+    "ph.speaking": "カンファレンスで登壇する Ryan Chi",
+    "ph.show": "金色財経 × Twinkle の番組『鏈上大玩家』に出演する Ryan Chi（Mr.RC、左）。HTX DAO 制作",
+    "ph.caseit": "CaseIT 2026 で準優勝したチームと Ryan Chi（中央）",
+    "ph.event": "クリプトコミュニティのイベントでの Ryan Chi（Mr.RC）",
     "nav.about": "Ryan Chi について",
     "about.p1": "Ryan Chi（Mr.RC）は香港出身の起業家・アーティスト・コンテンツクリエイターで、クリプト、AI、カルチャーの交差点でプロダクトを作っています。Polymarket の取引とコピートレードができる予測市場アグリゲーター insiders.bot を共同 CEO として共同創業し、2026年10月にイグジット。それ以前は Academic Labs の CMO・共同創業者（320万ドル調達、$AAX トークンを Gate に上場）、City Protocol の創設メンバー、Showtime Watch と Sigmaboy.ai の共同創業者でした。",
     "about.p2": "香港中文大学（CUHK）でグローバルビジネスとコンピュータサイエンスを学び、ペンシルベニア大学ウォートン校と EDHEC ビジネススクールに交換留学。14歳で MIT の AI コースを修了し、マルバーン・カレッジ香港でヘッドボーイを務め、香港最大級の大学ブロックチェーンクラブ 0xU を率いました。X（@MrRyanChi）では予測市場、クオンツ取引、Web3 戦略について発信しています。",
@@ -224,6 +242,12 @@ window.I18N = {
   },
 
   ko: {
+    "nav.photos": "사진",
+    "ph.portrait": "Ryan Chi(Mr.RC) 프로필 사진",
+    "ph.speaking": "콘퍼런스 무대에서 발표하는 Ryan Chi",
+    "ph.show": "진써차이징 × Twinkle의 웹3 프로그램 〈鏈上大玩家〉에 출연한 Ryan Chi(Mr.RC, 왼쪽), HTX DAO 제작",
+    "ph.caseit": "CaseIT 2026 준우승 팀과 함께한 Ryan Chi(가운데)",
+    "ph.event": "크립토 커뮤니티 행사에서의 Ryan Chi(Mr.RC)",
     "nav.about": "Ryan Chi 소개",
     "about.p1": "Ryan Chi(Mr.RC)는 홍콩 출신의 창업가이자 아티스트, 콘텐츠 크리에이터로 크립토, AI, 문화의 교차점에서 제품을 만듭니다. Polymarket 트레이딩과 카피 트레이딩을 지원하는 예측 시장 애그리게이터 insiders.bot을 공동 CEO로 공동 창업했고 2026년 10월에 엑싯했습니다. 그전에는 Academic Labs의 CMO 겸 공동 창업자(320만 달러 투자 유치, $AAX 토큰 Gate 상장), City Protocol 창립 멤버, Showtime Watch와 Sigmaboy.ai의 공동 창업자였습니다.",
     "about.p2": "홍콩중문대학교(CUHK)에서 글로벌 비즈니스와 컴퓨터공학을 공부하며 펜실베이니아대 와튼 스쿨과 EDHEC 경영대학원에서 교환학생으로 수학했습니다. 14세에 MIT AI 과정을 수료했고, 말번 칼리지 홍콩의 헤드 보이를 지냈으며, 홍콩 최대 규모의 대학 블록체인 동아리 중 하나인 0xU를 이끌었습니다. X(@MrRyanChi)에서 예측 시장, 퀀트 트레이딩, Web3 전략에 대해 씁니다.",
@@ -275,6 +299,12 @@ window.I18N = {
   },
 
   fr: {
+    "nav.photos": "Photos",
+    "ph.portrait": "Portrait de Ryan Chi (Mr.RC)",
+    "ph.speaking": "Ryan Chi sur scène lors d’une conférence",
+    "ph.show": "Ryan Chi (Mr.RC), à gauche, dans l’émission web3 鏈上大玩家 de Jinse Finance × Twinkle, produite par HTX DAO",
+    "ph.caseit": "Ryan Chi (au centre) avec son équipe à CaseIT 2026, 2e place",
+    "ph.event": "Ryan Chi (Mr.RC) lors d’un événement de la communauté crypto",
     "nav.about": "À propos de Ryan Chi",
     "about.p1": "Ryan Chi, alias Mr.RC, est un fondateur, artiste et créateur de contenu basé à Hong Kong, qui construit à la croisée de la crypto, de l’IA et de la culture. Il a cofondé insiders.bot, un agrégateur de marchés prédictifs pour le trading et le copy-trading sur Polymarket, en tant que co-CEO, avant d’en sortir en octobre 2026. Auparavant, il a été CMO et cofondateur d’Academic Labs (3,2 M$ levés, lancement du token $AAX sur Gate), membre fondateur de City Protocol et cofondateur de Showtime Watch et de Sigmaboy.ai.",
     "about.p2": "Ryan étudie le Global Business et l’informatique à l’Université chinoise de Hong Kong (CUHK), avec des échanges à la Wharton School de l’Université de Pennsylvanie et à l’EDHEC Business School. Il a suivi le cours d’IA du MIT à 14 ans, a été Head Boy du Malvern College Hong Kong et a dirigé 0xU, l’un des plus grands clubs blockchain universitaires de Hong Kong. Sur X (@MrRyanChi), il écrit sur les marchés prédictifs, le trading quantitatif et la stratégie Web3.",
