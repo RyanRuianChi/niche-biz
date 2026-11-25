@@ -14,7 +14,7 @@ window.SITE = {
   // `x` / `domain` record where each logo file came from.
   logos: {
     insiders:   { name: "insiders.bot",    href: "https://insiders.bot",           x: "insidersdotbot", domain: "insiders.bot",          mono: "IN" },
-    nox:        { name: "Nox Ventures",    href: "",                                                                                    mono: "NX" },
+    nox:        { name: "Nox Ventures",    href: "https://nox.ventures", x: "NOX_Ventures", domain: "nox.ventures", mono: "NX" },
     city:       { name: "City Protocol",   href: "https://cityprotocol.co",        x: "cityprotocolHQ", domain: "cityprotocol.co",                           mono: "CP" },
     academic:   { name: "Academic Labs",   href: "https://acad.live",              x: "Acad_Labs",      domain: "acad.live",             mono: "AL" },
     showtime:   { name: "Showtime Watch",  href: "https://x.com/SHOWTIME_WATCH", x: "SHOWTIME_WATCH",                                  mono: "SW" },
@@ -72,7 +72,7 @@ window.SITE = {
 
 window.I18N = {
   en: {
-    "q.nox.role": "Researcher & Growth · Part-time", "q.nox.desc": "Research and growth for a crypto venture firm, part-time and remote.",
+    "q.nox.role": "Researcher & Growth · Part-time", "q.nox.desc": "Full-lifecycle crypto incubation fund acting as strategic co-founder for crypto teams. Research and growth, part-time; portfolio includes Sign, Talus, Cetus and Metis.", "q.nox.aum": "AUM",
     "ph.portrait": "Ryan Chi (Mr.RC), portrait",
     "ph.hku": "Ryan Chi presenting insiders.bot's AI agent workflows at HKU CAMO",
     "ph.accelerate": "Ryan Chi and cofounder Daksh Joshi on stage at Solana Accelerate APAC",
@@ -146,7 +146,7 @@ window.I18N = {
   },
 
   "zh-Hant": {
-    "q.nox.role": "研究員及增長 · 兼職", "q.nox.desc": "為加密創投機構負責研究與增長，兼職遠端。",
+    "q.nox.role": "研究員及增長 · 兼職", "q.nox.desc": "全週期加密孵化基金，以策略聯合創辦人身份支持加密團隊。兼職負責研究與增長；投資組合包括 Sign、Talus、Cetus 及 Metis。", "q.nox.aum": "資產管理規模",
     "ph.more": "顯示全部照片",
     "ph.portrait": "Ryan Chi（Mr.RC）個人照",
     "ph.hku": "Ryan Chi 於香港大學 CAMO 分享 insiders.bot 的 AI Agent 工作流",
@@ -221,7 +221,7 @@ window.I18N = {
   },
 
   ja: {
-    "q.nox.role": "リサーチャー＆グロース · パートタイム", "q.nox.desc": "クリプト系ベンチャーファームでリサーチとグロースを担当（パートタイム・リモート）。",
+    "q.nox.role": "リサーチャー＆グロース · パートタイム", "q.nox.desc": "クリプトチームの戦略的共同創業者として伴走するフルライフサイクル型インキュベーションファンド。パートタイムでリサーチとグロースを担当。ポートフォリオに Sign、Talus、Cetus、Metis など。", "q.nox.aum": "運用資産",
     "ph.more": "すべての写真を見る",
     "ph.portrait": "Ryan Chi（Mr.RC）のポートレート",
     "ph.hku": "香港大学 CAMO で insiders.bot の AI エージェント・ワークフローを発表する Ryan Chi",
@@ -296,7 +296,7 @@ window.I18N = {
   },
 
   ko: {
-    "q.nox.role": "리서처 & 그로스 · 파트타임", "q.nox.desc": "크립토 벤처 펌의 리서치와 그로스 담당 (파트타임, 원격).",
+    "q.nox.role": "리서처 & 그로스 · 파트타임", "q.nox.desc": "크립토 팀의 전략적 공동 창업자 역할을 하는 풀 라이프사이클 인큐베이션 펀드. 파트타임으로 리서치와 그로스 담당. 포트폴리오: Sign, Talus, Cetus, Metis 등.", "q.nox.aum": "운용 자산",
     "ph.more": "사진 모두 보기",
     "ph.portrait": "Ryan Chi(Mr.RC) 프로필 사진",
     "ph.hku": "홍콩대학교 CAMO에서 insiders.bot의 AI 에이전트 워크플로를 발표하는 Ryan Chi",
@@ -371,7 +371,7 @@ window.I18N = {
   },
 
   fr: {
-    "q.nox.role": "Recherche & croissance · Temps partiel", "q.nox.desc": "Recherche et croissance pour une société de capital-risque crypto, à temps partiel et à distance.",
+    "q.nox.role": "Recherche & croissance · Temps partiel", "q.nox.desc": "Fonds d’incubation crypto full-lifecycle, cofondateur stratégique d’équipes crypto. Recherche et croissance à temps partiel ; portefeuille : Sign, Talus, Cetus, Metis.", "q.nox.aum": "Sous gestion",
     "ph.more": "Voir toutes les photos",
     "ph.portrait": "Portrait de Ryan Chi (Mr.RC)",
     "ph.hku": "Ryan Chi présente les workflows d’agents IA d’insiders.bot à HKU CAMO",
