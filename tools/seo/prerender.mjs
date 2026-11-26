@@ -13,16 +13,16 @@ const BASE = "https://www.ryanchi.com/";
 const PAGES = { en: "", "zh-Hant": "zh-hant", ja: "ja", ko: "ko", fr: "fr" };
 const HREFLANG = { en: "en", "zh-Hant": "zh-Hant", ja: "ja", ko: "ko", fr: "fr" };
 const META = {
-  en: ["Ryan Chi (Mr.RC) | Hong Kong Founder · insiders.bot Cofounder",
-       "Ryan Chi (Mr.RC) is a Hong Kong founder, artist and creator in crypto and AI. Cofounder of insiders.bot (exited 2026) and Academic Labs. CUHK, Wharton, EDHEC. Bio, projects and photos."],
-  "zh-Hant": ["Ryan Chi（Mr.RC）| 香港創業者 · insiders.bot 聯合創辦人",
-       "Ryan Chi（Mr.RC）是香港的加密與 AI 創業者、藝術家及內容創作者，insiders.bot（2026 年退出）與 Academic Labs 聯合創辦人。香港中文大學、華頓、EDHEC。個人簡介、項目與照片。"],
-  ja: ["Ryan Chi（Mr.RC）| 香港の起業家 · insiders.bot 共同創業者",
-       "Ryan Chi（Mr.RC）は香港のクリプト・AI 領域の起業家、アーティスト、クリエイター。insiders.bot（2026年イグジット）と Academic Labs の共同創業者。CUHK、ウォートン、EDHEC。プロフィール、プロジェクト、写真。"],
-  ko: ["Ryan Chi(Mr.RC) | 홍콩 창업가 · insiders.bot 공동 창업자",
-       "Ryan Chi(Mr.RC)는 크립토와 AI 분야의 홍콩 창업가, 아티스트, 크리에이터입니다. insiders.bot(2026년 엑싯)과 Academic Labs 공동 창업자. CUHK, 와튼, EDHEC. 소개, 프로젝트, 사진."],
-  fr: ["Ryan Chi (Mr.RC) | Fondateur à Hong Kong · cofondateur d’insiders.bot",
-       "Ryan Chi (Mr.RC) est un fondateur, artiste et créateur hongkongais dans la crypto et l’IA. Cofondateur d’insiders.bot (sortie en 2026) et d’Academic Labs. CUHK, Wharton, EDHEC. Bio, projets et photos."],
+  en: ["Ryan Chi",
+       "Ryan Chi (Mr.RC): GTM hacker, artist, serial builder. Took insiders.bot to $1.3M volume on a $0 budget, then exited. Paints in oil, ships in public, never sits still."],
+  "zh-Hant": ["Ryan Chi",
+       "Ryan Chi（Mr.RC）：GTM 駭客、藝術家、連續創業者。零預算把 insiders.bot 做到 130 萬美元交易量，然後退出。畫油畫，公開打造，從不停下。"],
+  ja: ["Ryan Chi",
+       "Ryan Chi（Mr.RC）：GTM ハッカー、アーティスト、連続起業家。予算ゼロで insiders.bot を取引高 130 万ドルへ伸ばしてイグジット。油絵を描き、公開でつくり、止まらない。"],
+  ko: ["Ryan Chi",
+       "Ryan Chi(Mr.RC): GTM 해커, 아티스트, 연쇄 창업가. 예산 0원으로 insiders.bot을 거래량 130만 달러까지 키운 뒤 엑싯. 유화를 그리고, 공개적으로 만들고, 멈추지 않는다."],
+  fr: ["Ryan Chi",
+       "Ryan Chi (Mr.RC) : hacker GTM, artiste, bâtisseur en série. A mené insiders.bot à 1,3 M$ de volume sans budget, puis en est sorti. Peint à l’huile, construit en public, ne tient pas en place."],
 };
 const url = (l) => BASE + PAGES[l];
 const attr = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
