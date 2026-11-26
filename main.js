@@ -155,7 +155,8 @@
     document.querySelectorAll("[data-i18n-html]").forEach((n) => fill(n, t(n.dataset.i18nHtml)));
     document.querySelectorAll(".yr").forEach((n) => {
       const to = n.dataset.to === "now" ? t("yr.now") : n.dataset.to;
-      n.textContent = to ? `${n.dataset.from} – ${to}` : n.dataset.from;
+      const age = n.dataset.age ? " · " + t("yr.age").replace("{a}", n.dataset.age) : "";
+      n.textContent = (to ? `${n.dataset.from} – ${to}` : n.dataset.from) + age;
     });
     document.querySelectorAll("[data-stat]").forEach((n) => { n.textContent = t("stat." + n.dataset.stat); });
     document.querySelectorAll("[data-rank]").forEach((n) => { n.textContent = t("rank." + n.dataset.rank)[n.dataset.level - 1]; });

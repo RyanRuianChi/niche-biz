@@ -46,8 +46,8 @@ function fill(html, lang) {
     const inLink = before.lastIndexOf("<a ") > before.lastIndexOf("</a>");
     return open + (v.includes("{") ? v.replace(/\{(\w+)\}/g, (_, k) => chip(k, inLink)) : esc(v)) + close;
   });
-  html = html.replace(/(<span class="yr" data-from="([^"]+)"(?: data-to="([^"]+)")?>)[^<]*(<\/span>)/g, (m, open, a, b, close) =>
-    open + (b ? `${a} – ${b === "now" ? T("yr.now") : b}` : a) + close);
+  html = html.replace(/(<span class="yr"(?: data-age="([^"]+)")? data-from="([^"]+)"(?: data-to="([^"]+)")?>)[^<]*(<\/span>)/g, (m, open, age, a, b, close) =>
+    open + (b ? `${a} – ${b === "now" ? T("yr.now") : b}` : a) + (age ? " · " + T("yr.age").replace("{a}", age) : "") + close);
   return html;
 }
 
