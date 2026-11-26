@@ -80,3 +80,9 @@ Commit attribution lines used so far:
 - Hero walk: avatar-v3 has its own `rigLayout` branch (Spine_2 is the left collarbone there, not a spine bone). `prepRig` now takes "forward" as perpendicular to the hip line (v3's right toe splays ~40° out, which had yawed the whole body). Hip sway pivots at Spine_0 instead of the floor-level Root (root position is baked into crowd clips too). Leg retarget clamps adduction so the mocap's catwalk gait doesn't cross the feet.
 - City Protocol marked as left, 2025 – 2025.11. Volunteering: HKU EMBA Guest Lecturer (2026.04), logo `assets/logos/hku.png`.
 - `fetch-logos` workflow: list `<key> <url>` lines in `tools/logos/RUN_LOGOS` and push to a non-production branch; candidates land in `tools/logos/out/` (the sandbox can't reach most logo hosts).
+
+### Update (Nov 2026)
+- 3D "My Journey" section removed from the page (the `#world` block and the `world.js` script tag). `world.js` and its assets stay in the repo, so it can be restored.
+- Featured In now sits right after Status. Achievements is its own section further down.
+- New Art section (`#art`, i18n `nav.paint` / `art.*`, images in `assets/art/`), marked up as VisualArtwork in JSON-LD and listed in the sitemap.
+- Sigmaboy.ai stamped "Pivoted". City Protocol: founding member, now advisor (2025 – present), $100M TVL. Nox Ventures stamp is "Part-time". X followers 17.1K.

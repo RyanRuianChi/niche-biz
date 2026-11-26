@@ -2,7 +2,7 @@
 <urlset xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.ryanchi.com/</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.ryanchi.com/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://www.ryanchi.com/zh-hant"/>
     <xhtml:link rel="alternate" hreflang="ja" href="https://www.ryanchi.com/ja"/>
@@ -38,6 +38,11 @@
     <image:image><image:loc>https://www.ryanchi.com/assets/photos/ryan-chi-crypto-party.jpg</image:loc></image:image>
     <image:image><image:loc>https://www.ryanchi.com/assets/photos/ryan-chi-horseshoe-bend.jpg</image:loc></image:image>
     <image:image><image:loc>https://www.ryanchi.com/assets/photos/ryan-chi-anime-convention.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.ryanchi.com/assets/art/ryan-chi-painting-mannequin-sea.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.ryanchi.com/assets/art/ryan-chi-painting-red-figure-harbour.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.ryanchi.com/assets/art/ryan-chi-painting-red-boat.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.ryanchi.com/assets/art/ryan-chi-painting-blue-suit-harbour.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.ryanchi.com/assets/art/ryan-chi-painting-woman-in-white.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.ryanchi.com/zh-hant</loc>
