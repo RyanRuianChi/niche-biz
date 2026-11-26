@@ -41,7 +41,7 @@ function fill(html, lang) {
   html = html.replace(/(<(\w+)\b[^>]*\sdata-i18n(-html)?="([^"]+)"[^>]*>)([\s\S]*?)(<\/\2>)/g, (m, open, tag, isHtml, key, inner, close, off) => {
     const v = T(key);
     if (typeof v !== "string") return m;
-    if (!isHtml && /<\w/.test(inner)) return m;
+    if (!isHtml && /<\w/.test(inner) && !/^(p|h[1-6])$/.test(tag)) return m;   // p/h* never nest, so their inner HTML is safe to replace
     const before = html.slice(Math.max(0, off - 2000), off);
     const inLink = before.lastIndexOf("<a ") > before.lastIndexOf("</a>");
     return open + (v.includes("{") ? v.replace(/\{(\w+)\}/g, (_, k) => chip(k, inLink)) : esc(v)) + close;
@@ -74,7 +74,7 @@ function langLinks(html, lang) {
   const names = { en: "English", "zh-Hant": "繁體中文", ja: "日本語", ko: "한국어", fr: "Français" };
   const nav = `<nav class="footer__langs" aria-label="Languages">` +
     Object.keys(PAGES).map((l) => `<a href="/${PAGES[l]}" hreflang="${HREFLANG[l]}"${l === lang ? ' aria-current="page"' : ""}>${names[l]}</a>`).join(" · ") + `</nav>`;
-  html = html.replace(/<nav class="footer__langs"[\s\S]*?<\/nav>\n?/, "");
+  html = html.replace(/[ \t]*<nav class="footer__langs"[\s\S]*?<\/nav>\n?/, "");
   return html.replace(/<\/footer>/, `  ${nav}\n</footer>`);
 }
 
