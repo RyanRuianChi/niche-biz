@@ -14,15 +14,15 @@ const PAGES = { en: "", "zh-Hant": "zh-hant", ja: "ja", ko: "ko", fr: "fr" };
 const HREFLANG = { en: "en", "zh-Hant": "zh-Hant", ja: "ja", ko: "ko", fr: "fr" };
 const META = {
   en: ["Ryan Chi",
-       "Ryan Chi (Mr.RC): GTM hacker, artist, serial builder. Took insiders.bot to $1.3M volume on a $0 budget, then exited. Paints in oil, ships in public, never sits still."],
+       "Ryan Chi (Mr.RC) is a GTM hacker and oil painter. He took insiders.bot to $1.3M in trading volume with zero ad spend, then exited. Now building in crypto and AI."],
   "zh-Hant": ["Ryan Chi",
-       "Ryan Chi（Mr.RC）：GTM 駭客、藝術家、連續創業者。零預算把 insiders.bot 做到 130 萬美元交易量，然後退出。畫油畫，公開打造，從不停下。"],
+       "Ryan Chi（Mr.RC）是 GTM 駭客，也畫油畫。零廣告預算把 insiders.bot 做到 130 萬美元交易量，然後退出。現在專注加密與 AI。"],
   ja: ["Ryan Chi",
-       "Ryan Chi（Mr.RC）：GTM ハッカー、アーティスト、連続起業家。予算ゼロで insiders.bot を取引高 130 万ドルへ伸ばしてイグジット。油絵を描き、公開でつくり、止まらない。"],
+       "Ryan Chi（Mr.RC）は GTM ハッカーで、油絵も描く。広告費ゼロで insiders.bot を取引高 130 万ドルに伸ばしてイグジット。いまはクリプトと AI で次をつくっている。"],
   ko: ["Ryan Chi",
-       "Ryan Chi(Mr.RC): GTM 해커, 아티스트, 연쇄 창업가. 예산 0원으로 insiders.bot을 거래량 130만 달러까지 키운 뒤 엑싯. 유화를 그리고, 공개적으로 만들고, 멈추지 않는다."],
+       "Ryan Chi(Mr.RC)는 GTM 해커이자 유화를 그리는 사람. 광고비 0원으로 insiders.bot을 거래량 130만 달러까지 키운 뒤 엑싯. 지금은 크립토와 AI에서 다음을 만드는 중."],
   fr: ["Ryan Chi",
-       "Ryan Chi (Mr.RC) : hacker GTM, artiste, bâtisseur en série. A mené insiders.bot à 1,3 M$ de volume sans budget, puis en est sorti. Peint à l’huile, construit en public, ne tient pas en place."],
+       "Ryan Chi (Mr.RC), hacker GTM et peintre à l’huile. Il a mené insiders.bot à 1,3 M$ de volume sans budget pub, puis en est sorti. Il construit désormais dans la crypto et l’IA."],
 };
 const url = (l) => BASE + PAGES[l];
 const attr = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
