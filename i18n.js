@@ -15,6 +15,8 @@ window.SITE = {
   logos: {
     insiders:   { name: "insiders.bot",    href: "https://insiders.bot",           x: "insidersdotbot", domain: "insiders.bot",          mono: "IN" },
     nox:        { name: "Nox Ventures",    href: "https://nox.ventures", x: "NOX_Ventures", domain: "nox.ventures", mono: "NX" },
+    blockbeats: { name: "BlockBeats",      href: "https://www.theblockbeats.info", x: "BlockBeatsAsia", mono: "BB" },
+    superteam:  { name: "Superteam",       href: "https://superteam.fun",           x: "superteam",      mono: "ST" },
     city:       { name: "City Protocol",   href: "https://cityprotocol.co",        x: "cityprotocolHQ", domain: "cityprotocol.co",                           mono: "CP" },
     academic:   { name: "Academic Labs",   href: "https://acad.live",              x: "Acad_Labs",      domain: "acad.live",             mono: "AL" },
     showtime:   { name: "Showtime Watch",  href: "https://x.com/SHOWTIME_WATCH", x: "SHOWTIME_WATCH",                                  mono: "SW" },
@@ -72,6 +74,14 @@ window.SITE = {
 
 window.I18N = {
   en: {
+    "nav.feat": "Featured In",
+    "f.blockbeats": "AI trading bot insiders.bot launches, built on data from 1.6M Polymarket traders",
+    "f.businessweek": "湧向Web3的人文社科畢業生 (The humanities graduates heading into Web3)",
+    "f.cuhk": "Undergraduates set sail at CUHK Business School, with a profile of Ryan Ruian Chi",
+    "f.solana": "Live on Solana's X broadcast",
+    "f.superteam": "Featured speaker at Solana Consumer Day",
+    "f.read": "Read",
+    "f.watch": "Watch",
     "nav.talks": "Talks", "talk.solana.t": "Ryan Chi at Solana Consumer Day: “I am 21, pls be my consumer”",
     "talk.solana.d": "Ryan pitches insiders.bot: 1,000 registered users and $1M in trading volume in the first month, with no marketing budget. He explains why the team “simps in public” and why the only metric he cares about is the share of users who win on prediction markets.",
     "q.nox.role": "Researcher & Growth · Part-time", "q.nox.desc": "Crypto incubation fund that works with teams the way a co-founder would, across their whole lifecycle. Research and growth, part-time. Portfolio includes Sign, Talus, Cetus and Metis.", "q.nox.aum": "AUM",
@@ -148,6 +158,14 @@ window.I18N = {
   },
 
   "zh-Hant": {
+    "nav.feat": "媒體報導",
+    "f.blockbeats": "AI 交易機器人 insiders.bot 上線，基於 160 萬名 Polymarket 交易者數據",
+    "f.businessweek": "湧向Web3的人文社科畢業生",
+    "f.cuhk": "中大商學院迎新報導，專訪 Ryan Ruian Chi",
+    "f.solana": "Solana X 直播",
+    "f.superteam": "Solana Consumer Day 特邀講者",
+    "f.read": "閱讀",
+    "f.watch": "觀看",
     "nav.talks": "演講", "talk.solana.t": "Ryan Chi 於 Solana Consumer Day：「我 21 歲，請成為我的用戶」",
     "talk.solana.d": "Ryan 介紹 insiders.bot：首月 1,000 名註冊用戶、100 萬美元交易量，零行銷預算。他解釋團隊為何「公開討好用戶」，以及他唯一在乎的指標：預測市場上有多少用戶真的賺錢。",
     "q.nox.role": "研究員及增長 · 兼職", "q.nox.desc": "加密孵化基金，像聯合創辦人一樣陪團隊走完整個週期。兼職負責研究與增長。投資組合包括 Sign、Talus、Cetus 及 Metis。", "q.nox.aum": "資產管理規模",
@@ -225,6 +243,14 @@ window.I18N = {
   },
 
   ja: {
+    "nav.feat": "掲載メディア",
+    "f.blockbeats": "Polymarket トレーダー 160 万人のデータを使う AI トレーディングボット insiders.bot がローンチ",
+    "f.businessweek": "湧向Web3的人文社科畢業生（Web3 へ向かう人文社会系の卒業生たち）",
+    "f.cuhk": "CUHK ビジネススクール新入生特集で Ryan Ruian Chi を紹介",
+    "f.solana": "Solana の X ライブ配信に出演",
+    "f.superteam": "Solana Consumer Day 登壇スピーカー",
+    "f.read": "読む",
+    "f.watch": "見る",
     "nav.talks": "講演", "talk.solana.t": "Solana Consumer Day での Ryan Chi：「21歳です、ユーザーになってください」",
     "talk.solana.d": "Ryan が insiders.bot をピッチ。マーケティング予算ゼロで初月 1,000 人登録、取引高 100 万ドル。チームが「公開でユーザーに尽くす」理由と、彼が唯一気にする指標、つまり予測市場で勝っているユーザーの割合について話します。",
     "q.nox.role": "リサーチャー＆グロース · パートタイム", "q.nox.desc": "共同創業者のようにチームのライフサイクル全体に関わるクリプト・インキュベーションファンド。パートタイムでリサーチとグロースを担当。ポートフォリオに Sign、Talus、Cetus、Metis など。", "q.nox.aum": "運用資産",
@@ -302,6 +328,14 @@ window.I18N = {
   },
 
   ko: {
+    "nav.feat": "미디어",
+    "f.blockbeats": "Polymarket 트레이더 160만 명의 데이터를 기반으로 한 AI 트레이딩 봇 insiders.bot 출시",
+    "f.businessweek": "湧向Web3的人文社科畢業生 (Web3로 향하는 인문사회계 졸업생들)",
+    "f.cuhk": "CUHK 경영대학 신입생 특집, Ryan Ruian Chi 소개",
+    "f.solana": "Solana X 라이브 방송 출연",
+    "f.superteam": "Solana Consumer Day 초청 연사",
+    "f.read": "읽기",
+    "f.watch": "보기",
     "nav.talks": "강연", "talk.solana.t": "Solana Consumer Day의 Ryan Chi: “21살입니다, 제 유저가 되어 주세요”",
     "talk.solana.d": "Ryan이 insiders.bot을 소개합니다. 마케팅 예산 없이 첫 달 등록 사용자 1,000명, 거래량 100만 달러. 팀이 왜 ‘공개적으로 유저에게 헌신하는지’, 그리고 그가 유일하게 신경 쓰는 지표인 예측 시장에서 돈을 버는 사용자 비율에 대해 이야기합니다.",
     "q.nox.role": "리서처 & 그로스 · 파트타임", "q.nox.desc": "공동 창업자처럼 팀의 전체 라이프사이클을 함께하는 크립토 인큐베이션 펀드. 파트타임으로 리서치와 그로스 담당. 포트폴리오: Sign, Talus, Cetus, Metis 등.", "q.nox.aum": "운용 자산",
@@ -379,6 +413,14 @@ window.I18N = {
   },
 
   fr: {
+    "nav.feat": "Dans les médias",
+    "f.blockbeats": "Lancement d’insiders.bot, bot de trading IA construit sur les données de 1,6 M de traders Polymarket",
+    "f.businessweek": "湧向Web3的人文社科畢業生 (Ces diplômés en sciences humaines qui partent vers le Web3)",
+    "f.cuhk": "Rentrée à la CUHK Business School, avec un portrait de Ryan Ruian Chi",
+    "f.solana": "En direct sur la diffusion X de Solana",
+    "f.superteam": "Intervenant au Solana Consumer Day",
+    "f.read": "Lire",
+    "f.watch": "Regarder",
     "nav.talks": "Conférences", "talk.solana.t": "Ryan Chi au Solana Consumer Day : « J’ai 21 ans, soyez mes utilisateurs »",
     "talk.solana.d": "Ryan présente insiders.bot : 1 000 inscrits et 1 M$ de volume le premier mois, sans budget marketing. Il explique pourquoi l’équipe « simp en public » et pourquoi la seule métrique qui compte pour lui est la part d’utilisateurs gagnants sur les marchés prédictifs.",
     "q.nox.role": "Recherche & croissance · Temps partiel", "q.nox.desc": "Fonds d’incubation crypto qui accompagne les équipes comme un cofondateur, sur tout leur cycle de vie. Recherche et croissance à temps partiel. Portefeuille : Sign, Talus, Cetus, Metis.", "q.nox.aum": "Sous gestion",
