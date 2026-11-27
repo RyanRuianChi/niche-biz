@@ -17,7 +17,7 @@ jobs:
           for i in $(seq 1 3); do
             [ "$(curl -sL https://ryanchi.com/$KEY.txt)" = "$KEY" ] && break; sleep 20
           done
-          for p in "" zh-hant ja ko fr sitemap.xml robots.txt llms.txt google218b9c922746143d.html; do
+          for p in "" zh-hant ja ko fr photos art press sitemap.xml robots.txt llms.txt google218b9c922746143d.html; do
             echo "$(curl -s -o /dev/null -w '%{http_code} %{url_effective}' -L https://ryanchi.com/$p) /$p"
           done
           curl -sL https://ryanchi.com/ | grep -o '<title>[^<]*'
@@ -26,4 +26,4 @@ jobs:
           KEY=$(cat tools/seo/INDEXNOW_KEY)
           curl -s -o /dev/null -w 'indexnow %{http_code}\n' -X POST https://api.indexnow.org/indexnow \
             -H 'Content-Type: application/json; charset=utf-8' \
-            -d "{\"host\":\"www.ryanchi.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://www.ryanchi.com/$KEY.txt\",\"urlList\":[\"https://www.ryanchi.com/\",\"https://www.ryanchi.com/zh-hant\",\"https://www.ryanchi.com/ja\",\"https://www.ryanchi.com/ko\",\"https://www.ryanchi.com/fr\"]}"
+            -d "{\"host\":\"www.ryanchi.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://www.ryanchi.com/$KEY.txt\",\"urlList\":[\"https://www.ryanchi.com/\",\"https://www.ryanchi.com/zh-hant\",\"https://www.ryanchi.com/ja\",\"https://www.ryanchi.com/ko\",\"https://www.ryanchi.com/fr\",\"https://www.ryanchi.com/photos\",\"https://www.ryanchi.com/art\",\"https://www.ryanchi.com/press\"]}"

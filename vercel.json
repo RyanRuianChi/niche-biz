@@ -4,6 +4,9 @@
     { "source": "/zh-hant", "destination": "/zh-hant.html" },
     { "source": "/ja", "destination": "/ja.html" },
     { "source": "/ko", "destination": "/ko.html" },
-    { "source": "/fr", "destination": "/fr.html" }
+    { "source": "/fr", "destination": "/fr.html" },
+    { "source": "/photos", "destination": "/photos.html" },
+    { "source": "/art", "destination": "/art.html" },
+    { "source": "/press", "destination": "/press.html" }
   ]
 }

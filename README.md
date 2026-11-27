@@ -15,3 +15,8 @@ Deploy: point the Vercel project at this repo (framework preset: Other, no build
 ## SEO
 - `node tools/seo/prerender.mjs` after editing copy or `index.html`: writes the text into `index.html` (English) and `zh-hant.html`, `ja.html`, `ko.html`, `fr.html` (served at /zh-hant etc. via `vercel.json`), with hreflang links.
 - Person / ProfilePage structured data and meta tags live in the `<head>` of `index.html`; `robots.txt` and `sitemap.xml` (with image entries) at the root. Add new photos of Ryan to the page and to `sitemap.xml`.
+
+### Standalone pages
+`/photos`, `/art` and `/press` are built from sections of `index.html` by `tools/seo/subpages.mjs`
+(run automatically at the end of `node tools/seo/prerender.mjs`). Each has its own title, canonical URL
+and ImageGallery / CollectionPage markup pointing back to the Person entity (`#ryan`).

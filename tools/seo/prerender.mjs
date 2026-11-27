@@ -88,3 +88,6 @@ for (const lang of Object.keys(PAGES)) {
   fs.writeFileSync(file, out);
   console.log("wrote", file);
 }
+
+// Standalone /photos, /art and /press pages, built from the English page above.
+await import("./subpages.mjs");

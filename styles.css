@@ -743,3 +743,11 @@ body.is-loading { overflow: hidden; }
 .art .art__piece { break-inside: avoid; margin: 0 0 24px; display: block; }
 .art .art__piece a { height: auto; }
 .art .art__piece img { height: auto; min-height: 0; object-fit: contain; }
+
+/* ---------- Standalone pages (/photos, /art, /press) ---------- */
+.subpage .nav__menu a { white-space: nowrap; }
+.subpage__head { padding-bottom: 0; padding-top: 130px; }
+.subpage__lead { max-width: 680px; font-weight: 600; margin: 0; }
+.subpage main > .section:not(.subpage__head) { padding-top: 40px; }
+.section__more { display: inline-block; margin-top: 22px; font: 15px var(--display); letter-spacing: 1px; text-transform: uppercase; color: var(--white); border-bottom: 3px solid var(--red); text-decoration: none; }
+.section__more:hover { color: var(--red); }
